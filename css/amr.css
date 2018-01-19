@@ -1,0 +1,815 @@
+
+.stylescroll::-webkit-scrollbar-track
+{
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	border-radius: 10px;
+	background-color: #F5F5F5;
+}
+
+.stylescroll::-webkit-scrollbar
+{
+	width: 12px;
+	background-color: #041e2b;
+}
+
+.stylescroll::-webkit-scrollbar-thumb
+{
+	border-radius: 10px;
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+	background-color: #041e2b;
+}
+
+
+
+/* apply this class for animation transitions between classes */
+.transition-class{
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+}
+
+
+#layerList{
+	overflow-y: auto;
+	overflow-x: hidden;
+	border-radius: 10px;
+	//height: 45%;
+	width: 30%;
+	position: absolute;
+	top: 10px;
+	left: 20px;
+	z-index: 10000;
+	border-radius: 10px;
+	min-height: 150px;
+	min-width: 250px;
+	background-color: #2c5875;
+	display: none;
+	padding: 10px;
+}
+
+#toc{
+	height: 20%;
+	position: absolute;
+	bottom: 0px;
+	left:0px;
+	overflow-y: auto;
+	background-color: white !important;
+	padding: 4px;
+	border: solid 4px;
+	min-height: 150px;
+}
+
+.toc-button:hover{
+	color: white;
+}
+
+
+/* for css when *TABLET* mode is engaged */
+@media (max-width: 767px){
+	.toc-view{
+		background-color:  rgba(255,255,255,0) !important;
+	}
+	#tocModal{
+		padding-left: 0px !important;
+	}
+
+	.level-toggle-view{
+		background-color: rgba(0,0,0,.25) !important;
+	}
+	.map-view{
+		height: 100vh !important;
+	}
+	#legendButton{
+		visibility: visible;
+	}
+	.toc-button{
+		visibility: hidden;
+	}
+
+	.rotate-text {
+		-moz-transform: rotate(-69deg);
+		-webkit-transform: rotate(-69deg);
+		transform:  rotate(-69deg);
+		bottom: 10px !important;
+		left: 15%;
+		text-align-last: left;
+		background-color: rgba(0,0,0,0) !important;
+		white-space: nowrap;
+	}
+	.level-switch-slider {
+		text-align: left !important;
+		left: 60px;
+		position: absolute;
+	}
+	.leaflet-control-container-tablet-custom{
+		position: absolute;
+		top: 0px;
+		left: -5px;
+	}
+	.layer-list-view{
+	  padding-left: 50px !important;
+		padding-top: 12px;
+		height: 500% !important;
+		overflow-y: auto!important;
+	}
+
+	.legend-bar{
+		color: black!important;
+		text-shadow: none!important;
+	}
+
+
+
+}
+
+/* for css when *PHONE* mode is engaged */
+@media (max-width: 499px){
+	.rotate-text {
+		-moz-transform: rotate(-90deg);
+		-webkit-transform: rotate(-90deg);
+		transform:  rotate(-90deg);
+		text-align-last: left;
+		left: 50%;
+	}
+}
+
+/* for css when *DESKTOP* mode is engaged */
+@media (min-width: 768px){
+	.toc-view{
+		height: 20%;
+		min-height: 150px;
+		background-color: #619ec7 !important;
+	}
+	.map-view{
+		height: 80vh;
+	}
+	#legendButton{
+		visibility: hidden;
+	}
+	.toc-button{
+		visibility: visible;
+	}
+
+
+	.layer-list-holder-closed{
+		width: 0px;
+		height: 0px;
+	}
+
+
+}
+
+/* glyphicons */
+.icon-class{
+	color: #ffffff;
+}
+.button-icon-class{
+	color: #999;
+	top: 8px;
+}
+
+/* dock/undock button */
+.toc-button{
+  height: 20px;
+  width: 80px;
+  position: absolute;
+  background-color: #2c5875;
+  left: 50%;
+  z-index: 10000;
+	cursor: pointer;
+	text-align: center;
+	opacity: 0;
+	bottom: 20%;
+	color: black;
+}
+.toc-button-unfade{
+ 	opacity: 100;
+}
+.toc-button-open{
+	margin: -10px -40px;
+}
+.toc-button-closed{
+	bottom: 10px !important;
+}
+.toc-closed{
+	height: 1%;
+}
+
+/* docked/undocked toc views */
+.map-view{
+	background-color: #619ec7;
+	padding-right:5px;
+	padding-left:5px;
+}
+.map-view-full{
+	height: 100%!important;
+	position: absolute;
+	top: 0px;
+	left: 0px;
+}
+.map-view-toc{
+	position: absolute;
+	top:0px;
+	left:0px;
+	height: 80%;
+}
+.toc-view{
+	padding:4px;
+}
+.toc-view-open{
+	position: absolute;
+	bottom: 0px;
+	left: 0px;
+	height: 20%!important;
+}
+.toc-view-closed{
+	height: 1%;
+	position: absolute;
+	bottom:0px;
+	left:0px;
+}
+
+/* toc elements  */
+.layer-list-view{
+	background-color: #2c5875;
+	border-radius: 5px;
+	padding-left:5px;
+	height: 300px;
+	overflow-y: auto;
+	overflow-x: hidden;
+	min-height: 0px !important;
+}
+.level-toggle-view{
+	background-color: #e95d5f;
+	height: 100%;
+}
+
+
+/* level 1 level 2 toggle */
+.switch {
+	position: relative;
+	display: inline-block;
+	width: 2vh;
+	height: 16vh;
+}
+
+#neatline{
+	height: 5px!important;
+	width:100%!important;
+	position: absolute;
+	bottom:0px!important;
+	left:0px!important;
+	background-color: #619ec7 !important;
+	display: none;
+	z-index: 1000!important;
+}
+
+.histogram-div{
+	position: absolute;
+	bottom: 0px;
+}
+
+.legend-off, .layer-list-off{
+	visibility: hidden;
+	height: 0% !important;
+}
+
+#legendModalContent{
+	height: 500px;
+	width: 500px;
+}
+
+#legendHolder{
+	height:100%;
+	overflow-y: hidden;
+	min-height: 150px;
+	padding-left: 0px;
+	padding-right: 0px;
+}
+
+#legend{
+	overflow-y: hidden;
+	height: 100%;
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-top: 5px;
+}
+
+
+.page-header {
+    margin: 10px 10px 0px;
+}
+
+.legend-holder-modal{
+	height: 750px!important;
+}
+
+
+#legendModalBody{
+	height: 500px;
+}
+
+
+/* leaflet customized css */
+.radio, .checkbox{
+	color: #ffffff;
+	font-size: 8pt;
+	height: 10px;
+	line-height: 2;
+	margin-top: 5px;
+}
+
+/* leaflet customized css */
+.leaflet-control-custom{
+	width: 28px;
+	height: 28px;
+	background-color: #fff;
+	cursor: pointer !important;
+  text-align: center;
+	margin-top: 5px!important;
+	float: none;
+}
+
+/*Aligns zoom controls with other custom controls*/
+.leaflet-control-zoom{
+	margin-left: 20px !important;
+
+}
+
+/*Matches zoom control color to other control colors*/
+.leaflet-control-zoom-in, .leaflet-control-zoom-out{
+	color: #999 !important;
+}
+
+.leaflet-control-attribution, .cartodb-legend-stack {
+	visibility:hidden;
+}
+
+.cartodb-logo {
+	visibility:hidden !important;
+}
+
+body > div.cartodb-tooltip{
+	margin-bottom: 15px !important;
+	margin-left: 10px !important;
+	border-radius: 5px;
+	width: 100%;
+	min-width: 17.5px;
+    max-width: 24px;
+	height: 17.5px;
+}
+/* gives to the tooltip different styles */
+div.cartodb-tooltip-content-wrapper{
+	padding: 1px 1px 1px 1px;
+	max-width:none;
+	text-align: center;
+	background-color: #FFF!important;
+	opacity: 0.9;
+	border-radius: 5px!important;
+}
+/* set styles to the <p> tag of the tooltip */
+div.cartodb-tooltip-content-wrapper p{
+	color: #2c5875 !important;
+	font-size:8pt;
+}
+/* set infobox styles */
+.cartodb-infobox{
+	opacity:0.9;
+	background-color: #FFF!important;
+	color: #2c5875 !important;
+	border-radius: 5px!important;
+}
+
+
+/* set styles to the custom infowindow */
+.infowindow-custom{
+	position: relative;
+	width: 100%;
+	background-color: #FFF;
+	margin-bottom: 2px;
+	opacity: 0.9;
+	text-align: left;
+	/*font-style: oblique;*/
+	background-color: #FFF;
+	color: #2c5875;
+	border-radius: 10px;
+}
+
+.infobox-mobile{
+	padding-top: 0px!important;
+	padding-left: 0px!important;
+	padding-bottom: 0px!important;
+	padding-right: 0px!important;
+	right: 10px;
+	border-radius: 10px!important;
+}
+
+#mobile-clickwindow{
+	background-color: white!important;
+	width: 100%!important;
+	max-width: 200px;
+	float: right;
+	margin: 0px!important;
+	border-radius: 10px;
+}
+
+
+#infowindow-table-desktop{
+	padding-right: 25px!important
+}
+
+#mobile-clickwindow td{
+	/*display: inline-block;*/
+	max-width: 75px;
+	padding-left: 0px;
+}
+
+.infobox-mobile th, td{
+	border-bottom: 1px solid #ddd;
+	padding-left: 10px!important;
+	padding-right: 10px!important;
+}
+
+.cartodb-popup-content .content h3{
+  font-style: italic;
+}
+.cartodb-popup-content .content p{
+  text-align: left;
+  font-size: 8pt;
+  color:#2c5875;
+  margin-left: 1px;
+}
+
+.leaflet-popup-wrapper{
+	width: 1000px!important;
+}
+
+/* set styles to the custom infowindow -> close button */
+.cartodb-popup-close-button {
+	position: absolute;
+	top: -12px;
+	right: -11px;
+	width: 26px;
+	height: 26px;
+	background: url('http://libs.cartodb.com/cartodb.js/v3/themes/img/light.png') no-repeat 0 -23px;
+	text-indent: -9999px;
+	font-size: 0;
+	line-height: 0;
+	opacity: 1;
+	text-transform: uppercase;
+	z-index: 3;
+}
+/* set styles to the custom infowindow -> tip container */
+.cartodb-popup-tip-container{
+	position: absolute;
+	bottom: -13px;
+	left: 23px;
+	width: 16px;
+	height: 14px;
+	background: url('http://libs.cartodb.com/cartodb.js/v3/themes/img/light.png') no-repeat -23px -7px;
+	text-indent: -9999px;
+	font-size: 0;
+	line-height: 0;
+	opacity: 1;
+	z-index: 3;
+}
+
+
+th{
+	padding-right: 25px!important;
+}
+td{
+	padding-right: 25px!important;
+	text-align: left;
+}
+
+.cartodb-searchbox{
+	float: none!important;
+	/*margin-left: 25px;
+	margin-top: 25px;*/
+	margin: 0px!important;
+}
+
+.leaflet-search-control{
+	float: none!important;
+}
+
+.legend-label{
+	padding-top: 10px;
+	margin-bottom: 0px;
+}
+
+#close-toc{
+	position: relative;
+	top: 0px;
+	right: 0px;
+}
+
+.axis {
+	font: 10px sans-serif;
+	color: white;
+	fill: white;
+	text-shadow: black 0.1em 0.1em 0.2em;
+}
+
+.modal-content{
+	background-color: rgba(255, 255, 255, 1);
+}
+
+#legendModalBody{
+	overflow-y: auto;
+}
+
+
+
+.axis path,
+.axis line {
+	fill: none;
+	stroke: #000;
+	shape-rendering: crispEdges;
+}
+
+#level1Label{
+	color: #333;
+	/*text-shadow: black 0.1em 0.1em 0.2em;*/
+	z-index: 999;
+	position: absolute;
+    top: -19px;
+    left: 18%;
+	display: none;
+}
+
+#legend-back{
+	display: none;
+	/*font: 14px sans-serif;*/
+	/*color: black;*/
+	/*fill: black;*/
+	/*text-shadow: black 0.1em 0.1em 0.2em;*/
+	/*cursor: pointer;*/
+}
+
+#legend-back:hover{
+	/*color:  #2c5875;*/
+}
+
+.infowindow-header{
+	margin-top: 5px;
+	margin-bottom: 0px!important;
+}
+
+.selector-axis path{
+	display: none;
+}
+
+
+.layer-list-header{
+	color: white;
+	text-shadow: black 0.1em 0.1em 0.2em;
+}
+
+#legend-header{
+	color: black;
+	/*text-shadow: black 0.1em 0.1em 0.2em;*/
+}
+
+.legend-bar{
+	margin: 0px!important;
+	padding: 0px!important;
+		font: 14px sans-serif;
+}
+
+.legend-item{
+	height: 30px;
+	min-height: 30px;
+	margin-top:5px;
+	margin-bottom:5px!important;
+}
+
+.media{
+	height: 30px;
+	cursor: pointer;
+}
+
+.media-body{
+	color: black;
+	/*fill: white;*/
+	/*text-shadow: black 0.1em 0.1em 0.2em;*/
+	padding-top: 2%;
+}
+
+.media-left img{
+	height:25px;
+	width: 25px;
+}
+
+
+.autoscroll{
+	overflow-y: auto!important;
+}
+
+
+.btn-sm{
+	padding-left: 10px;
+}
+
+button.active{
+	background: cyan;
+}
+
+.all-none-grp{
+	padding-bottom: 10px;
+}
+
+.legend-media{
+	border-radius: 4px;
+}
+
+.active{
+	background-color: rgba(	179,68,50,.25)!important;
+}
+
+
+#showAll:hover{
+	background: rgba(0, 0, 0, 0.25)
+}
+#showNone:hover{
+	background: rgba(0, 0, 0, 0.25)
+}
+
+/*#logHist{
+	color: white;
+	text-shadow: black 0.1em 0.1em 0.2em;
+	font-size: 10px;
+	cursor: pointer;
+}
+
+#linearHist{
+	color: white;
+		text-shadow: black 0.1em 0.1em 0.2em;
+		font-size: 10px;
+		cursor: pointer;
+		padding-right: 25px;
+}*/
+
+.histbtn{
+	color:black;
+}
+
+.infobox{
+	padding-left: 20px;
+	padding-right: 20px;
+	position:absolute;
+	display:inline-block;
+	-webkit-box-shadow:rgba(0,0,0,.2) 0 0 4px 2px;
+	-moz-box-shadow:rgba(0,0,0,.2) 0 0 4px 2px;
+	box-shadow:rgba(0,0,0,.2) 0 0 4px 2px;
+	background:#fff;
+	-webkit-border-radius:4px;
+	-moz-border-radius:4px;
+	-ms-border-radius:4px;
+	-o-border-radius:4px;
+	border-radius:4px;
+	border:1px solid #999;
+	text-align:left;
+	z-index:105;
+	top: 10px;
+	right: 10px;
+	display: none;
+	padding-top: 7px;
+	padding-bottom: 12px;
+	height: 35px;
+}
+
+/*#level1-set{
+	padding-bottom: 10px;
+}*/
+
+.filter-swatch{
+	cursor: pointer;
+}
+
+#infoboxHolder{
+	position: absolute;
+	top: 40px;
+	right: 10px;
+	/*width:  75px;*/
+	height: 25px;
+	z-index: 200000;
+	color: 		black;
+	/*text-shadow: black 0.1em 0.1em 0.2em;*/
+	/*padding-left: 5px;*/
+}
+
+#showInfobox{
+	-webkit-appearance: none;
+	background-color: #fafafa;
+	border: 1px solid #cacece;
+	box-shadow: 0 1px 2px rgba(0,0,0,0.05), inset 0px -15px 10px -12px rgba(0,0,0,0.05);
+	padding: 9px;
+	border-radius: 3px;
+	display: inline-block;
+	position: relative;
+	vertical-align: -40%;
+}
+
+#showInfobox:active, #showInfobox:checked:active {
+	box-shadow: 0 1px 2px rgba(0,0,0,0.05), inset 0px 1px 3px rgba(0,0,0,0.1);
+}
+
+#showInfobox:checked {
+	background-color: #e9ecee;
+	border: 1px solid #adb8c0;
+	box-shadow: 0 1px 2px rgba(0,0,0,0.05), inset 0px -15px 10px -12px rgba(0,0,0,0.05), inset 15px 10px -12px rgba(255,255,255,0.1);
+	color: #99a1a7;
+}
+
+#showInfobox:checked:after {
+	content: '\2714';
+	font-size: 14px;
+	position: absolute;
+	top: 0px;
+	left: 3px;
+	color: #99a1a7;
+}
+
+#showInfoboxLabel{
+	padding-left: 5px!important;
+	height: 25px;
+
+}
+
+#map{
+	height: 80%;
+	width: 100%;
+}
+
+#modal-layerListHolder{
+	overflow-y: auto;
+}
+
+.slider{
+	margin-top: 15px;
+	display: block;
+}
+
+
+.cartodb-popup-content .content{
+	padding-left: 0px!important;
+	width: 100%;
+}
+
+/*.leaflet-popup-content-wrapper td{
+	background-color: red;
+}*/
+
+.leaflet-popup-content-wrapper{
+	padding-right: 25px!important;
+	text-align: left;
+	font-size: 8pt;
+	color:#2c5875;
+	margin-left: 1px;
+}
+
+.content{
+	padding:0px!important;
+}
+
+rect{
+	cursor: pointer;
+}
+
+.tablet-hist{
+	color: black;
+}
+
+.tablet-hist-btn{
+	color: black!important;
+	text-shadow: none!important;
+	font: bold 11px Arial;
+	/*background-color: #EEEEEE;
+	color: #333333;
+	padding: 2px 6px 2px 6px;
+	border-top: 1px solid #CCCCCC;
+	border-right: 1px solid #333333;
+	border-bottom: 1px solid #333333;
+	border-left: 1px solid #CCCCCC;
+	border-radius: 10px;*/
+}
+
+
+#copyButton:hover{
+	cursor: pointer;
+	background-color: darkgray;
+}
+
+.copybox{
+	padding-top: 50px;
+	margin-bottom: 25px;
+}
+
+
+
+#infosharemodalBdoay{
+	height: 100% !important;
+}

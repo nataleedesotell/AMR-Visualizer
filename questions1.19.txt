@@ -1,0 +1,7 @@
+Meeting 1/19 Questions (for Codie)
+
+-I created a variable "cipro09" to house the layer for Ciprofloxacin 2009. Should I create a separate variable for each drug/year combo? The css inside would be the same except for the field name. Seems like there should be a quicker way to do that but I'm not sure how.
+
+-Is the Bordner project a good model for the SQL I'll need to use? Seems like the user's interaction with the Bordner data is quite different from our project. Do you know of a better example than Bordner?
+
+-I'd like to set a meeting just between Codie & I (and Andrea if she's available) to discuss the JS/SQL in greater depth. 
