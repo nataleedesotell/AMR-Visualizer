@@ -16,38 +16,6 @@ var sql2;
       maxZoom: 19,
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
     }).addTo(map)
-
-
-//                                             cartocss: '#layer {' +
-//                                                 'polygon-fill: #CCCCCC;' +
-//                                                 'polygon-opacity: 0.9;' +
-//                                                 '::outline {' +
-//                                                   'line-color: #FFFFFF;' +
-//                                                   'line-width: 1;' +
-//                                                   'line-opacity: 0.5;' +
-//                                                 '}' +
-//                                               '}' +
-//                                               '#layer [ cipro09 <= 100] {' +
-//                                               'polygon-fill: #50B848;' +
-//                                               '}' +
-//                                               '#layer [ cipro09 <= 90] {' +
-//                                               'polygon-fill: #BCDDA1;' +
-//                                               '}' +
-//                                               '#layer [ cipro09 <= 80] {' +
-//                                               'polygon-fill: #F4E6ED;' +
-//                                               '}' +
-//                                               '#layer [ cipro09 <= 70] {' +
-//                                               'polygon-fill: #EDC1DB;' +
-//                                               '}' +
-//                                               '#layer [ cipro09 <= 60] {' +
-//                                               'polygon-fill: #CF3D96;' +
-//                                               '}' +
-//                                               '#layer [ cipro09 = 0] {' +
-//                                               'polygon-fill: #CCCCCC;' +
-//                                               '}' 
-//                                           }]
-//                                          },{ https: true }).addTo(map);
-// });
     
     // Promise for the first layer
     var cipro09 = cartodb.createLayer(map, {

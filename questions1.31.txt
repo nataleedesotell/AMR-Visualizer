@@ -1,0 +1,13 @@
+Meeting 1/31 Questions (for Codie)
+
+
+1) I implemented the hover example code, but something is going wrong. I receive an error every time the cursor hovers over a polygon (see console)
+2) 
+3)
+4)
+5)
+6)
+
+
+#A question from last time that I either forgot to ask or forgot the answer to!:
+-I created a variable "cipro09" to house the layer for Ciprofloxacin 2009. Should I create a separate variable for each drug/year combo? The css inside would be the same except for the field name. Seems like there should be a quicker way to do that but I'm not sure how.
