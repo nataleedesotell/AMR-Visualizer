@@ -16,8 +16,7 @@ var sql2;
       maxZoom: 19,
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
     }).addTo(map)
-    
-    // Promise for the first layer
+
     var cipro09 = cartodb.createLayer(map, {
     user_name: 'nrobson',
     type: 'cartodb',
@@ -97,7 +96,7 @@ var sql2;
   }); // ends on document ready context 
   
   
-  //////////////////// Stock code for enabling map queries against CARTO server
+  // Stock code for enabling map queries against CARTO server
   var Map = cdb.core.View.extend({
     initialize: function() {
       //CS: console.log("Map.initialize")
@@ -145,7 +144,7 @@ var sql2;
     }
 
   })
-  //////////////////// More stock code
+  // More stock code
   var Filters = cdb.core.View.extend({
 
     initialize: function() {
@@ -196,4 +195,3 @@ var sql2;
       })
     }
   })
-  /////////////////////////////////////////
