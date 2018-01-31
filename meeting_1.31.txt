@@ -1,0 +1,45 @@
+To do:
+-Email GitHub link to Codie & Andrea
+-Restructure the 3 tables (2009, 2013, 2015) into one table
+-Read about Mustache templates 
+	-Why use this?
+	-How to use for this project?
+-Look into Leaflet documentation
+	-popups
+	-legends
+
+
+Meeting 1/31 Questions and Notes
+
+
+1) I found an example that looks pretty close to what I'm aiming for (Bootstrap + Carto),
+but I had some trouble editing it to grab data from my carto account. It's still taking in data from the original map author.
+
+2) I assume it'll be simple to plug in 2 bootstrap dropdowns, but the code that will actually change the map view for every new selection still boggles my mind. Is there an example you know of where there are 2 dropdowns that both alter a choropleth?
+(https://getbootstrap.com/docs/4.0/components/dropdowns/)
+
+Notes from call:
+
+/Carto vs. D3 - carto easier to maintain/security, better going forward as dataset gets larger
+
+/Carto concepts:
+
+/mouseover interactivity: Important to udnerstand that what I'm seeing on screen is actually a tile layer that's rendered by carto and sent as raster tiles. They don't have object associated with them or variable info associated with them. To adhere attribute information, you have to procure mouse coordinates and then use the SQL API to request attributes of that particular geometry, returns a json object with attributes: county, isolates, susceptibiliy, etc.
+
+/table structure: dividing by year is a good way of approaching but might be easier to combine all the years into 1 table that contains all the years. longer term might be easier to deal with one long table instead of separate ones.
+
+/styling and creating the choropleth. cartoCCS is the way the colors are classified defined on the layer creation. can define the cartocss and change the style of the map by changing the style.css. Carto returns brand new tiles. 
+
+/dynamically restyling the map: the example that we've talked about had a big string that we use to instantiate the layer. that was used when we used the carto layer when you define the table and other parameters. One of those parameters is the cartocss. Can also use it as things change in the map, when the user requests a new drug, can also send an additional cartoCSS style to cartodb that will return brand new tiles. What code is used to do that? We'll find out... 
+
+/Legend: Create using HTML. Carto.js is the library that creates the map and it's built on top of leaflet.js, so leaflet documentation for a legend can work with what we're doing. 
+/Create custom HTML, maybe once I dive into the mustache. Pull those colors from predefined dictionaries. 
+
+/Leaflet pop up: there's a way to do this in leaflet that's already designed. Go from an example. There's a lot of docs on popups.
+
+/In example, the popup that's rendered on the screen is a leaflet layer that's created on the fly. Created from the geojson that is passed back from carto. 
+
+Mousing over elements = drawing a vector on top of the raster. 
+Under properties (in console) - should be able to find attributes
+
+

@@ -204,6 +204,9 @@
     }).addTo(map);
 
 // this URL grabs his data from carto. How do I do the same thing?
+//similar to a stylesheet
+//js formatter - see more clearly
+//easier to do true carto sql call instead of working with viz
     var layerUrl = 'https://team.cartodb.com/u/chriswhong/api/v2/viz/47f9b93e-9a36-11e5-bb29-0ecd1babdde5/viz.json';
     var sql = Mustache.render($('#sql-template').text(),{ code: '112210' })
 
