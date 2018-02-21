@@ -1,0 +1,11 @@
+DATA STRUCTURE
+After discussing it with Codie and Andrea, I restructured the data into one table. Each row represents one Wisconsin county and the columns are named with the year included (i.e., isol09, cip09, cip13, cip15, etc)
+
+DATA CLEANING PROCESS
+A pdf with details on my data cleaning process is on Box (.../AMR/Data folder). This doesn't include the step to restructure the data, but that's probably self-explanatory. 
+
+MUSTACHE
+Haven't completed the Mustache Lynda course yet
+
+
+

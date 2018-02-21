@@ -8,20 +8,37 @@ var sql2;
       zoom: 7
     });
     
-    sql2 = new cartodb.SQL({ user: 'nrobson', format: 'geojson' });
+    var info = L.control({ position: 'topleft' });
 
-    
+
+    info.onAdd = function (map) {
+        this._div = L.DomUtil.create('div', 'info'); 
+        this.update('2009','Ciprofloxacin');
+        return this._div;
+    };
+    // This part should change based on what the user is viewing
+    // Example: "Ciprofloxacin resistance in 2009" or "Levoflovain susceptibility in 2013"
+    // method that we will use to update the control based on feature properties passed
+    info.update = function (code, title) {
+        this._div.innerHTML = Mustache.render('<h4>AMR Viz {{code}} - {{title}}</h4>',{ code:code, title:title });
+    };
+
+    info.addTo(map);
+
+
+
+    sql2 = new cartodb.SQL({ user: 'nrobson', format: 'geojson' });
     
     var basemap = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       maxZoom: 19,
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
     }).addTo(map)
 
-    var cipro09 = cartodb.createLayer(map, {
+    var cip09 = cartodb.createLayer(map, {
     user_name: 'nrobson',
     type: 'cartodb',
     sublayers: [{
-      sql: 'SELECT * FROM wi_counties_amr_2009',
+      sql: 'SELECT * FROM amrviz',
       cartocss: '#layer {' +
         'polygon-fill: #CCCCCC;' +
         'polygon-opacity: 0.9;' +
@@ -31,25 +48,25 @@ var sql2;
         'line-opacity: 0.5;' +
         '}' +
       '}' +
-      '#layer [cipro09 <= 100] {' +
+      '#layer [cip09 <= 100] {' +
         'polygon-fill: #50B848;' +
       '}' +
-      '#layer [cipro09 <= 90] {' +
+      '#layer [cip09 <= 90] {' +
         'polygon-fill: #BCDDA1;' +
       '}' +
-      '#layer [cipro09 <= 80] {' +
+      '#layer [cip09 <= 80] {' +
         'polygon-fill: #F4E6ED;' +
       '}' +
-      '#layer [cipro09 <= 70] {' +
+      '#layer [cip09 <= 70] {' +
         'polygon-fill: #EDC1DB;' +
       '}' +
-      '#layer [cipro09 <= 60] {' +
+      '#layer [cip09 <= 60] {' +
         'polygon-fill: #CF3D96;' +
       '}' +
-      '#layer [cipro09 = 0] {' +
+      '#layer [cip09 = 0] {' +
         'polygon-fill: #CCCCCC;' +
       '}',
-      interactivity: ['cartodb_id', 'year', 'isolates09'],
+      interactivity: ['cartodb_id', 'isol09'],
       layerIndex:1 
     }]
     },{ https: true })
@@ -76,8 +93,11 @@ var sql2;
     console.log(data)
   }
   
-  function showFeature(cartodb_id) {
-    sql2.execute("SELECT the_geom as the_geom from wi_county_bnds WHERE cartodb_id = {{cartodb_id}}", {cartodb_id: cartodb_id} ).done(function(geojson) {
+function showFeature(cartodb_id) {
+    sql2.execute("SELECT * from amrviz WHERE cartodb_id = {{cartodb_id}}", {cartodb_id: cartodb_id} 
+    // The below line was used in the previous example, it explicitly calls for only the_geom (which is the geometry object), thus no other attributes were returned. Open the console to see the object that is returned, it will now include all attribute values for the table at the "features" > "0" > "properties" position.
+    //The old SQL call... sql2.execute("SELECT SELECT the_geom from wi_county_bnds WHERE cartodb_id = {{cartodb_id}}", {cartodb_id: cartodb_id}
+  ).done(function(geojson) {
       if (polygon) {
         map.removeLayer(polygon);
       }
@@ -90,10 +110,11 @@ var sql2;
         weight: 2,
         opacity: 0.65
         }
-      }).addTo(map);
+      }).addTo(map).bindPopup("<b>" + geojson.features["0"].properties.cip09 + "% susceptibility </br></b>" + geojson.features["0"].properties.name + " county").openPopup();
     });
   }
   }); // ends on document ready context 
+
   
   
   // Stock code for enabling map queries against CARTO server
