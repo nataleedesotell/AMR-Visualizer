@@ -5,7 +5,25 @@ DATA CLEANING PROCESS
 A pdf with details on my data cleaning process is on Box (.../AMR/Data folder). This doesn't include the step to restructure the data, but that's probably self-explanatory. 
 
 MUSTACHE
-Haven't completed the Mustache Lynda course yet
+Haven't completed the Mustache Lynda course yet, but I think that will help a lot with the implementation of things like dynamically changing title (Cipro 2009 to Levo 2013, etc)
+
+STYLING
+Will worry about styling after all the functionality is there
+
+MEETINGS
+I've established that I'm not great at asking for help via email! Let's get another meeting with Codie & Andrea scheduled (next Wed or Fri) to run over some of the Carto code and questions. 
+
+
+ANDREA and CODIE to discuss coding questions that arise:
+	WED, FEB 28th between 1-5pm CT?
+	or
+	FRI, MAR 2nd between 12-5pm CT?
+
+FINAL MEETING with everyone to officially pass off the project to SCO:
+	WED, MAR 7th between 1-5pm CT?
+	or
+	FRI, MAR 9th between 12-5pm CT?
+
 
 
 
