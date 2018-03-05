@@ -43,3 +43,14 @@ Mousing over elements = drawing a vector on top of the raster.
 Under properties (in console) - should be able to find attributes
 
 
+
+MEETING 3/5/2018
+-viz strategy - look into it briefly?
+-become more acquainted with jQuery
+	-selections: select an element by its id or class name
+	-classes are .classname, id #id
+-simplify map
+-hover glitch: only on click or don't recreate if already created
+
+
+MARCH 12th - 10CT / 11 ET

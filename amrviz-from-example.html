@@ -1,0 +1,513 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="./wifavi.jpg">
+
+    <title>AMR Visualizer</title>
+
+    <link rel="stylesheet" href="http://libs.cartocdn.com/cartodb.js/v3/3.15/themes/css/cartodb.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+
+    <link rel="icon" type="image/png" href="./wifavi.jpg">
+  </head>
+
+  <style>
+    html, body, #container {
+      height: 100%;
+      width: 100%;
+      overflow: hidden;
+    }
+
+    body {
+      padding-top: 50px;
+    }
+
+    #map {
+      width: auto;
+      height: 100%;
+    }
+
+    #custom-search-input{
+        padding: 3px;
+        border: solid 1px #E4E4E4;
+        border-radius: 6px;
+        background-color: #fff;
+    }
+
+    #custom-search-input input{
+        border: 0;
+        box-shadow: none;
+    }
+
+    #custom-search-input button{
+        margin: 2px 0 0 0;
+        background: none;
+        box-shadow: none;
+        border: 0;
+        color: #666666;
+        padding: 0 8px 0 10px;
+        border-left: solid 1px #ccc;
+    }
+
+    #custom-search-input button:hover{
+        border: 0;
+        box-shadow: none;
+        border-left: solid 1px #ccc;
+    }
+
+    #custom-search-input .glyphicon-search{
+        font-size: 23px;
+    }
+  
+    #results {
+      position: absolute;
+      top: 68px;
+      left: 15px;
+      right: 15px;
+      bottom: 0;
+    }
+
+    .list-group-item:hover {
+      background: steelblue;
+      color: #fff;
+      cursor: pointer;
+    }
+
+    .info {
+        padding: 6px 8px;
+        font: 14px/18px Arial, Helvetica, sans-serif;
+        background: white;
+        background: rgba(255,255,255,0.8);
+        box-shadow: 0 0 15px rgba(0,0,0,0.2);
+        border-radius: 5px;
+    }
+
+
+  </style>
+
+  <body>
+
+    <nav class="navbar navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">AMR Visualizer</a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="#">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+
+    <div id="container">
+      <div class="col-md-3" style='height:100%'>
+        <!-- the dropdowns will go here -->
+        
+        <!-- search starts here -->
+<!--         <div id="custom-search-input">
+            <div class="input-group col-md-12">
+                <input id="mainSearch" type="text" class="form-control input-lg" placeholder="NAICS Lookup" />
+                <span class="input-group-btn">
+                    <button class="btn btn-info btn-lg" type="button">
+                        <i class="glyphicon glyphicon-search"></i>
+                    </button>
+                </span>
+            </div>
+        </div>  -->
+       <!-- end search -->
+
+       <!-- start search results -->
+        <br/>
+          <ul id="results" class="list-group">
+          </ul>
+
+</br></br>
+
+<!-- stary year dropdown -->
+<div class="dropdown">
+  <button class="btn btn-dark dropdown-toggle" type="button" data-toggle="dropdown">Year
+  <span class="caret"></span></button>
+  <ul class="dropdown-menu">
+    <li><a href="#">2009</a></li>
+    <li><a href="#">2013</a></li>
+    <li><a href="#">2015</a></li>
+  </ul>
+</div>
+<!-- end year dropdown -->
+</br></br>
+</br></br>
+</br></br>
+
+
+<!-- start dropdown1 -->
+<div class="dropdown">
+  <button class="btn btn-dark dropdown-toggle" type="button" data-toggle="dropdown">Drug
+  <span class="caret"></span></button>
+  <ul class="dropdown-menu">
+    <li><a href="#">Amoxicillin</a></li>
+    <li><a href="#">Trimethroprim</a></li>
+    <li><a href="#">Ciprofloxacin</a></li>
+    <li><a href="#">Nitrofurantoin</a></li>
+    <li><a href="#">Ampicillin</a></li>
+    <li><a href="#">Levofloxacin</a></li>
+  </ul>
+</div>
+<!-- end dropdown1 -->
+
+
+
+
+
+
+</div>
+
+      <!-- map div -->
+      <div id="map">
+      </div>
+      <!-- end map div -->
+
+    </div><!-- /.container -->
+
+
+  <script type="text/sql" id="sql-template">
+SELECT cartodb_id, the_geom, name, year, cip09 FROM nrobson.amrviz
+  </script>
+
+
+</script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/mustache.js/2.2.0/mustache.min.js'></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script src="http://libs.cartocdn.com/cartodb.js/v3/3.15/cartodb.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <script>
+    var counties;
+
+//QUESTION: mybounds isn't working: why?
+    var southWest = L.latLng(41.658699, -92.532280),
+        northEast = L.latLng(47.322995, -85.886458),
+        mybounds = L.latLngBounds(southWest, northEast);
+
+    var map = new L.Map('map', { 
+      bounds: mybounds,
+      center: [44.319972, -89.736453],
+      zoom: 7,
+      zoomControl: false
+    });
+
+    new L.Control.Zoom({ position: 'topright' }).addTo(map);
+
+    var info = L.control({ position: 'topleft' });
+
+
+    // this title updates code and title, mine should update year and drug
+    info.onAdd = function (map) {
+        this._div = L.DomUtil.create('div', 'info'); 
+        this.update('51512','Television Broadcasting');
+        return this._div;
+    };
+
+    // method that we will use to update the control based on feature properties passed
+    info.update = function (code, title) {
+        this._div.innerHTML = Mustache.render('<h4>NIACS Code {{code}} - {{title}}</h4>',{ code:code, title:title });
+    };
+
+    info.addTo(map);
+
+
+    L.tileLayer('http://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png',{
+      attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="http://cartodb.com/attributions">CartoDB</a>'
+    }).addTo(map);
+
+    var layerUrl = {
+  // QUESTION: what does this ID refer to? 
+    "id": "47f9b93e-9a36-11e5-bb29-0ecd1babdde5",
+    "version": "0.1.0",
+    "title": "BLS",
+    "likes": 0,
+    "description": null,
+    "scrollwheel": false,
+    "legends": true,
+    "url": null,
+    "map_provider": "leaflet",
+    "bounds": [
+    // QUESTION: again, bounds are not working. 
+        [41.658699, -92.532280],
+        [47.322995, -85.886458]
+    ],
+    "center": "[44.319972, -89.736453]",
+    "zoom": 4,
+    "layers": [{
+        "options": {
+            "visible": true,
+            "type": "Tiled",
+            "name": "Dark matter (lite)",
+            "className": "dark_matter_lite_rainbow",
+            "base_type": "default",
+            "urlTemplate": "https://cartodb-basemaps-{s}.global.ssl.fastly.net/dark_nolabels/{z}/{x}/{y}.png",
+            "minZoom": "9",
+            "maxZoom": "18",
+            "attribution": "&copy; <a href=\"http://www.openstreetmap.org/copyright\">OpenStreetMap</a> contributors &copy; <a href=\"https://carto.com/attributions\">CARTO</a>",
+            "subdomains": "abcd",
+            "style": null,
+            "read_only": true,
+            "category": "CARTO",
+            "order": 0,
+            // QUESTION: what does this ID refer to?
+            "id": "d6b86bf4-77e2-441d-bc16-ae6ae3f282a1"
+        },
+        "infowindow": null,
+        "tooltip": null,
+        "id": "0c2a75bc-132e-4904-82e9-34f1023556a4",
+        "order": 0,
+        "type": "tiled"
+    },     
+    {"type": "layergroup",
+      "options": {
+        "user_name": "chriswhong",
+        // takes user name and puts it into url
+        "maps_api_template": "https://{user}.carto.com:443",
+        "sql_api_template": "https://{user}.carto.com:443",
+        "tiler_protocol": "http",
+        "tiler_domain": "carto.com",
+        "tiler_port": "80",
+        "sql_api_protocol": "http",
+        "sql_api_domain": "carto.com",
+        "sql_api_endpoint": "/api/v2/sql",
+        "sql_api_port": 80,
+        "filter": "mapnik",
+        "layer_definition": {
+          "stat_tag": "47f9b93e-9a36-11e5-bb29-0ecd1babdde5",
+          "version": "1.0.1",
+          "layers": [
+            {
+              "id": "7c3ae32d-7f7b-4f73-9e8c-74cd44291aef",
+              "type": "CartoDB",
+              "infowindow": {
+                "fields": [],
+                "template_name": "table/views/infowindow_light",
+                "template": "<div class=\"cartodb-popup v2\">\n  <a href=\"#close\" class=\"cartodb-popup-close-button close\">x</a>\n  <div class=\"cartodb-popup-content-wrapper\">\n    <div class=\"cartodb-popup-content\">\n      {{#content.fields}}\n        {{#title}}<h4>{{title}}</h4>{{/title}}\n        {{#value}}\n          <p {{#type}}class=\"{{ type }}\"{{/type}}>{{{ value }}}</p>\n        {{/value}}\n        {{^value}}\n          <p class=\"empty\">null</p>\n        {{/value}}\n      {{/content.fields}}\n    </div>\n  </div>\n  <div class=\"cartodb-popup-tip-container\"></div>\n</div>\n",
+                "alternative_names": {},
+                "width": 226,
+                "maxHeight": 180
+              },
+              "tooltip": {
+                "fields": [
+                  {
+                    "position": 1,
+                    "name": "avg_wkly_wage",
+                    "title": true
+                  },
+                  {
+                    "position": 0,
+                    "name": "name",
+                    "title": true
+                  }
+                ],
+                "template_name": "",
+                "template": "<div class=\"cartodb-tooltip-content-wrapper\">\n  <div class=\"cartodb-tooltip-content\">\n    <h4>County</h4>\n    <p>{{name}}</p>\n    <h4>Susceptibility</h4>\n    <p>{{avg_wkly_wage}}%</p>\n  </div>\n</div>",
+                "alternative_names": {},
+                "maxHeight": 180
+              },
+
+                    "legend": {
+                        "type": "choropleth",
+                        "show_title": true,
+                        "title": "Susceptibility",
+                        "template": "",
+                        "visible": true,
+                        "items": [{
+                            "name": "Left label",
+                            "visible": true,
+                            "value": "60%",
+                            "type": "text",
+                            "custom_value": true
+                        }, {
+                            "name": "Right label",
+                            "visible": true,
+                            "value": "100%",
+                            "type": "text",
+                            "custom_value": true
+                        }, {
+                            "name": "Color",
+                            "visible": true,
+                            "value": "#CF3D96",
+                            "type": "color"
+                        }, {
+                            "name": "Color",
+                            "visible": true,
+                            "value": "#EDC1DB",
+                            "type": "color"
+                        }, {
+                            "name": "Color",
+                            "visible": true,
+                            "value": "#F4E6ED",
+                            "type": "color"
+                        }, {
+                            "name": "Color",
+                            "visible": true,
+                            "value": "#BCDDA1",
+                            "type": "color"
+                        }, {
+                            "name": "Color",
+                            "visible": true,
+                            "value": "#50B848",
+                            "type": "color"
+                        }]
+                    },
+                      "order": 1,
+              "visible": true,
+              "options": {
+                "layer_name": "counties",
+                "cartocss": "/** choropleth visualization */\n\n#cb_2014_us_county_20m{\n  polygon-fill: #ECF0F6;\n polygon-opacity: 0.8;\n  line-color: #FFF;\n  line-width: 0.5;\n  line-opacity: 1;\n}\n#cb_2014_us_county_20m [ avg_wkly_wage < 2892] {\n   polygon-fill: #43618F;\n}\n#cb_2014_us_county_20m [ avg_wkly_wage <= 2892] {\n   polygon-fill: #4E71A6;\n}\n#cb_2014_us_county_20m [ avg_wkly_wage <= 2410] {\n   polygon-fill: #6182B5;\n}\n#cb_2014_us_county_20m [ avg_wkly_wage <= 1928] {\n   polygon-fill: #849EC5;\n}\n#cb_2014_us_county_20m [ avg_wkly_wage <= 1446] {\n   polygon-fill: #9BB0D0;\n}\n#cb_2014_us_county_20m [ avg_wkly_wage <= 964] {\n   polygon-fill: #B2C2DB;\n}\n#cb_2014_us_county_20m [ avg_wkly_wage <= 482] {\n   polygon-fill: #ECF0F6;\n}\n#cb_2014_us_county_20m [ avg_wkly_wage = null] {\n   polygon-opacity: 0;\n   line-opacity: 0;\n}\n#cb_2014_us_county_20m [ avg_wkly_wage = 0] {\n   polygon-opacity: 0;\n   line-opacity: 0;\n}",
+                "cartocss_version": "2.1.1",
+                "interactivity": "cartodb_id,avg_wkly_wage,name",
+                "sql": "SELECT a.cartodb_id, a.the_geom, a.the_geom_webmercator, a.name, b.avg_wkly_wage::bigint FROM chriswhong.cb_2014_us_county_20m a LEFT JOIN (SELECT * FROM chriswhong.table_2015_q1_q1_singlefile WHERE industry_code = '51512') b ON a.geoid=b.area_fips",
+                "table_name": "\"\"."
+                    }
+                }]
+            },
+            "attribution": ""
+        }
+    }],
+    "overlays": [{
+        "type": "share",
+        "order": 2,
+        "options": {
+            "display": true,
+            "x": 20,
+            "y": 20
+        },
+        "template": ""
+    }, {
+        "type": "search",
+        "order": 3,
+        "options": {
+            "display": true,
+            "x": 60,
+            "y": 20
+        },
+        "template": ""
+    }, {
+        "type": "zoom",
+        "order": 6,
+        "options": {
+            "display": true,
+            "x": 20,
+            "y": 20
+        },
+        "template": "<a href=\"#zoom_in\" class=\"zoom_in\">+</a> <a href=\"#zoom_out\" class=\"zoom_out\">-</a>"
+    }, {
+        "type": "loader",
+        "order": 8,
+        "options": {
+            "display": true,
+            "x": 20,
+            "y": 150
+        },
+        "template": "<div class=\"loader\" original-title=\"\"></div>"
+    }, {
+        "type": "logo",
+        "order": 9,
+        "options": {
+            "display": true,
+            "x": 10,
+            "y": 40
+        },
+        "template": ""
+    }],
+    "prev": null,
+    "next": null,
+    "transition_options": {
+        "time": 0
+    }
+};
+
+//QUESTION: Chris's code doesn't seem to use an api_key anywhere. Why?
+// structure of sql api url:
+// https://{username}.carto.com/api/v2/sql?q={SQL statement}&api_key={api_key}
+
+ // the Mustache.render function 
+    var sql = Mustache.render($('#sql-template').text(),{ code: '112210' })
+
+
+    var cartocss = $('#cartocss').text();
+
+    // var layerSource = {
+    //   user_name: 'chriswhong',
+    //   type: 'cartodb',
+    //   sublayers: [{
+    //     sql: sql,
+    //     cartocss: cartocss
+    //   }]
+    // }
+
+    cartodb.createLayer(map, layerUrl)
+      .addTo(map)
+      .on('done', function(layer) {
+        counties = layer.getSubLayer(0);
+      }).on('error', function() {
+        //log the error
+      });
+
+// this takes in what the users searches, sets it = q, sends it to log, calls lookupCodes function with parameter q
+    $("#mainSearch").keyup(function (e) {
+      if (e.keyCode == 13) {
+        var q = $(this).val();
+        console.log(q);
+        $('#results').empty();
+        lookupCodes(q);
+      }
+    });
+
+
+// this sets the search term = q and adds it to this url, which returns the list of 2012 data points that match the code
+    function lookupCodes(q) {
+      var url = Mustache.render('http://api.naics.us/v0/s?year=2012&terms={{q}}',{ q:q });
+      $.getJSON(url, function( data ) {
+        populateResults(data);
+      })
+    } //end lookupCodes
+
+    function populateResults(data) {
+
+      data.forEach(function(naicsCode) {
+        // after search, this lists the results
+        var snippet = Mustache.render('<li class="list-group-item"><span class="badge">{{code}}</span><div class="title">{{title}}</div></li>',naicsCode)
+        // adds the snippet to the results
+        $('#results').append(snippet);
+      })
+      $('.list-group-item').on('click', function() {
+          var code = $(this).find('.badge').text();
+          var title = $(this).find('.title').text();
+          // call the updateMap function
+          updateMap(code);
+          info.update(code,title);
+      });
+    } //end populateResults
+
+
+    function updateMap(code) {
+      var sql = Mustache.render($('#sql-template').text(),{ code: code })
+      counties.setSQL(sql);
+    }
+
+    </script>
+  </body>
+</html>

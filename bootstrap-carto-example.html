@@ -8,11 +8,14 @@
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <meta name="description" content="">
     <meta name="author" content="">
+    <link rel="icon" href="./favicon.ico">
 
     <title>Starter Template for Bootstrap</title>
 
     <link rel="stylesheet" href="http://libs.cartocdn.com/cartodb.js/v3/3.15/themes/css/cartodb.css" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+
+    <link rel="icon" type="image/png" href="./favicon.png">
   </head>
 
   <style>
@@ -101,7 +104,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">AMR Visualizer</a>
+          <a class="navbar-brand" href="#">BLS Wages</a>
         </div>
         <div id="navbar" class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
@@ -116,7 +119,14 @@
     <div id="container">
       <div class="col-md-3" style='height:100%'>
         <div id="custom-search-input">
-            dropdowns will go here! 
+            <div class="input-group col-md-12">
+                <input id="mainSearch" type="text" class="form-control input-lg" placeholder="NAICS Lookup" />
+                <span class="input-group-btn">
+                    <button class="btn btn-info btn-lg" type="button">
+                        <i class="glyphicon glyphicon-search"></i>
+                    </button>
+                </span>
+            </div>
         </div> 
         <br/>
           <ul id="results" class="list-group">
@@ -131,67 +141,63 @@
 
     </div><!-- /.container -->
     <script type="text/sql" id="sql-template">
-<!--     SELECT a.cartodb_id, a.the_geom, a.the_geom_webmercator, a.name, b.avg_wkly_wage::bigint FROM cb_2014_us_county_20m a LEFT JOIN (SELECT * FROM chriswhong.table_2015_q1_q1_singlefile WHERE industry_code = '{{code}}') b ON a.geoid=b.area_fips -->
-
-
-<!--     SELECT * FROM nrobson.wi_counties_amr_2009
- -->
+    SELECT a.cartodb_id, a.the_geom, a.the_geom_webmercator, a.name, b.avg_wkly_wage::bigint FROM cb_2014_us_county_20m a LEFT JOIN (SELECT * FROM chriswhong.table_2015_q1_q1_singlefile WHERE industry_code = '{{code}}') b ON a.geoid=b.area_fips
     </script>
     <script type="text/cartocss" id="cartocss">
+    /** choropleth visualization */
 
-    #nrobson.wi_counties_amr_2009{
-      polygon-fill: #CCCCCC;
+    #cb_2014_us_county_20m{
+      polygon-fill: #43618F;
       polygon-opacity: 0.8;
       line-color: #FFF;
       line-width: 0.5;
       line-opacity: 1;
     }
-    #nrobson.wi_counties_amr_2009 [cipro09 <= 100] {
+    #cb_2014_us_county_20m [ avg_wkly_wage <= 3377] {
        polygon-fill: #43618F;
     }
-    #nrobson.wi_counties_amr_2009 [ cipro09 <= 90] {
+    #cb_2014_us_county_20m [ avg_wkly_wage <= 1704] {
        polygon-fill: #4E71A6;
     }
-    #nrobson.wi_counties_amr_2009 [ cipro09 <= 80] {
+    #cb_2014_us_county_20m [ avg_wkly_wage <= 1425] {
        polygon-fill: #6182B5;
     }
-    #nrobson.wi_counties_amr_2009[ cipro09 <= 70] {
+    #cb_2014_us_county_20m [ avg_wkly_wage <= 1196] {
        polygon-fill: #849EC5;
     }
-    #nrobson.wi_counties_amr_2009[ cipro09 <= 60] {
+    #cb_2014_us_county_20m [ avg_wkly_wage <= 970] {
        polygon-fill: #9BB0D0;
     }
-    #nrobson.wi_counties_amr_2009 [cipro09 = 0] {
-       polygon-fill: #9BB0D0;
+    #cb_2014_us_county_20m [ avg_wkly_wage <= 743] {
+       polygon-fill: #B2C2DB;
     }
-
+    #cb_2014_us_county_20m [ avg_wkly_wage <= 500] {
+       polygon-fill: #ECF0F6;
+    }
 </script>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/mustache.js/2.2.0/mustache.min.js'></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     <script src="http://libs.cartocdn.com/cartodb.js/v3/3.15/cartodb.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-
     <script>
     var counties;
 
     var map = new L.Map('map', { 
-      zoomControl: false,
-      center: [43.7844,-88.7879],
-      zoom: 7
+      center: [40.1,-100.3],
+      zoom: 4,
+      zoomControl: false
     });
 
     new L.Control.Zoom({ position: 'topright' }).addTo(map);
+
     var info = L.control({ position: 'topleft' });
-
-
 
     info.onAdd = function (map) {
         this._div = L.DomUtil.create('div', 'info'); 
         this.update('51512','Television Broadcasting');
         return this._div;
     };
-    // This part should change based on what the user is viewing
-    // Example: "Ciprofloxacin resistance in 2009" or "Levoflovain susceptibility in 2013"
+
     // method that we will use to update the control based on feature properties passed
     info.update = function (code, title) {
         this._div.innerHTML = Mustache.render('<h4>NIACS Code {{code}} - {{title}}</h4>',{ code:code, title:title });
@@ -199,29 +205,25 @@
 
     info.addTo(map);
 
+
     L.tileLayer('http://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png',{
       attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="http://cartodb.com/attributions">CartoDB</a>'
     }).addTo(map);
 
-// this URL grabs his data from carto. How do I do the same thing?
-//similar to a stylesheet
-//js formatter - see more clearly
-//easier to do true carto sql call instead of working with viz
     var layerUrl = 'https://team.cartodb.com/u/chriswhong/api/v2/viz/47f9b93e-9a36-11e5-bb29-0ecd1babdde5/viz.json';
     var sql = Mustache.render($('#sql-template').text(),{ code: '112210' })
 
 
     var cartocss = $('#cartocss').text();
 
-//this code doesn't do anything...
-    var layerSource = {
-      user_name: 'nrobson',
-      type: 'cartodb',
-      sublayers: [{
-        sql: sql,
-        cartocss: cartocss
-      }]
-    }
+    // var layerSource = {
+    //   user_name: 'chriswhong',
+    //   type: 'cartodb',
+    //   sublayers: [{
+    //     sql: sql,
+    //     cartocss: cartocss
+    //   }]
+    // }
 
     cartodb.createLayer(map, layerUrl)
       .addTo(map)
