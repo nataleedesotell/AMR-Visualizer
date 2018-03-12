@@ -1,0 +1,428 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="./wifavi.jpg">
+
+    <title>AMR Visualizer</title>
+
+    <link rel="stylesheet" href="http://libs.cartocdn.com/cartodb.js/v3/3.15/themes/css/cartodb.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+
+    <link rel="icon" type="image/png" href="./wifavi.jpg">
+  </head>
+
+  <style>
+    html, body, #container {
+      height: 100%;
+      width: 100%;
+      overflow: hidden;
+    }
+
+    body {
+      padding-top: 50px;
+    }
+
+    #map {
+      width: auto;
+      height: 100%;
+    }
+
+    #custom-search-input{
+        padding: 3px;
+        border: solid 1px #E4E4E4;
+        border-radius: 6px;
+        background-color: #fff;
+    }
+
+    #custom-search-input input{
+        border: 0;
+        box-shadow: none;
+    }
+
+    #custom-search-input button{
+        margin: 2px 0 0 0;
+        background: none;
+        box-shadow: none;
+        border: 0;
+        color: #666666;
+        padding: 0 8px 0 10px;
+        border-left: solid 1px #ccc;
+    }
+
+    #custom-search-input button:hover{
+        border: 0;
+        box-shadow: none;
+        border-left: solid 1px #ccc;
+    }
+
+    #custom-search-input .glyphicon-search{
+        font-size: 23px;
+    }
+  
+    #results {
+      position: absolute;
+      top: 68px;
+      left: 15px;
+      right: 15px;
+      bottom: 0;
+    }
+
+    .list-group-item:hover {
+      background: steelblue;
+      color: #fff;
+      cursor: pointer;
+    }
+
+    .info {
+        padding: 6px 8px;
+        font: 14px/18px Arial, Helvetica, sans-serif;
+        background: white;
+        background: rgba(255,255,255,0.8);
+        box-shadow: 0 0 15px rgba(0,0,0,0.2);
+        border-radius: 5px;
+    }
+
+
+  </style>
+
+  <body>
+
+    <nav class="navbar navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">AMR Visualizer</a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="#">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+
+    <div id="container">
+      <div class="col-md-3" style='height:100%'>
+        <!-- the dropdowns will go here -->
+        
+        <!-- search starts here -->
+<!--         <div id="custom-search-input">
+            <div class="input-group col-md-12">
+                <input id="mainSearch" type="text" class="form-control input-lg" placeholder="NAICS Lookup" />
+                <span class="input-group-btn">
+                    <button class="btn btn-info btn-lg" type="button">
+                        <i class="glyphicon glyphicon-search"></i>
+                    </button>
+                </span>
+            </div>
+        </div>  -->
+       <!-- end search -->
+
+       <!-- start search results -->
+        <br/>
+          <ul id="results" class="list-group">
+          </ul>
+
+</br></br>
+
+<!-- stary year dropdown -->
+<div class="dropdown">
+  <button class="btn btn-dark dropdown-toggle" type="button" data-toggle="dropdown">Year
+  <span class="caret"></span></button>
+  <ul class="dropdown-menu">
+    <li><a href="#">2009</a></li>
+    <li><a href="#">2013</a></li>
+    <li><a href="#">2015</a></li>
+  </ul>
+</div>
+<!-- end year dropdown -->
+</br></br>
+</br></br>
+</br></br>
+
+
+<!-- start dropdown1 -->
+<div class="dropdown">
+  <button class="btn btn-dark dropdown-toggle" type="button" data-toggle="dropdown">Drug
+  <span class="caret"></span></button>
+  <ul class="dropdown-menu">
+    <li><a href="#">Amoxicillin</a></li>
+    <li><a href="#">Trimethroprim</a></li>
+    <li><a href="#">Ciprofloxacin</a></li>
+    <li><a href="#">Nitrofurantoin</a></li>
+    <li><a href="#">Ampicillin</a></li>
+    <li><a href="#">Levofloxacin</a></li>
+  </ul>
+</div>
+<!-- end dropdown1 -->
+
+
+
+
+
+
+</div>
+
+      <!-- map div -->
+      <div id="map">
+      </div>
+      <!-- end map div -->
+
+    </div><!-- /.container -->
+
+
+  <script type="text/sql" id="sql-template">
+SELECT cartodb_id, the_geom, name, year, cip09 FROM nrobson.amrviz
+  </script>
+
+
+</script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/mustache.js/2.2.0/mustache.min.js'></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script src="http://libs.cartocdn.com/cartodb.js/v3/3.15/cartodb.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <script>
+
+var sql2;
+  var polygon;
+  $( document ).ready(function() {
+    //Create the leaflet map
+    var map = L.map('map', {
+      zoomControl: true,
+      center: [43.7844,-88.7879],
+      zoom: 7
+    });
+    
+    var info = L.control({ position: 'topleft' });
+
+
+    info.onAdd = function (map) {
+        this._div = L.DomUtil.create('div', 'info'); 
+        this.update('2009','Ciprofloxacin');
+        return this._div;
+    };
+    // This part should change based on what the user is viewing
+    // Example: "Ciprofloxacin resistance in 2009" or "Levoflovain susceptibility in 2013"
+    // method that we will use to update the control based on feature properties passed
+    info.update = function (code, title) {
+        this._div.innerHTML = Mustache.render('<h4>AMR Viz {{code}} - {{title}}</h4>',{ code:code, title:title });
+    };
+
+    info.addTo(map);
+
+
+
+    sql2 = new cartodb.SQL({ user: 'nrobson', format: 'geojson' });
+    
+    var basemap = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 19,
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+    }).addTo(map)
+
+    var cip09 = cartodb.createLayer(map, {
+    user_name: 'nrobson',
+    type: 'cartodb',
+    sublayers: [{
+      sql: 'SELECT * FROM amrviz',
+      cartocss: '#layer {' +
+        'polygon-fill: #CCCCCC;' +
+        'polygon-opacity: 0.9;' +
+        '::outline {' +
+        'line-color: #FFFFFF;' +
+        'line-width: 1;' +
+        'line-opacity: 0.5;' +
+        '}' +
+      '}' +
+      '#layer [cip09 <= 100] {' +
+        'polygon-fill: #50B848;' +
+      '}' +
+      '#layer [cip09 <= 90] {' +
+        'polygon-fill: #BCDDA1;' +
+      '}' +
+      '#layer [cip09 <= 80] {' +
+        'polygon-fill: #F4E6ED;' +
+      '}' +
+      '#layer [cip09 <= 70] {' +
+        'polygon-fill: #EDC1DB;' +
+      '}' +
+      '#layer [cip09 <= 60] {' +
+        'polygon-fill: #CF3D96;' +
+      '}' +
+      '#layer [cip09 = 0] {' +
+        'polygon-fill: #CCCCCC;' +
+      '}',
+      interactivity: ['cartodb_id', 'isol09'],
+      layerIndex:1 
+    }]
+    },{ https: true })
+    .addTo(map)
+    .done(function(layer) {
+      layer.setInteraction(true);
+      //layer.bind('featureOver', onPolyOver)
+      //layer.bind('featureOut', onPolyOut)
+      layer.bind('featureClick', onPolyClick)
+      layer.bind('featureClick',function(e, pos, latlng, data) {
+        showFeature(data.cartodb_id)
+      });
+    })
+  
+  // function onPolyOver(e, latln, pxPos, data, layer){
+  //   console.log(data)
+  // }
+  
+  // function onPolyOut(e, latln, pxPos, data, layer){
+  //   console.log(data)
+  // }
+
+  function onPolyClick(e, latln, pxPos, data, layer){
+    console.log(data)
+  }
+  
+function showFeature(cartodb_id) {
+    sql2.execute("SELECT * from amrviz WHERE cartodb_id = {{cartodb_id}}", {cartodb_id: cartodb_id} 
+    // The below line was used in the previous example, it explicitly calls 
+    //for only the_geom (which is the geometry object), thus no other attributes 
+    //were returned. Open the console to see the object that is returned, it will 
+    //now include all attribute values for the table at the "features" > "0" > "properties" position.
+    //The old SQL call... sql2.execute("SELECT SELECT the_geom from wi_county_bnds 
+    //WHERE cartodb_id = {{cartodb_id}}", {cartodb_id: cartodb_id}
+    
+  ).done(function(geojson) {
+      if (polygon) {
+        map.removeLayer(polygon);
+      }
+      console.log(geojson)
+      polygon = L.geoJson(geojson, { 
+        style: {
+        color: "#000",
+        fillColor: "#fff",
+        fillOpacity: 0.0,
+        weight: 2,
+        opacity: 0.65
+        }
+      }).addTo(map).bindPopup("<b>" + geojson.features["0"].properties.cip09 + "% susceptibility </br></b>" + geojson.features["0"].properties.name + " county").openPopup();
+    });
+  }
+  }); // ends on document ready context 
+
+  
+  var layerUrl = 'https://team.cartodb.com/u/chriswhong/api/v2/viz/47f9b93e-9a36-11e5-bb29-0ecd1babdde5/viz.json';
+  
+  // Stock code for enabling map queries against CARTO server
+  var Map = cdb.core.View.extend({
+    initialize: function() {
+      //CS: console.log("Map.initialize")
+      _.bindAll(this, '_initMap');
+      this.filters = this.options.filters;
+      this._getVizJson();
+      this._bindEvents();
+    },
+
+    _getVizJson: function() {
+      $.ajax({
+      url: 'https://team.cartodb.com/u/chriswhong/api/v2/viz/47f9b93e-9a36-11e5-bb29-0ecd1babdde5/viz.json',
+      success: this._initMap,
+      error: function() {
+        cdb.log.info('problems getting vizjson info, check tools.json url please')
+      }
+      })
+    },
+
+    _initMap: function(data) {
+      var self = this;
+      cartodb.createVis(this.$el, data.vizjson, {search: true})
+      .done(function(vis, layers) {
+        self.layers = layers[1];
+        self.map = vis.getNativeMap();
+        var v = cdb.vis.Overlay.create('search', map.viz, {});
+      });
+    },
+
+    _bindEvents: function() {
+      this.filters.bind('change', this._changeLayerGroup, this);
+    },
+
+    _changeLayerGroup: function(layers) {
+      var self = this;
+
+      _.each(layers, function(opts, i) {
+      var pos = i.split('-')[1];
+      var sublayer = self.layers.getSubLayer(pos);
+
+      if (sublayer) {
+        sublayer.set(opts);
+      }
+      });
+    }
+
+  })
+  // More stock code
+  var Filters = cdb.core.View.extend({
+
+    initialize: function() {
+      //CS: console.log("Filters.initialize")
+      _.bindAll(this, 'render');
+      this._getActions();
+    },
+
+    render: function(data) {
+      this.clearSubViews();
+
+      var self = this;
+
+      if (!data.interactions) return false;
+      var buttons = data.interactions;
+
+      for (var i = 0, l = buttons.length; i < l; i++) {
+      var a = new FiltersItem({ data: buttons[i] });
+      a.bind('change', this._triggerChange, this)
+      self.addView(a);
+      self.$('ul').append(a.render().el);
+      }
+
+      return this;
+    },
+
+    _triggerChange: function(d) {
+      this._setSelectedFilter(d);
+      this.trigger('change', d.layers, this);
+    },
+
+    _setSelectedFilter: function(d) {
+      this.$('ul li a').removeClass('selected');
+      this.$('ul li a').each(function(i,a) {
+      if ($(a).text() == d.text && $(a).attr('class') == d.className) {
+        $(a).addClass('selected')
+      }
+      })
+    },
+
+    _getActions: function() {
+      $.ajax({
+      url: 'https://team.cartodb.com/u/chriswhong/api/v2/viz/47f9b93e-9a36-11e5-bb29-0ecd1babdde5/viz.json',
+      success: this.render,
+      error: function() {
+        cdb.log.info('oh no!, check your json location or if you are using a web server (Apache?)')
+      }
+      })
+    }
+  })
+
+    </script>
+  </body>
+</html>

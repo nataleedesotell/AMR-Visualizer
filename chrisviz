@@ -1,0 +1,205 @@
+{
+    "id": "47f9b93e-9a36-11e5-bb29-0ecd1babdde5",
+    "version": "0.1.0",
+    "title": "BLS",
+    "likes": 0,
+    "description": null,
+    "scrollwheel": false,
+    "legends": true,
+    "url": null,
+    "map_provider": "leaflet",
+    "bounds": [
+        [17.476432197195532, -128.056640625],
+        [54.92714186454645, -29.091796875]
+    ],
+    "center": "[38.5825261593533, -78.57421875]",
+    "zoom": 4,
+    "updated_at": "2016-08-30T14:32:02+00:00",
+    "layers": [{
+        "options": {
+            "visible": true,
+            "type": "Tiled",
+            "name": "Dark matter (lite)",
+            "className": "dark_matter_lite_rainbow",
+            "base_type": "default",
+            "urlTemplate": "https://cartodb-basemaps-{s}.global.ssl.fastly.net/dark_nolabels/{z}/{x}/{y}.png",
+            "minZoom": "0",
+            "maxZoom": "18",
+            "attribution": "&copy; <a href=\"http://www.openstreetmap.org/copyright\">OpenStreetMap</a> contributors &copy; <a href=\"https://carto.com/attributions\">CARTO</a>",
+            "subdomains": "abcd",
+            "style": null,
+            "read_only": true,
+            "category": "CARTO",
+            "order": 0,
+            "id": "d6b86bf4-77e2-441d-bc16-ae6ae3f282a1"
+        },
+        "infowindow": null,
+        "tooltip": null,
+        "id": "0c2a75bc-132e-4904-82e9-34f1023556a4",
+        "order": 0,
+        "type": "tiled"
+    }, {
+        "type": "layergroup",
+        "options": {
+            "user_name": "chriswhong",
+            "maps_api_template": "https://{user}.carto.com:443",
+            "sql_api_template": "https://{user}.carto.com:443",
+            "tiler_protocol": "http",
+            "tiler_domain": "carto.com",
+            "tiler_port": "80",
+            "sql_api_protocol": "http",
+            "sql_api_domain": "carto.com",
+            "sql_api_endpoint": "/api/v2/sql",
+            "sql_api_port": 80,
+            "filter": "mapnik",
+            "layer_definition": {
+                "stat_tag": "47f9b93e-9a36-11e5-bb29-0ecd1babdde5",
+                "version": "1.0.1",
+                "layers": [{
+                    "id": "7c3ae32d-7f7b-4f73-9e8c-74cd44291aef",
+                    "type": "CartoDB",
+                    "infowindow": {
+                        "fields": [],
+                        "template_name": "table/views/infowindow_light",
+                        "template": "<div class=\"cartodb-popup v2\">\n  <a href=\"#close\" class=\"cartodb-popup-close-button close\">x</a>\n  <div class=\"cartodb-popup-content-wrapper\">\n    <div class=\"cartodb-popup-content\">\n      {{#content.fields}}\n        {{#title}}<h4>{{title}}</h4>{{/title}}\n        {{#value}}\n          <p {{#type}}class=\"{{ type }}\"{{/type}}>{{{ value }}}</p>\n        {{/value}}\n        {{^value}}\n          <p class=\"empty\">null</p>\n        {{/value}}\n      {{/content.fields}}\n    </div>\n  </div>\n  <div class=\"cartodb-popup-tip-container\"></div>\n</div>\n",
+                        "alternative_names": {},
+                        "width": 226,
+                        "maxHeight": 180
+                    },
+                    "tooltip": {
+                        "fields": [{
+                            "position": 1,
+                            "name": "avg_wkly_wage",
+                            "title": true
+                        }, {
+                            "position": 0,
+                            "name": "name",
+                            "title": true
+                        }],
+                        "template_name": "",
+                        "template": "<div class=\"cartodb-tooltip-content-wrapper\">\n  <div class=\"cartodb-tooltip-content\">\n    <h4>County</h4>\n    <p>{{name}}</p>\n    <h4>Avg. Weekly Wage</h4>\n    <p>${{avg_wkly_wage}}</p>\n  </div>\n</div>",
+                        "alternative_names": {},
+                        "maxHeight": 180
+                    },
+                    "legend": {
+                        "type": "choropleth",
+                        "show_title": true,
+                        "title": "Average Weekly Wages",
+                        "template": "",
+                        "visible": true,
+                        "items": [{
+                            "name": "Left label",
+                            "visible": true,
+                            "value": "0",
+                            "type": "text",
+                            "custom_value": true
+                        }, {
+                            "name": "Right label",
+                            "visible": true,
+                            "value": "> 2892",
+                            "type": "text",
+                            "custom_value": true
+                        }, {
+                            "name": "Color",
+                            "visible": true,
+                            "value": "#ECF0F6",
+                            "type": "color"
+                        }, {
+                            "name": "Color",
+                            "visible": true,
+                            "value": "#B2C2DB",
+                            "type": "color"
+                        }, {
+                            "name": "Color",
+                            "visible": true,
+                            "value": "#9BB0D0",
+                            "type": "color"
+                        }, {
+                            "name": "Color",
+                            "visible": true,
+                            "value": "#849EC5",
+                            "type": "color"
+                        }, {
+                            "name": "Color",
+                            "visible": true,
+                            "value": "#6182B5",
+                            "type": "color"
+                        }, {
+                            "name": "Color",
+                            "visible": true,
+                            "value": "#4E71A6",
+                            "type": "color"
+                        }, {
+                            "name": "Color",
+                            "visible": true,
+                            "value": "#43618F",
+                            "type": "color"
+                        }]
+                    },
+                    "order": 1,
+                    "visible": true,
+                    "options": {
+                        "layer_name": "counties",
+                        "cartocss": "/** choropleth visualization */\n\n#cb_2014_us_county_20m{\n  polygon-fill: #ECF0F6;\n  polygon-opacity: 0.8;\n  line-color: #FFF;\n  line-width: 0.5;\n  line-opacity: 1;\n}\n#cb_2014_us_county_20m [ avg_wkly_wage < 2892] {\n   polygon-fill: #43618F;\n}\n#cb_2014_us_county_20m [ avg_wkly_wage <= 2892] {\n   polygon-fill: #4E71A6;\n}\n#cb_2014_us_county_20m [ avg_wkly_wage <= 2410] {\n   polygon-fill: #6182B5;\n}\n#cb_2014_us_county_20m [ avg_wkly_wage <= 1928] {\n   polygon-fill: #849EC5;\n}\n#cb_2014_us_county_20m [ avg_wkly_wage <= 1446] {\n   polygon-fill: #9BB0D0;\n}\n#cb_2014_us_county_20m [ avg_wkly_wage <= 964] {\n   polygon-fill: #B2C2DB;\n}\n#cb_2014_us_county_20m [ avg_wkly_wage <= 482] {\n   polygon-fill: #ECF0F6;\n}\n#cb_2014_us_county_20m [ avg_wkly_wage = null] {\n   polygon-opacity: 0;\n   line-opacity: 0;\n}\n#cb_2014_us_county_20m [ avg_wkly_wage = 0] {\n   polygon-opacity: 0;\n   line-opacity: 0;\n}",
+                        "cartocss_version": "2.1.1",
+                        "interactivity": "cartodb_id,avg_wkly_wage,name",
+                        "sql": "SELECT a.cartodb_id, a.the_geom, a.the_geom_webmercator, a.name, b.avg_wkly_wage::bigint FROM chriswhong.cb_2014_us_county_20m a LEFT JOIN (SELECT * FROM chriswhong.table_2015_q1_q1_singlefile WHERE industry_code = '51512') b ON a.geoid=b.area_fips",
+                        "table_name": "\"\"."
+                    }
+                }]
+            },
+            "attribution": ""
+        }
+    }],
+    "overlays": [{
+        "type": "share",
+        "order": 2,
+        "options": {
+            "display": true,
+            "x": 20,
+            "y": 20
+        },
+        "template": ""
+    }, {
+        "type": "search",
+        "order": 3,
+        "options": {
+            "display": true,
+            "x": 60,
+            "y": 20
+        },
+        "template": ""
+    }, {
+        "type": "zoom",
+        "order": 6,
+        "options": {
+            "display": true,
+            "x": 20,
+            "y": 20
+        },
+        "template": "<a href=\"#zoom_in\" class=\"zoom_in\">+</a> <a href=\"#zoom_out\" class=\"zoom_out\">-</a>"
+    }, {
+        "type": "loader",
+        "order": 8,
+        "options": {
+            "display": true,
+            "x": 20,
+            "y": 150
+        },
+        "template": "<div class=\"loader\" original-title=\"\"></div>"
+    }, {
+        "type": "logo",
+        "order": 9,
+        "options": {
+            "display": true,
+            "x": 10,
+            "y": 40
+        },
+        "template": ""
+    }],
+    "prev": null,
+    "next": null,
+    "transition_options": {
+        "time": 0
+    }
+}

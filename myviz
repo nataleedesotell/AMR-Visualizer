@@ -1,0 +1,209 @@
+{
+    "id": "925c5413-5572-44ce-80d8-36a0954e3c41",
+    "version": "0.1.0",
+    "title": "AMR Visualizer - E. Coli",
+    "likes": 0,
+    "description": null,
+    "scrollwheel": true,
+    "legends": true,
+    "url": null,
+    "map_provider": "leaflet",
+    "bounds": [
+        [42.469, -92.9185],
+        [47.1036, -86.775]
+    ],
+    "center": "[44.786302,-89.8467645]",
+    "zoom": 6,
+    "updated_at": "2018-01-07T21:58:38+00:00",
+    "layers": [{
+        "options": {
+      "visible": true,
+            "type": "Tiled",
+            "className": "dark_matter_lite_rainbow",
+            "category": "CARTO",
+            "urlTemplate": "https://cartodb-basemaps-{s}.global.ssl.fastly.net/dark_nolabels/{z}/{x}/{y}.png",
+            "subdomains": "abcd",
+            "minZoom": "0",
+            "maxZoom": "18",
+            "name": "Dark matter (lite)",
+            "className": "dark_matter_lite_rainbow",
+            "attribution": "&copy; <a href=\"http://www.openstreetmap.org/copyright\">OpenStreetMap</a> contributors",
+            "selected": true,
+            "val": "dark_matter_lite_rainbow",
+            "label": "Dark matter (lite)",
+            "default": false,
+            "highlighted": true
+        },
+        "infowindow": null,
+        "tooltip": null,
+        "id": "ef2243e4-b48a-4df3-aa59-ec3b1995125b",
+        "order": 0,
+        "type": "tiled"
+    }, {
+        "type": "layergroup",
+        "options": {
+            "user_name": "nrobson",
+            "maps_api_template": "https://{user}.carto.com:443",
+            "sql_api_template": "https://{user}.carto.com:443",
+            "tiler_protocol": "http",
+            "tiler_domain": "carto.com",
+            "tiler_port": "80",
+            "sql_api_protocol": "http",
+            "sql_api_domain": "carto.com",
+            "sql_api_endpoint": "/api/v2/sql",
+            "sql_api_port": 80,
+            "filter": "mapnik",
+            "layer_definition": {
+                "stat_tag": "925c5413-5572-44ce-80d8-36a0954e3c41",
+                "version": "1.0.1",
+                "layers": [{
+                    "id": "4d66a996-f463-444e-ae7b-580c113bdcad",
+                    "type": "CartoDB",
+                    "infowindow": {
+                        "fields": [],
+                        "template_name": "table/views/infowindow_light",
+                        "template": "<div class=\"cartodb-popup v2\">\n  <a href=\"#close\" class=\"cartodb-popup-close-button close\">x</a>\n  <div class=\"cartodb-popup-content-wrapper\">\n    <div class=\"cartodb-popup-content\">\n      {{#content.fields}}\n        {{#title}}<h4>{{title}}</h4>{{/title}}\n        {{#value}}\n          <p {{#type}}class=\"{{ type }}\"{{/type}}>{{{ value }}}</p>\n        {{/value}}\n        {{^value}}\n          <p class=\"empty\">null</p>\n        {{/value}}\n      {{/content.fields}}\n    </div>\n  </div>\n  <div class=\"cartodb-popup-tip-container\"></div>\n</div>\n",
+                        "alternative_names": {},
+                        "width": 226,
+                        "maxHeight": 180
+                    },
+                    "tooltip": {
+                        "fields": [{
+                            "position": 1,
+                            "name": "cip09",
+                            "title": true
+                        }, {
+                            "position": 0,
+                            "name": "name",
+                            "title": true
+                        }],
+                        "template_name": "",
+                        "template": "<div class=\"cartodb-tooltip-content-wrapper\">\n  <div class=\"cartodb-tooltip-content\">\n    <h4>County</h4>\n    <p>{{name}}</p>\n    <h4>Susceptibility</h4>\n    <p>{{avg_wkly_wage}}%</p>\n  </div>\n</div>",
+                        "alternative_names": {},
+                        "maxHeight": 180
+
+// polygon-fill: #50B848  
+// polygon-fill: #BCDDA1
+// polygon-fill: #F4E6ED
+// polygon-fill: #EDC1DB
+// polygon-fill: #CF3D96
+
+                    },
+                    "legend": {
+                        "type": "choropleth",
+                        "show_title": true,
+                        "title": "Susceptibility",
+                        "template": "",
+                        "visible": true,
+                        "items": [{
+                            "name": "Left label",
+                            "visible": true,
+                            "value": "60%",
+                            "type": "text",
+                            "custom_value": true
+                        }, {
+                            "name": "Right label",
+                            "visible": true,
+                            "value": "90%+",
+                            "type": "text",
+                            "custom_value": true
+                        }, {
+                            "name": "OtherLabel",
+                            "visible": true,
+                            "value": "90%+",
+                            "type": "text",
+                            "custom_value": true
+                        }, {
+                            "name": "Color",
+                            "visible": true,
+                            "value": "#CF3D96",
+                            "type": "color"
+                        }, {
+                            "name": "Color",
+                            "visible": true,
+                            "value": "#EDC1DB",
+                            "type": "color"
+                        }, {
+                            "name": "Color",
+                            "visible": true,
+                            "value": "#F4E6ED",
+                            "type": "color"
+                        }, {
+                            "name": "Color",
+                            "visible": true,
+                            "value": "#BCDDA1",
+                            "type": "color"
+                        }, {
+                            "name": "Color",
+                            "visible": true,
+                            "value": "#50B848",
+                            "type": "color"
+                        }]
+                    },
+                    "order": 4,
+                    "visible": true,
+                    "options": {
+                        "layer_name": "amrviz",
+                        "cartocss": "#layer['mapnik::geometry_type'=1] {\n  marker-width: 7;\n  marker-fill: #EE4D5A;\n  marker-fill-opacity: 0.9;\n  marker-line-color: #FFFFFF;\n  marker-line-width: 1;\n  marker-line-opacity: 1;\n  marker-type: ellipse;\n  marker-allow-overlap: true;\n}\n#layer['mapnik::geometry_type'=2] {\n  line-color: #4CC8A3;\n  line-width: 1.5;\n  line-opacity: 1;\n}\n\n#layer {\n\n  polygon-fill: #CCCCCC;\n\n  polygon-opacity: 0.9;\n\n  ::outline {\n\n    line-color: #FFFFFF;\n\n    line-width: 1;\n\n    line-opacity: 0.5;\n\n  }\n\n}\n\n\n#layer [cip09  <= 100] {\n\n    polygon-fill: #50B848;\n\n}\n\n#layer [cip09  <= 90] {\n\n    polygon-fill: #BCDDA1;\n\n}\n\n#layer [cip09  <= 80] {\n\n    polygon-fill: #F4E6ED;\n\n}\n\n#layer [cip09  <= 70] {\n\n    polygon-fill: #EDC1DB;\n\n}\n\n#layer [cip09  <= 60] {\n\n    polygon-fill: #CF3D96;\n\n}\n\n#layer [cip09 = 0] {\n\n    polygon-fill: #712d2d;\n\n}\n",
+                        "cartocss_version": "2.1.1",
+                        "interactivity": "",
+                        "sql": "SELECT * FROM nrobson.amrviz",
+                        "table_name": "\"\"."
+                    }
+                }]
+            },
+            "attribution": ""
+        }
+    }],
+    "overlays": [{
+        "type": "share",
+        "order": 2,
+        "options": {
+            "display": true,
+            "x": 20,
+            "y": 20
+        },
+        "template": ""
+    }, {
+        "type": "search",
+        "order": 3,
+        "options": {
+            "display": true,
+            "x": 60,
+            "y": 20
+        },
+        "template": ""
+    }, {
+        "type": "zoom",
+        "order": 6,
+        "options": {
+            "display": true,
+            "x": 20,
+            "y": 20
+        },
+        "template": "<a href=\"#zoom_in\" class=\"zoom_in\">+</a> <a href=\"#zoom_out\" class=\"zoom_out\">-</a>"
+    }, {
+        "type": "loader",
+        "order": 8,
+        "options": {
+            "display": true,
+            "x": 20,
+            "y": 150
+        },
+        "template": "<div class=\"loader\" original-title=\"\"></div>"
+    }, {
+        "type": "logo",
+        "order": 9,
+        "options": {
+            "display": true,
+            "x": 10,
+            "y": 40
+        },
+        "template": ""
+    }],
+    "prev": null,
+    "next": null,
+    "transition_options": {
+        "time": 0
+    }
+};

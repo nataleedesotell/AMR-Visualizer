@@ -1,0 +1,9 @@
+NOTES
+3/11/2018
+
+-How did Chris Whong's map have tooltips? Where do they come from?
+
+-Write SQL for every combo of year/drug, think about how to structure it (find an example?)
+
+-Change legend to vertical, I think... or get each part to have a label.
+
