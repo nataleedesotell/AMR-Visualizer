@@ -1,38 +1,1302 @@
 
-<html>
-    <head>
 
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="./wifavi.jpg">
+
+    <title>AMR Visualizer</title>
+
+    <link rel="stylesheet" href="http://libs.cartocdn.com/cartodb.js/v3/3.15/themes/css/cartodb.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+
+    <link rel="icon" type="image/png" href="./wifavi.jpg">
+  </head>
+
+  <style>
+html, body, #container {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
+body {
+  padding-top: 50px;
+}
+
+#map {
+  width: auto;
+  height: 100%;
+}
+
+#custom-search-input{
+    padding: 3px;
+    border: solid 1px #E4E4E4;
+    border-radius: 6px;
+    background-color: #fff;
+}
+
+#custom-search-input input{
+    border: 0;
+    box-shadow: none;
+}
+
+#custom-search-input button{
+    margin: 2px 0 0 0;
+    background: none;
+    box-shadow: none;
+    border: 0;
+    color: #666666;
+    padding: 0 8px 0 10px;
+    border-left: solid 1px #ccc;
+}
+
+#custom-search-input button:hover{
+    border: 0;
+    box-shadow: none;
+    border-left: solid 1px #ccc;
+}
+
+#custom-search-input .glyphicon-search{
+    font-size: 23px;
+}
+
+#results {
+    position: absolute;
+    top: 68px;
+    left: 15px;
+    right: 15px;
+    bottom: 0;
+}
+
+.list-group-item:hover {
+    background: steelblue;
+    color: #fff;
+    cursor: pointer;
+}
+.legend {
+    padding: 6px 8px;
+    font-size: 1em;
+    background: white;
+    color: black; 
+    box-shadow: 0 0 15px rgba(0,0,0,0.2);
+    border-radius: 5px;
+    width: 145px;
+    border: 2px solid white;
+    border-radius: 5px; 
+}
+.legend h3 {
+    font-size: 1em;
+    font-weight: bold;
+    line-height: 1.3em;
+    color: black;
+    margin: 0;
+}
+.legend ul {
+    margin: 10px 0 0 0;
+    padding: 0;
+}
+.legend li {
+    list-style-type: none;
+    height: 22px;
+    color: black;
+    font-size: .85em;
+}
+.legend span {
+    width: 30px;
+    height: 20px;
+    float: left;
+    margin-right: 5px;
+}
+
+  </style>
+
+  <body>
+
+    <nav class="navbar navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">AMR Visualizer</a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="./index.html">Map</a></li>
+            <li><a href="./about.html">About</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div> <!-- end container -->
+    </nav> <!-- end navbar-->
 
 
-        <title>AMR Visualizer</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <style>
-          html, body, #map {
-            height: 100%;
-            padding: 0;
-            margin: 0;
-          }
-        </style>
-        <link rel="stylesheet" href="https://cartodb-libs.global.ssl.fastly.net/cartodb.js/v3/3.15/themes/css/cartodb.css" />
-        <link rel="stylesheet" src="css/amr.css" />
-    </head>
-    <body>
+<div id="container">
+  <div class="col-md-2" style='height:100%'>
+    <br/>
+    <ul id="results" class="list-group"></ul>
+    </br></br>
 
-        <div id="map"></div>
-    </body>
+      <!-- start year dropdown -->
+      <div class="dropdown">
+        <button class="btn btn-dark dropdown-toggle" type="button" data-toggle="dropdown">Year
+        <span class="caret"></span></button>
+        <ul class="dropdown-menu">
+          <li id = "2009drop"><a href="#">2009</a></li>
+          <li id = "2013drop"><a href="#">2013</a></li>
+          <li id = "2015drop"><a href="#">2015</a></li>
+        </ul>
+      </div>
+      <!-- end year dropdown -->
+
+      </br></br>
+      </br></br>
+      </br></br>
+
+        <!-- start drug dropdown -->
+        <div class="dropdown">
+          <button class="btn btn-dark dropdown-toggle" type="button" data-toggle="dropdown">Antibiotic
+          <span class="caret"></span></button>
+          <ul class="dropdown-menu">
+            <li id="amxdrop"><a href="#">Amoxicillin</a></li>
+            <li id="tridrop"> <a href="#">Trimethroprim</a></li>
+            <li id="cipdrop"><a href="#">Ciprofloxacin</a></li>
+            <li id="nitdrop"><a href="#">Nitrofurantoin</a></li>
+            <li id="ampdrop"><a href="#">Ampicillin</a></li>
+            <li id="levdrop"> <a href="#">Levofloxacin</a></li>
+          </ul>
+        </div>
+        <!-- end drug dropdown-->
+
+</div>
+
+      <!-- map div -->
+      <div id="map">
+      </div>
+      <!-- end map div -->
+
+</script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/mustache.js/2.2.0/mustache.min.js'></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script src="http://libs.cartocdn.com/cartodb.js/v3/3.15/cartodb.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <script>
+
+var sql2;
+var polygon;
+var currentYear = 2015;
+var currentDrug = "Ciprofloxacin";
+
+
+// 2009 COLORS // 
+
+var cip09colors = '#layer {' +
+        'polygon-fill: #CCCCCC;' +
+        'polygon-opacity: 0.9;' +
+        '::outline {' +
+        'line-color: #FFFFFF;' +
+        'line-width: 1;' +
+        'line-opacity: 0.5;' +
+        '}' +
+      '}' +
+      '#layer [cip09 <= 100] {' +
+        'polygon-fill: #50B848;' +
+      '}' +
+      '#layer [cip09 <= 90] {' +
+        'polygon-fill: #BCDDA1;' +
+      '}' +
+      '#layer [cip09 <= 80] {' +
+        'polygon-fill: #F4E6ED;' +
+      '}' +
+      '#layer [cip09 <= 70] {' +
+        'polygon-fill: #EDC1DB;' +
+      '}' +
+      '#layer [cip09 <= 60] {' +
+        'polygon-fill: #CF3D96;' +
+      '}';
+
+
+var nit09colors = '#layer {' +
+        'polygon-fill: #CCCCCC;' +
+        'polygon-opacity: 0.9;' +
+        '::outline {' +
+        'line-color: #FFFFFF;' +
+        'line-width: 1;' +
+        'line-opacity: 0.5;' +
+        '}' +
+      '}' +
+      '#layer [nit09 <= 100] {' +
+        'polygon-fill: #50B848;' +
+      '}' +
+      '#layer [nit09 <= 90] {' +
+        'polygon-fill: #BCDDA1;' +
+      '}' +
+      '#layer [nit09 <= 80] {' +
+        'polygon-fill: #F4E6ED;' +
+      '}' +
+      '#layer [nit09 <= 70] {' +
+        'polygon-fill: #EDC1DB;' +
+      '}' +
+      '#layer [nit09 <= 60] {' +
+        'polygon-fill: #CF3D96;' +
+      '}';
+
+var amp09colors = '#layer {' +
+        'polygon-fill: #CCCCCC;' +
+        'polygon-opacity: 0.9;' +
+        '::outline {' +
+        'line-color: #FFFFFF;' +
+        'line-width: 1;' +
+        'line-opacity: 0.5;' +
+        '}' +
+      '}' +
+      '#layer [amp09 <= 100] {' +
+        'polygon-fill: #50B848;' +
+      '}' +
+      '#layer [amp09 <= 90] {' +
+        'polygon-fill: #BCDDA1;' +
+      '}' +
+      '#layer [amp09 <= 80] {' +
+        'polygon-fill: #F4E6ED;' +
+      '}' +
+      '#layer [amp09 <= 70] {' +
+        'polygon-fill: #EDC1DB;' +
+      '}' +
+      '#layer [amp09 <= 60] {' +
+        'polygon-fill: #CF3D96;' +
+      '}';
+
+
+var amx09colors = '#layer {' +
+        'polygon-fill: #CCCCCC;' +
+        'polygon-opacity: 0.9;' +
+        '::outline {' +
+        'line-color: #FFFFFF;' +
+        'line-width: 1;' +
+        'line-opacity: 0.5;' +
+        '}' +
+      '}' +
+      '#layer [amx09 <= 100] {' +
+        'polygon-fill: #50B848;' +
+      '}' +
+      '#layer [amx09 <= 90] {' +
+        'polygon-fill: #BCDDA1;' +
+      '}' +
+      '#layer [amx09 <= 80] {' +
+        'polygon-fill: #F4E6ED;' +
+      '}' +
+      '#layer [amx09 <= 70] {' +
+        'polygon-fill: #EDC1DB;' +
+      '}' +
+      '#layer [amx09 <= 60] {' +
+        'polygon-fill: #CF3D96;' +
+      '}';
+
+
+var tri09colors = '#layer {' +
+        'polygon-fill: #CCCCCC;' +
+        'polygon-opacity: 0.9;' +
+        '::outline {' +
+        'line-color: #FFFFFF;' +
+        'line-width: 1;' +
+        'line-opacity: 0.5;' +
+        '}' +
+      '}' +
+      '#layer [tri09 <= 100] {' +
+        'polygon-fill: #50B848;' +
+      '}' +
+      '#layer [tri09 <= 90] {' +
+        'polygon-fill: #BCDDA1;' +
+      '}' +
+      '#layer [tri09 <= 80] {' +
+        'polygon-fill: #F4E6ED;' +
+      '}' +
+      '#layer [tri09 <= 70] {' +
+        'polygon-fill: #EDC1DB;' +
+      '}' +
+      '#layer [tri09 <= 60] {' +
+        'polygon-fill: #CF3D96;' +
+      '}';
+
+var lev09colors = '#layer {' +
+        'polygon-fill: #CCCCCC;' +
+        'polygon-opacity: 0.9;' +
+        '::outline {' +
+        'line-color: #FFFFFF;' +
+        'line-width: 1;' +
+        'line-opacity: 0.5;' +
+        '}' +
+      '}' +
+      '#layer [lev09 <= 100] {' +
+        'polygon-fill: #50B848;' +
+      '}' +
+      '#layer [lev09 <= 90] {' +
+        'polygon-fill: #BCDDA1;' +
+      '}' +
+      '#layer [lev09 <= 80] {' +
+        'polygon-fill: #F4E6ED;' +
+      '}' +
+      '#layer [lev09 <= 70] {' +
+        'polygon-fill: #EDC1DB;' +
+      '}' +
+      '#layer [lev09 <= 60] {' +
+        'polygon-fill: #CF3D96;' +
+      '}';
+
+// 2013 COLORS // 
+
+var cip13colors = '#layer {' +
+        'polygon-fill: #CCCCCC;' +
+        'polygon-opacity: 0.9;' +
+        '::outline {' +
+        'line-color: #FFFFFF;' +
+        'line-width: 1;' +
+        'line-opacity: 0.5;' +
+        '}' +
+      '}' +
+      '#layer [cip13 <= 100] {' +
+        'polygon-fill: #50B848;' +
+      '}' +
+      '#layer [cip13 <= 90] {' +
+        'polygon-fill: #BCDDA1;' +
+      '}' +
+      '#layer [cip13 <= 80] {' +
+        'polygon-fill: #F4E6ED;' +
+      '}' +
+      '#layer [cip13 <= 70] {' +
+        'polygon-fill: #EDC1DB;' +
+      '}' +
+      '#layer [cip13 <= 60] {' +
+        'polygon-fill: #CF3D96;' +
+      '}';
+
+
+var nit13colors = '#layer {' +
+        'polygon-fill: #CCCCCC;' +
+        'polygon-opacity: 0.9;' +
+        '::outline {' +
+        'line-color: #FFFFFF;' +
+        'line-width: 1;' +
+        'line-opacity: 0.5;' +
+        '}' +
+      '}' +
+      '#layer [nit13 <= 100] {' +
+        'polygon-fill: #50B848;' +
+      '}' +
+      '#layer [nit13 <= 90] {' +
+        'polygon-fill: #BCDDA1;' +
+      '}' +
+      '#layer [nit13 <= 80] {' +
+        'polygon-fill: #F4E6ED;' +
+      '}' +
+      '#layer [nit13 <= 70] {' +
+        'polygon-fill: #EDC1DB;' +
+      '}' +
+      '#layer [nit13 <= 60] {' +
+        'polygon-fill: #CF3D96;' +
+      '}';
+
+var amp13colors = '#layer {' +
+        'polygon-fill: #CCCCCC;' +
+        'polygon-opacity: 0.9;' +
+        '::outline {' +
+        'line-color: #FFFFFF;' +
+        'line-width: 1;' +
+        'line-opacity: 0.5;' +
+        '}' +
+      '}' +
+      '#layer [amp13 <= 100] {' +
+        'polygon-fill: #50B848;' +
+      '}' +
+      '#layer [amp13 <= 90] {' +
+        'polygon-fill: #BCDDA1;' +
+      '}' +
+      '#layer [amp13 <= 80] {' +
+        'polygon-fill: #F4E6ED;' +
+      '}' +
+      '#layer [amp13 <= 70] {' +
+        'polygon-fill: #EDC1DB;' +
+      '}' +
+      '#layer [amp13 <= 60] {' +
+        'polygon-fill: #CF3D96;' +
+      '}';
+
+
+var amx13colors = '#layer {' +
+        'polygon-fill: #CCCCCC;' +
+        'polygon-opacity: 0.9;' +
+        '::outline {' +
+        'line-color: #FFFFFF;' +
+        'line-width: 1;' +
+        'line-opacity: 0.5;' +
+        '}' +
+      '}' +
+      '#layer [amx13 <= 100] {' +
+        'polygon-fill: #50B848;' +
+      '}' +
+      '#layer [amx13 <= 90] {' +
+        'polygon-fill: #BCDDA1;' +
+      '}' +
+      '#layer [amx13 <= 80] {' +
+        'polygon-fill: #F4E6ED;' +
+      '}' +
+      '#layer [amx13 <= 70] {' +
+        'polygon-fill: #EDC1DB;' +
+      '}' +
+      '#layer [amx13 <= 60] {' +
+        'polygon-fill: #CF3D96;' +
+      '}';
+
+
+var tri13colors = '#layer {' +
+        'polygon-fill: #CCCCCC;' +
+        'polygon-opacity: 0.9;' +
+        '::outline {' +
+        'line-color: #FFFFFF;' +
+        'line-width: 1;' +
+        'line-opacity: 0.5;' +
+        '}' +
+      '}' +
+      '#layer [tri13 <= 100] {' +
+        'polygon-fill: #50B848;' +
+      '}' +
+      '#layer [tri13 <= 90] {' +
+        'polygon-fill: #BCDDA1;' +
+      '}' +
+      '#layer [tri13 <= 80] {' +
+        'polygon-fill: #F4E6ED;' +
+      '}' +
+      '#layer [tri13 <= 70] {' +
+        'polygon-fill: #EDC1DB;' +
+      '}' +
+      '#layer [tri13 <= 60] {' +
+        'polygon-fill: #CF3D96;' +
+      '}';
+
+var lev13colors = '#layer {' +
+        'polygon-fill: #CCCCCC;' +
+        'polygon-opacity: 0.9;' +
+        '::outline {' +
+        'line-color: #FFFFFF;' +
+        'line-width: 1;' +
+        'line-opacity: 0.5;' +
+        '}' +
+      '}' +
+      '#layer [lev13 <= 100] {' +
+        'polygon-fill: #50B848;' +
+      '}' +
+      '#layer [lev13 <= 90] {' +
+        'polygon-fill: #BCDDA1;' +
+      '}' +
+      '#layer [lev13 <= 80] {' +
+        'polygon-fill: #F4E6ED;' +
+      '}' +
+      '#layer [lev13 <= 70] {' +
+        'polygon-fill: #EDC1DB;' +
+      '}' +
+      '#layer [lev13 <= 60] {' +
+        'polygon-fill: #CF3D96;' +
+      '}';
+
+
+// 2015 COLORS // 
+
+var cip15colors = '#layer {' +
+        'polygon-fill: #CCCCCC;' +
+        'polygon-opacity: 0.9;' +
+        '::outline {' +
+        'line-color: #FFFFFF;' +
+        'line-width: 1;' +
+        'line-opacity: 0.5;' +
+        '}' +
+      '}' +
+      '#layer [cip15 <= 100] {' +
+        'polygon-fill: #50B848;' +
+      '}' +
+      '#layer [cip15 <= 90] {' +
+        'polygon-fill: #BCDDA1;' +
+      '}' +
+      '#layer [cip15 <= 80] {' +
+        'polygon-fill: #F4E6ED;' +
+      '}' +
+      '#layer [cip15 <= 70] {' +
+        'polygon-fill: #EDC1DB;' +
+      '}' +
+      '#layer [cip15 <= 60] {' +
+        'polygon-fill: #CF3D96;' +
+      '}';
+
+
+var nit15colors = '#layer {' +
+        'polygon-fill: #CCCCCC;' +
+        'polygon-opacity: 0.9;' +
+        '::outline {' +
+        'line-color: #FFFFFF;' +
+        'line-width: 1;' +
+        'line-opacity: 0.5;' +
+        '}' +
+      '}' +
+      '#layer [nit15 <= 100] {' +
+        'polygon-fill: #50B848;' +
+      '}' +
+      '#layer [nit15 <= 90] {' +
+        'polygon-fill: #BCDDA1;' +
+      '}' +
+      '#layer [nit15 <= 80] {' +
+        'polygon-fill: #F4E6ED;' +
+      '}' +
+      '#layer [nit15 <= 70] {' +
+        'polygon-fill: #EDC1DB;' +
+      '}' +
+      '#layer [nit15 <= 60] {' +
+        'polygon-fill: #CF3D96;' +
+      '}';
+
+var amp15colors = '#layer {' +
+        'polygon-fill: #CCCCCC;' +
+        'polygon-opacity: 0.9;' +
+        '::outline {' +
+        'line-color: #FFFFFF;' +
+        'line-width: 1;' +
+        'line-opacity: 0.5;' +
+        '}' +
+      '}' +
+      '#layer [amp15 <= 100] {' +
+        'polygon-fill: #50B848;' +
+      '}' +
+      '#layer [amp15 <= 90] {' +
+        'polygon-fill: #BCDDA1;' +
+      '}' +
+      '#layer [amp15 <= 80] {' +
+        'polygon-fill: #F4E6ED;' +
+      '}' +
+      '#layer [amp15 <= 70] {' +
+        'polygon-fill: #EDC1DB;' +
+      '}' +
+      '#layer [amp15 <= 60] {' +
+        'polygon-fill: #CF3D96;' +
+      '}';
+
+
+var amx15colors = '#layer {' +
+        'polygon-fill: #CCCCCC;' +
+        'polygon-opacity: 0.9;' +
+        '::outline {' +
+        'line-color: #FFFFFF;' +
+        'line-width: 1;' +
+        'line-opacity: 0.5;' +
+        '}' +
+      '}' +
+      '#layer [amx15 <= 100] {' +
+        'polygon-fill: #50B848;' +
+      '}' +
+      '#layer [amx15 <= 90] {' +
+        'polygon-fill: #BCDDA1;' +
+      '}' +
+      '#layer [amx15 <= 80] {' +
+        'polygon-fill: #F4E6ED;' +
+      '}' +
+      '#layer [amx15 <= 70] {' +
+        'polygon-fill: #EDC1DB;' +
+      '}' +
+      '#layer [amx15 <= 60] {' +
+        'polygon-fill: #CF3D96;' +
+      '}';
+
+
+var tri15colors = '#layer {' +
+        'polygon-fill: #CCCCCC;' +
+        'polygon-opacity: 0.9;' +
+        '::outline {' +
+        'line-color: #FFFFFF;' +
+        'line-width: 1;' +
+        'line-opacity: 0.5;' +
+        '}' +
+      '}' +
+      '#layer [tri15 <= 100] {' +
+        'polygon-fill: #50B848;' +
+      '}' +
+      '#layer [tri15 <= 90] {' +
+        'polygon-fill: #BCDDA1;' +
+      '}' +
+      '#layer [tri15 <= 80] {' +
+        'polygon-fill: #F4E6ED;' +
+      '}' +
+      '#layer [tri15 <= 70] {' +
+        'polygon-fill: #EDC1DB;' +
+      '}' +
+      '#layer [tri15 <= 60] {' +
+        'polygon-fill: #CF3D96;' +
+      '}';
+
+var lev15colors = '#layer {' +
+        'polygon-fill: #CCCCCC;' +
+        'polygon-opacity: 0.9;' +
+        '::outline {' +
+        'line-color: #FFFFFF;' +
+        'line-width: 1;' +
+        'line-opacity: 0.5;' +
+        '}' +
+      '}' +
+      '#layer [lev15 <= 100] {' +
+        'polygon-fill: #50B848;' +
+      '}' +
+      '#layer [lev15 <= 90] {' +
+        'polygon-fill: #BCDDA1;' +
+      '}' +
+      '#layer [lev15 <= 80] {' +
+        'polygon-fill: #F4E6ED;' +
+      '}' +
+      '#layer [lev15 <= 70] {' +
+        'polygon-fill: #EDC1DB;' +
+      '}' +
+      '#layer [lev15 <= 60] {' +
+        'polygon-fill: #CF3D96;' +
+      '}';
+
+
+
+
+  //jquery document ready statement (wraps all JS), prevents jQuery code from running before the document is finished loading 
+  $( document ).ready(function() {
+    //Create the leaflet map
+    var map = L.map('map', {
+      zoomControl: true,
+      center: [44.4,-90.0],
+      zoom: 7
+    });
     
+    sql2 = new cartodb.SQL({ user: 'nrobson', format: 'geojson' });
     
+    var basemap = L.tileLayer('http://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png',{
+      attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="http://cartodb.com/attributions">CartoDB</a>'
+    }).addTo(map);
+    drawLegend();
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-  <script src="https://cartodb-libs.global.ssl.fastly.net/cartodb.js/v3/3.15/cartodb.js"></script>
-   <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js"></script>
-<!--   <script src="//d3js.org/d3.v3.min.js"></script>
- -->  
- <script src="js/bootstrap-slider.min.js"></script>
-  <script src="js/bootstrap.min.js"></script> <!-- Bootstrap 3.3.7 -->
-  <script src="js/jquery.query-object.js"></script>
-  <script src="js/amr.js"></script>
-  <!-- js /\ -->
+
+    $("#tridrop").click(function(e){
+    var currentDrug = "Trimethroprim";
+    showTri();
+    console.log("trimethroprim was clicked!");
+    e.preventDefault();
+    });
+
+    $("#cipdrop").click(function(e){
+    var currentDrug = "Ciprofloxacin";
+    showCip();
+    console.log("Ciprofloxacin was clicked!");
+    e.preventDefault();
+    });
+
+
+    $("#ampdrop").click(function(e){
+    var currentDrug = "Ampicillin";
+    showAmp();
+    console.log("Ampicillin was clicked!");
+    e.preventDefault();
+    });
+
+
+    $("#amxdrop").click(function(e){
+    var currentDrug = "Amoxicillin";
+    showAmx();
+    console.log("Amoxicillin was clicked!");
+    e.preventDefault();
+    });
+
+
+    $("#levdrop").click(function(e){
+    var currentDrug = "Levofloxacin";
+    showLev();
+    console.log("Levofloxacin was clicked!");
+    e.preventDefault();
+    });
+
+
+
+    $("#nitdrop").click(function(e){
+    var currentDrug = "Nitrofurantoin";
+    showNit();
+    console.log("Nitrofurantoin was clicked!");
+    e.preventDefault();
+    });
+
+
+    $("#2009drop").click(function(e){
+    currentYear = 2009;
+    console.log("2009 was clicked!");
+    console.log("current year is " + currentYear)
+    // changeYear();
+    e.preventDefault();
+    });
+
+
+    $("#2013drop").click(function(e){
+    currentYear = 2013;
+    console.log("2013 was clicked!");
+    console.log("current year is " + currentYear)
+    // changeYear();
+    e.preventDefault();
+    });
+
+
+
+    $("#2015drop").click(function(e){
+    currentYear = 2015;
+    console.log("2015 was clicked!");
+    // changeYear();
+    console.log("current year is " + currentYear)
+    e.preventDefault();
+    });
+
+///////////////////////////////////////////////////////////
+///////////////// MAP FUNCTIONS ///////////////////////////
+///////////////////////////////////////////////////////////
+
+
+// AMOXICILLIN
+
+
+
+// function changeYear() {
+// if (currentYear === 2009) {
+// ///CODE FOR AMOXICILLIN 2009
+// console.log("current year is 2009")
+//  ;
+// } else if (currentYear === 2013) {
+// ///CODE FOR AMOXICILLIN IN 2013
+// console.log("current year is 2013")
+//  ;
+// } 
+// else if (currentYear === 2015) {
+// console.log("current year is 2015")
+// ///CODE FOR AMOXICILLIN IN 2013
+//     ;
+// } else {
+//     greeting = "error";
+// }
+// };
+
+
+// When creating new layers, they will essentially get stacked upon one another and will obfuscate one another. To avoid a huge pileup of tile layers, it is necessary to manage them once they are created. See the attached code for more about how to hide (e.g. cipLayer.getSubLayer(0).hide();) and show (cipLayer.getSubLayer(0).show();) a layer after it is created.
+
+
+//SHOW AMOXICILLIN
+
+
+function showAmx() {
+if (currentYear === 2009) {
+// ///CODE FOR AMOXICILLIN 2009
+    console.log("showAmx 2009 function called");
+    var amx09 = cartodb.createLayer(map, {
+    user_name: 'nrobson',
+    type: 'cartodb',
+    sublayers: [{
+      sql: 'SELECT * FROM amrviz',
+      cartocss: amx09colors,
+      //QUESTION: What does 'Interactivity' do? 
+      interactivity: ['cartodb_id', 'amx09'],
+      layerIndex:1
+    }]
+    },{ https: true })
+    .addTo(map)
+    .done(function(layer) {
+      layer.setInteraction(true);
+      //layer.bind('featureOver', onPolyOver)
+      //layer.bind('featureOut', onPolyOut)
+      layer.bind('featureClick', onPolyClick)
+      layer.bind('featureClick',function(e, pos, latlng, data) {
+        showFeatureAmx09(data.cartodb_id);
+      });
+    })
+console.log("current year is 2009")
+ ;
+} else if (currentYear === 2013) {
+///CODE FOR AMOXICILLIN IN 2013
+    console.log("showAmx 2013 function called");
+    var amx13 = cartodb.createLayer(map, {
+    user_name: 'nrobson',
+    type: 'cartodb',
+    sublayers: [{
+      sql: 'SELECT * FROM amrviz',
+      cartocss: amx13colors,
+      //QUESTION: What does 'Interactivity' do? 
+      interactivity: ['cartodb_id', 'amx13'],
+      layerIndex:1
+    }]
+    },{ https: true })
+    .addTo(map)
+    .done(function(layer) {
+      layer.setInteraction(true);
+      //layer.bind('featureOver', onPolyOver)
+      //layer.bind('featureOut', onPolyOut)
+      layer.bind('featureClick', onPolyClick)
+      layer.bind('featureClick',function(e, pos, latlng, data) {
+        showFeatureAmx13(data.cartodb_id);
+      });
+    })
+console.log("current year is 2013")
+
+ ;
+} 
+else if (currentYear === 2015) {
+///CODE FOR AMOXICILLIN IN 2013
+    console.log("showAmx 2015 function called");
+    var amx15 = cartodb.createLayer(map, {
+    user_name: 'nrobson',
+    type: 'cartodb',
+    sublayers: [{
+      sql: 'SELECT * FROM amrviz',
+      cartocss: amx15colors,
+      //QUESTION: What does 'Interactivity' do? 
+      interactivity: ['cartodb_id', 'amx15'],
+      layerIndex:1
+    }]
+    },{ https: true })
+    .addTo(map)
+    .done(function(layer) {
+      layer.setInteraction(true);
+      //layer.bind('featureOver', onPolyOver)
+      //layer.bind('featureOut', onPolyOut)
+      layer.bind('featureClick', onPolyClick)
+      layer.bind('featureClick',function(e, pos, latlng, data) {
+        showFeatureAmx15(data.cartodb_id);
+      });
+    })
+console.log("current year is 2015")
+    ;
+} else {
+    greeting = "error";
+}
+};
+
+
+//SHOW CIPROFLOXACIN
+function showCip() {
+    var cip09 = cartodb.createLayer(map, {
+    user_name: 'nrobson',
+    type: 'cartodb',
+    sublayers: [{
+      sql: 'SELECT * FROM amrviz',
+      cartocss: cip09colors,
+      //QUESTION: What does 'Interactivity' do? 
+      interactivity: ['cartodb_id', 'cip09'],
+      layerIndex:1
+    }]
+    },{ https: true })
+    .addTo(map)
+    .done(function(layer) {
+      layer.setInteraction(true);
+      //layer.bind('featureOver', onPolyOver)
+      //layer.bind('featureOut', onPolyOut)
+      layer.bind('featureClick', onPolyClick)
+      layer.bind('featureClick',function(e, pos, latlng, data) {
+        showFeatureCip09(data.cartodb_id);
+      });
+    })
+};
+
+//SHOW AMPICILLIN
+function showAmp() {
+    var amp09 = cartodb.createLayer(map, {
+    user_name: 'nrobson',
+    type: 'cartodb',
+    sublayers: [{
+      sql: 'SELECT * FROM amrviz',
+      cartocss: amp09colors,
+      //QUESTION: What does 'Interactivity' do? 
+      interactivity: ['cartodb_id', 'amp09'],
+      layerIndex:1
+    }]
+    },{ https: true })
+    .addTo(map)
+    .done(function(layer) {
+      layer.setInteraction(true);
+      //layer.bind('featureOver', onPolyOver)
+      //layer.bind('featureOut', onPolyOut)
+      layer.bind('featureClick', onPolyClick)
+      layer.bind('featureClick',function(e, pos, latlng, data) {
+        showFeatureAmp09(data.cartodb_id);
+      });
+    })
+};
+
+//SHOW NITROFURANTOIN
+function showNit() {
+    var nit09 = cartodb.createLayer(map, {
+    user_name: 'nrobson',
+    type: 'cartodb',
+    sublayers: [{
+      sql: 'SELECT * FROM amrviz',
+      cartocss: nit09colors,
+      //QUESTION: What does 'Interactivity' do? 
+      interactivity: ['cartodb_id', 'nit09'],
+      layerIndex:1
+    }]
+    },{ https: true })
+    .addTo(map)
+    .done(function(layer) {
+      layer.setInteraction(true);
+      //layer.bind('featureOver', onPolyOver)
+      //layer.bind('featureOut', onPolyOut)
+      layer.bind('featureClick', onPolyClick)
+      layer.bind('featureClick',function(e, pos, latlng, data) {
+        showFeatureNit09(data.cartodb_id);
+      });
+    })
+};
+
+
+//SHOW TRIMETHROPRIM
+function showTri() {
+
+    var tri09 = cartodb.createLayer(map, {
+    user_name: 'nrobson',
+    type: 'cartodb',
+    sublayers: [{
+      sql: 'SELECT * FROM amrviz',
+      cartocss: tri09colors,
+      //QUESTION: What does 'Interactivity' do? 
+      interactivity: ['cartodb_id', 'tri09'],
+      layerIndex:1
+    }]
+    },{ https: true })
+    .addTo(map)
+    .done(function(layer) {
+      layer.setInteraction(true);
+      //layer.bind('featureOver', onPolyOver)
+      //layer.bind('featureOut', onPolyOut)
+      layer.bind('featureClick', onPolyClick)
+      layer.bind('featureClick',function(e, pos, latlng, data) {
+        showFeatureTri09(data.cartodb_id);
+
+      });
+    })
+};
+
+//SHOW TRIMETHROPRIM
+function showLev() {
+    var lev09 = cartodb.createLayer(map, {
+    user_name: 'nrobson',
+    type: 'cartodb',
+    sublayers: [{
+      sql: 'SELECT * FROM amrviz',
+      cartocss: lev09colors,
+      //QUESTION: What does 'Interactivity' do? 
+      interactivity: ['cartodb_id', 'lev09'],
+      layerIndex:1
+    }]
+    },{ https: true })
+    .addTo(map)
+    .done(function(layer) {
+      layer.setInteraction(true);
+      //layer.bind('featureOver', onPolyOver)
+      //layer.bind('featureOut', onPolyOut)
+      layer.bind('featureClick', onPolyClick)
+      layer.bind('featureClick',function(e, pos, latlng, data) {
+        showFeatureLev09(data.cartodb_id);
+      });
+    })
+};
+
+// Colors:
+// #50B848
+// #BCDDA1
+// #F4E6ED
+// #EDC1DB
+// #CF3D96
+
+// QUESTION: what does this 'd' refer to?
+function getColor(d) {
+    return d > 1000 ? '#800026' :
+           d > 500  ? '#BD0026' :
+           d > 200  ? '#E31A1C' :
+           d > 100  ? '#FC4E2A' :
+           d > 50   ? '#FD8D3C' :
+           d > 20   ? '#FEB24C' :
+           d > 10   ? '#FED976' :
+                      '#FFEDA0';
+}
+
+// function to draw the legend
+function drawLegend(cartodb_id) {
+console.log("drawlegend")
+var legend = L.control({position: 'bottomright'});
+legend.onAdd = function (map) {
+    var div = L.DomUtil.create('div', 'info legend'),
+        grades = [0, 10, 20, 50, 100, 200, 500, 1000],
+        labels = [];
+    // loop through our density intervals and generate a label with a colored square for each interval
+    for (var i = 0; i < grades.length; i++) {
+        div.innerHTML +=
+            '<i style="background:' + getColor(grades[i] + 1) + '"></i> ' +
+            grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '<br>' : '+');
+    }
+    return div;
+};
+legend.addTo(map);
+    var legend = $('.legend').html("<h3>Susceptibility</h3>" + currentDrug + currentYear +"</br></br><ul>");     
+}
+
+function onPolyClick(e, latln, pxPos, data, layer){
+    console.log(data)
+  }
+
+
+///////////////////////////////////////////////////////////
+///////////////// START TOOLTIPS //////////////////////////
+///////////////////////////////////////////////////////////
+
+
+// NITROFURANTOIN 2009 TOOLTIP
+function showFeatureNit09(cartodb_id) {
+    sql2.execute("SELECT * from amrviz WHERE cartodb_id = {{cartodb_id}}", {cartodb_id: cartodb_id} 
+  ).done(function(geojson) {
+      if (polygon) {
+        map.removeLayer(polygon);
+      }
+      console.log(geojson)
+      polygon = L.geoJson(geojson, { 
+        style: {
+        color: "#000",
+        fillColor: "#fff",
+        fillOpacity: 0.0,
+        weight: 2,
+        opacity: 0.65
+        }
+      }).addTo(map).bindPopup("<b>" + geojson.features["0"].properties.nit09 + "% susceptibility </br></b>" + geojson.features["0"].properties.name + " county").openPopup();
+    });
+  }
+
+  // AMPICILLIN 2009 TOOLTIP
+function showFeatureAmp09(cartodb_id) {
+    sql2.execute("SELECT * from amrviz WHERE cartodb_id = {{cartodb_id}}", {cartodb_id: cartodb_id} 
+  ).done(function(geojson) {
+      if (polygon) {
+        map.removeLayer(polygon);
+      }
+      console.log(geojson)
+      polygon = L.geoJson(geojson, { 
+        style: {
+        color: "#000",
+        fillColor: "#fff",
+        fillOpacity: 0.0,
+        weight: 2,
+        opacity: 0.65
+        }
+        // QUESTION: how do I add logic to the popup? I.e., if null, show "No Data". Else, show % susceptibility.
+      }).addTo(map).bindPopup("<b>" + geojson.features["0"].properties.amp09 + "% susceptibility </br></b>" + geojson.features["0"].properties.name + " county").openPopup();
+    });
+  }
+
+
+  // AMOXICILLIN 2009 TOOLTIP
+function showFeatureAmx09(cartodb_id) {
+    sql2.execute("SELECT * from amrviz WHERE cartodb_id = {{cartodb_id}}", {cartodb_id: cartodb_id} 
+  ).done(function(geojson) {
+      if (polygon) {
+        map.removeLayer(polygon);
+      }
+      console.log(geojson)
+      polygon = L.geoJson(geojson, { 
+        style: {
+        color: "#000",
+        fillColor: "#fff",
+        fillOpacity: 0.0,
+        weight: 2,
+        opacity: 0.65
+        }
+        // QUESTION: how do I add logic to the popup? I.e., if null, show "No Data". Else, show % susceptibility.
+      }).addTo(map).bindPopup("<b>" + geojson.features["0"].properties.amx09 + "% susceptibility </br></b>" + geojson.features["0"].properties.name + " county").openPopup();
+    });
+  }
+
+
+  // TRIMETHROPRIM 2009 TOOLTIP
+function showFeatureTri09(cartodb_id) {
+    sql2.execute("SELECT * from amrviz WHERE cartodb_id = {{cartodb_id}}", {cartodb_id: cartodb_id} 
+  ).done(function(geojson) {
+      if (polygon) {
+        map.removeLayer(polygon);
+      }
+      console.log(geojson)
+      polygon = L.geoJson(geojson, { 
+        style: {
+        color: "#000",
+        fillColor: "#fff",
+        fillOpacity: 0.0,
+        weight: 2,
+        opacity: 0.65
+        }
+        // QUESTION: how do I add logic to the popup? I.e., if null, show "No Data". Else, show % susceptibility.
+      }).addTo(map).bindPopup("<b>" + geojson.features["0"].properties.tri09 + "% susceptibility </br></b>" + geojson.features["0"].properties.name + " county").openPopup();
+    });
+  }
+
+
+
+// CIPROFLOXACIN 2009 TOOLTIP
+function showFeatureCip09(cartodb_id) {
+    sql2.execute("SELECT * from amrviz WHERE cartodb_id = {{cartodb_id}}", {cartodb_id: cartodb_id} 
+  ).done(function(geojson) {
+      if (polygon) {
+        map.removeLayer(polygon);
+      }
+      console.log(geojson)
+      polygon = L.geoJson(geojson, { 
+        style: {
+        color: "#000",
+        fillColor: "#fff",
+        fillOpacity: 0.0,
+        weight: 2,
+        opacity: 0.65
+        }
+      }).addTo(map).bindPopup("<b>" + geojson.features["0"].properties.cip09 + "% susceptibility </br></b>" + geojson.features["0"].properties.name + " county").openPopup();
+    });
+  }
+
+
+// LEVOFLOXACIN 2009 TOOLTIP
+function showFeatureLev09(cartodb_id) {
+    sql2.execute("SELECT * from amrviz WHERE cartodb_id = {{cartodb_id}}", {cartodb_id: cartodb_id} 
+  ).done(function(geojson) {
+      if (polygon) {
+        map.removeLayer(polygon);
+      }
+      console.log(geojson)
+      polygon = L.geoJson(geojson, { 
+        style: {
+        color: "#000",
+        fillColor: "#fff",
+        fillOpacity: 0.0,
+        weight: 2,
+        opacity: 0.65
+        }
+      }).addTo(map).bindPopup("<b>" + geojson.features["0"].properties.lev09 + "% susceptibility </br></b>" + geojson.features["0"].properties.name + " county").openPopup();
+    });
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  }); // ends on document ready context 
+
+
+
+  
+  // Stock code for enabling map queries against CARTO server
+  var Map = cdb.core.View.extend({
+    initialize: function() {
+      //CS: console.log("Map.initialize")
+      _.bindAll(this, '_initMap');
+      this.filters = this.options.filters;
+      this._getVizJson();
+      this._bindEvents();
+    },
+
+    _getVizJson: function() {
+      $.ajax({
+      url: 'data.json',
+      success: this._initMap,
+      error: function() {
+        cdb.log.info('problems getting vizjson info, check tools.json url please')
+      }
+      })
+    },
+
+    _initMap: function(data) {
+      var self = this;
+      cartodb.createVis(this.$el, data.vizjson, {search: true})
+      .done(function(vis, layers) {
+        self.layers = layers[1];
+        self.map = vis.getNativeMap();
+        var v = cdb.vis.Overlay.create('search', map.viz, {});
+      });
+    },
+
+    _bindEvents: function() {
+      this.filters.bind('change', this._changeLayerGroup, this);
+    },
+
+    _changeLayerGroup: function(layers) {
+      var self = this;
+
+      _.each(layers, function(opts, i) {
+      var pos = i.split('-')[1];
+      var sublayer = self.layers.getSubLayer(pos);
+
+      if (sublayer) {
+        sublayer.set(opts);
+      }
+      });
+    }
+  })
+  // More stock code
+  var Filters = cdb.core.View.extend({
+    initialize: function() {
+      //CS: console.log("Filters.initialize")
+      _.bindAll(this, 'render');
+      this._getActions();
+    },
+    render: function(data) {
+      this.clearSubViews();
+      var self = this;
+      if (!data.interactions) return false;
+      var buttons = data.interactions;
+      for (var i = 0, l = buttons.length; i < l; i++) {
+      var a = new FiltersItem({ data: buttons[i] });
+      a.bind('change', this._triggerChange, this)
+      self.addView(a);
+      self.$('ul').append(a.render().el);
+      }
+      return this;
+    },
+
+    _triggerChange: function(d) {
+      this._setSelectedFilter(d);
+      this.trigger('change', d.layers, this);
+    },
+
+    _setSelectedFilter: function(d) {
+      this.$('ul li a').removeClass('selected');
+      this.$('ul li a').each(function(i,a) {
+      if ($(a).text() == d.text && $(a).attr('class') == d.className) {
+        $(a).addClass('selected')
+      }
+      })
+    },
+
+    _getActions: function() {
+      $.ajax({
+      url: 'data.json',
+      success: this.render,
+      error: function() {
+        cdb.log.info('oh no!, check your json location or if you are using a web server (Apache?)')
+      }
+      })
+    }
+  })
+
+    </script>
+  </body>
 </html>

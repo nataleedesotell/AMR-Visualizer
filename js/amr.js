@@ -95,8 +95,13 @@ var sql2;
   
 function showFeature(cartodb_id) {
     sql2.execute("SELECT * from amrviz WHERE cartodb_id = {{cartodb_id}}", {cartodb_id: cartodb_id} 
-    // The below line was used in the previous example, it explicitly calls for only the_geom (which is the geometry object), thus no other attributes were returned. Open the console to see the object that is returned, it will now include all attribute values for the table at the "features" > "0" > "properties" position.
-    //The old SQL call... sql2.execute("SELECT SELECT the_geom from wi_county_bnds WHERE cartodb_id = {{cartodb_id}}", {cartodb_id: cartodb_id}
+    // The below line was used in the previous example, it explicitly calls 
+    //for only the_geom (which is the geometry object), thus no other attributes 
+    //were returned. Open the console to see the object that is returned, it will 
+    //now include all attribute values for the table at the "features" > "0" > "properties" position.
+    //The old SQL call... sql2.execute("SELECT SELECT the_geom from wi_county_bnds 
+    //WHERE cartodb_id = {{cartodb_id}}", {cartodb_id: cartodb_id}
+    
   ).done(function(geojson) {
       if (polygon) {
         map.removeLayer(polygon);

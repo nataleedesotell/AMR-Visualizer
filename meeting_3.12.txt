@@ -1,3 +1,13 @@
+MEETING 3/5/2018
+-become more acquainted with jQuery
+	-selections: select an element by its id or class name
+	-classes are .classname, id #id
+-simplify map
+
+MARCH 12th - 10CT / 11 ET
+
+
+
 NOTES
 3/11/2018
 
@@ -7,3 +17,4 @@ NOTES
 
 -Change legend to vertical, I think... or get each part to have a label.
 
+-Add about and contact pages (last thing before meeting)
