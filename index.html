@@ -128,7 +128,7 @@ body {
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">AMR Visualizer</a>
+          <a class="navbar-brand" href="#">Antimicrobial Resistance Visualizer</a>
         </div>
         <div id="navbar" class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
@@ -148,7 +148,8 @@ body {
 
       <!-- start year dropdown -->
       <div class="dropdown">
-        <button class="btn btn-dark dropdown-toggle" type="button" data-toggle="dropdown">Year
+        <p>YEAR</p>
+        <button class="btn btn-dark dropdown-toggle" type="button" data-toggle="dropdown">2015
         <span class="caret"></span></button>
         <ul class="dropdown-menu">
           <li id = "2009drop"><a href="#">2009</a></li>
@@ -164,7 +165,8 @@ body {
 
         <!-- start drug dropdown -->
         <div class="dropdown">
-          <button class="btn btn-dark dropdown-toggle" type="button" data-toggle="dropdown">Antibiotic
+         <p>ANTIBIOTIC</p>
+          <button class="btn btn-dark dropdown-toggle" type="button" data-toggle="dropdown">Ciprofloxacin
           <span class="caret"></span></button>
           <ul class="dropdown-menu">
             <li id="amxdrop"><a href="#">Amoxicillin</a></li>
@@ -197,8 +199,11 @@ var currentYear = 2015;
 var currentDrug = "Ciprofloxacin";
 
 
-// 2009 COLORS // 
+///////////////////////////////////////////////////////////
+///////////////// COLORS/////// ///////////////////////////
+///////////////////////////////////////////////////////////
 
+// 2009 COLORS // 
 var cip09colors = '#layer {' +
         'polygon-fill: #CCCCCC;' +
         'polygon-opacity: 0.9;' +
@@ -666,6 +671,9 @@ var lev15colors = '#layer {' +
 // END LAYER COLORS
 
 
+///////////////////////////////////////////////////////////
+///////////////// LOAD MAP //// ///////////////////////////
+///////////////////////////////////////////////////////////
 
   //jquery document ready statement (wraps all JS), prevents jQuery code from running before the document is finished loading 
   $( document ).ready(function() {
@@ -687,6 +695,12 @@ var lev15colors = '#layer {' +
       attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="http://cartodb.com/attributions">CartoDB</a>'
     }).addTo(map);
     drawLegend();
+
+
+
+///////////////////////////////////////////////////////////
+///////////////// DROPDOWNS /// ///////////////////////////
+///////////////////////////////////////////////////////////
 
 
     // have the dropdown display the currently selected year and drug
@@ -726,7 +740,6 @@ var lev15colors = '#layer {' +
     e.preventDefault();
     });
 
-
     $("#levdrop").click(function(e){
     currentDrug = "Levofloxacin";
     showLev();
@@ -734,15 +747,12 @@ var lev15colors = '#layer {' +
     e.preventDefault();
     });
 
-
-
     $("#nitdrop").click(function(e){
     currentDrug = "Nitrofurantoin";
     showNit();
     // console.log(currentDrug + " was clicked");
     // e.preventDefault();
     });
-
 
     $("#2009drop").click(function(e){
     currentYear = 2009;
@@ -752,7 +762,6 @@ var lev15colors = '#layer {' +
     // e.preventDefault();
     });
 
-
     $("#2013drop").click(function(e){
     currentYear = 2013;
     selectDrug();
@@ -761,8 +770,6 @@ var lev15colors = '#layer {' +
     // e.preventDefault();
     });
 
-
-
     $("#2015drop").click(function(e){
     currentYear = 2015;
     selectDrug();
@@ -770,7 +777,6 @@ var lev15colors = '#layer {' +
     // console.log("current year is " + currentYear)
     // e.preventDefault();
     });
-
 
 function selectDrug() {
   console.log("selectDrug was called");
@@ -1281,6 +1287,10 @@ function updateTitle() {
 
 
 
+///////////////////////////////////////////////////////////
+///////////////// LEGEND ////// ///////////////////////////
+///////////////////////////////////////////////////////////
+
 // Colors:
 // #50B848
 // #BCDDA1
@@ -1326,7 +1336,7 @@ function onPolyClick(e, latln, pxPos, data, layer){
 
 
 ///////////////////////////////////////////////////////////
-///////////////// START TOOLTIPS //////////////////////////
+/////////////////////// TOOLTIPS //////////////////////////
 ///////////////////////////////////////////////////////////
 
 
@@ -1415,8 +1425,6 @@ function showFeatureTri09(cartodb_id) {
     });
   }
 
-
-
 // CIPROFLOXACIN 2009 TOOLTIP
 function showFeatureCip09(cartodb_id) {
     sql2.execute("SELECT * from amrviz WHERE cartodb_id = {{cartodb_id}}", {cartodb_id: cartodb_id} 
@@ -1437,7 +1445,6 @@ function showFeatureCip09(cartodb_id) {
     });
   }
 
-
 // LEVOFLOXACIN 2009 TOOLTIP
 function showFeatureLev09(cartodb_id) {
     sql2.execute("SELECT * from amrviz WHERE cartodb_id = {{cartodb_id}}", {cartodb_id: cartodb_id} 
@@ -1457,7 +1464,6 @@ function showFeatureLev09(cartodb_id) {
       }).addTo(map).bindPopup("<b>" + geojson.features["0"].properties.lev09 + "% susceptibility </br></b>" + geojson.features["0"].properties.name + " county").openPopup();
     });
   }
-
 
 ///2013 Tooltips
 // NITROFURANTOIN 2013 TOOLTIP
@@ -1631,7 +1637,6 @@ function showFeatureAmp15(cartodb_id) {
     });
   }
 
-
   // AMOXICILLIN 2015 TOOLTIP
 function showFeatureAmx15(cartodb_id) {
     sql2.execute("SELECT * from amrviz WHERE cartodb_id = {{cartodb_id}}", {cartodb_id: cartodb_id} 
@@ -1653,7 +1658,6 @@ function showFeatureAmx15(cartodb_id) {
     });
   }
 
-
   // TRIMETHROPRIM 2015 TOOLTIP
 function showFeatureTri15(cartodb_id) {
     sql2.execute("SELECT * from amrviz WHERE cartodb_id = {{cartodb_id}}", {cartodb_id: cartodb_id} 
@@ -1674,8 +1678,6 @@ function showFeatureTri15(cartodb_id) {
       }).addTo(map).bindPopup("<b>" + geojson.features["0"].properties.tri15 + "% susceptibility </br></b>" + geojson.features["0"].properties.name + " county").openPopup();
     });
   }
-
-
 
 // CIPROFLOXACIN 2015 TOOLTIP
 function showFeatureCip15(cartodb_id) {
@@ -1718,25 +1720,12 @@ function showFeatureLev15(cartodb_id) {
     });
   }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   }); // ends on document ready context 
 
 
-
+///////////////////////////////////////////////////////////
+///////////////// STOCK CODE // ///////////////////////////
+///////////////////////////////////////////////////////////
   
   // Stock code for enabling map queries against CARTO server
   var Map = cdb.core.View.extend({
