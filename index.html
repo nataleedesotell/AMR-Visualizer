@@ -663,6 +663,7 @@ var lev15colors = '#layer {' +
         'polygon-fill: #CF3D96;' +
       '}';
 
+// END LAYER COLORS
 
 
 
@@ -674,6 +675,11 @@ var lev15colors = '#layer {' +
       center: [44.4,-90.0],
       zoom: 7
     });
+
+    var currentYear = 2015;
+    var currentDrug = "Ciprofloxacin";
+    showCip();
+    //show Ciprofloxacin 2015 on load
     
     sql2 = new cartodb.SQL({ user: 'nrobson', format: 'geojson' });
     
@@ -683,127 +689,131 @@ var lev15colors = '#layer {' +
     drawLegend();
 
 
+    // have the dropdown display the currently selected year and drug
+    $(".dropdown-menu li a").click(function(){
+    $(this).parents(".dropdown").find('.btn').html($(this).text() + ' <span class="caret"></span>');
+    $(this).parents(".dropdown").find('.btn').val($(this).data('value'));
+  });
+
+
     $("#tridrop").click(function(e){
-    var currentDrug = "Trimethroprim";
+    currentDrug = "Trimethroprim";
     showTri();
-    console.log("trimethroprim was clicked!");
+    // console.log(currentDrug + " was clicked");
     e.preventDefault();
     });
 
     $("#cipdrop").click(function(e){
-    var currentDrug = "Ciprofloxacin";
+    currentDrug = "Ciprofloxacin";
     showCip();
-    console.log("Ciprofloxacin was clicked!");
+    // console.log(currentDrug + " was clicked");
     e.preventDefault();
     });
 
 
     $("#ampdrop").click(function(e){
-    var currentDrug = "Ampicillin";
+    currentDrug = "Ampicillin";
     showAmp();
-    console.log("Ampicillin was clicked!");
+    // console.log(currentDrug + " was clicked");
     e.preventDefault();
     });
 
 
     $("#amxdrop").click(function(e){
-    var currentDrug = "Amoxicillin";
+    currentDrug = "Amoxicillin";
     showAmx();
-    console.log("Amoxicillin was clicked!");
+    console.log(currentDrug + " was clicked");
     e.preventDefault();
     });
 
 
     $("#levdrop").click(function(e){
-    var currentDrug = "Levofloxacin";
+    currentDrug = "Levofloxacin";
     showLev();
-    console.log("Levofloxacin was clicked!");
+    console.log(currentDrug + " was clicked");
     e.preventDefault();
     });
 
 
 
     $("#nitdrop").click(function(e){
-    var currentDrug = "Nitrofurantoin";
+    currentDrug = "Nitrofurantoin";
     showNit();
-    console.log("Nitrofurantoin was clicked!");
-    e.preventDefault();
+    // console.log(currentDrug + " was clicked");
+    // e.preventDefault();
     });
 
 
     $("#2009drop").click(function(e){
     currentYear = 2009;
-    console.log("2009 was clicked!");
-    console.log("current year is " + currentYear)
-    // changeYear();
-    e.preventDefault();
+    selectDrug();
+    console.log(currentDrug);
+    // console.log("current year is " + currentYear)
+    // e.preventDefault();
     });
 
 
     $("#2013drop").click(function(e){
     currentYear = 2013;
-    console.log("2013 was clicked!");
-    console.log("current year is " + currentYear)
-    // changeYear();
-    e.preventDefault();
+    selectDrug();
+    console.log(currentDrug);
+    // console.log("current year is " + currentYear)
+    // e.preventDefault();
     });
 
 
 
     $("#2015drop").click(function(e){
     currentYear = 2015;
-    console.log("2015 was clicked!");
-    // changeYear();
-    console.log("current year is " + currentYear)
-    e.preventDefault();
+    selectDrug();
+    console.log(currentDrug);
+    // console.log("current year is " + currentYear)
+    // e.preventDefault();
     });
+
+
+function selectDrug() {
+  console.log("selectDrug was called");
+if (currentDrug === "Nitrofurantoin") {
+    // console.log(currentDrug + " was called");
+    console.log("made it to selectDrug >> Nitro");
+    showNit();
+} else if (currentDrug === "Trimethroprim") {
+    // console.log(currentDrug + " was called");
+    showTri();
+} else if (currentDrug === "Ciprofloxacin") {
+    // console.log(currentDrug + " was called");
+    showCip();
+} else if (currentDrug === "Levofloxacin") {
+    // console.log(currentDrug + " was called");
+    showLev();
+} else if (currentDrug === "Amoxicillin") {
+    // console.log(currentDrug + " was called");
+    showAmx();
+} else if (currentDrug === "Ampicillin") {
+    // console.log(currentDrug + " was called");
+    showAmp();
+} else {
+  console.log("Error selecting drug")
+}
+};
 
 ///////////////////////////////////////////////////////////
 ///////////////// MAP FUNCTIONS ///////////////////////////
 ///////////////////////////////////////////////////////////
 
 
-// AMOXICILLIN
-
-
-
-// function changeYear() {
-// if (currentYear === 2009) {
-// ///CODE FOR AMOXICILLIN 2009
-// console.log("current year is 2009")
-//  ;
-// } else if (currentYear === 2013) {
-// ///CODE FOR AMOXICILLIN IN 2013
-// console.log("current year is 2013")
-//  ;
-// } 
-// else if (currentYear === 2015) {
-// console.log("current year is 2015")
-// ///CODE FOR AMOXICILLIN IN 2013
-//     ;
-// } else {
-//     greeting = "error";
-// }
-// };
-
-
 // When creating new layers, they will essentially get stacked upon one another and will obfuscate one another. To avoid a huge pileup of tile layers, it is necessary to manage them once they are created. See the attached code for more about how to hide (e.g. cipLayer.getSubLayer(0).hide();) and show (cipLayer.getSubLayer(0).show();) a layer after it is created.
-
-
-//SHOW AMOXICILLIN
-
 
 function showAmx() {
 if (currentYear === 2009) {
-// ///CODE FOR AMOXICILLIN 2009
-    console.log("showAmx 2009 function called");
+    console.log("Amoxicillin 2009 function called");
     var amx09 = cartodb.createLayer(map, {
     user_name: 'nrobson',
     type: 'cartodb',
     sublayers: [{
       sql: 'SELECT * FROM amrviz',
       cartocss: amx09colors,
-      //QUESTION: What does 'Interactivity' do? 
       interactivity: ['cartodb_id', 'amx09'],
       layerIndex:1
     }]
@@ -818,18 +828,15 @@ if (currentYear === 2009) {
         showFeatureAmx09(data.cartodb_id);
       });
     })
-console.log("current year is 2009")
  ;
 } else if (currentYear === 2013) {
-///CODE FOR AMOXICILLIN IN 2013
-    console.log("showAmx 2013 function called");
+    console.log("Amoxicillin 2013 function called");
     var amx13 = cartodb.createLayer(map, {
     user_name: 'nrobson',
     type: 'cartodb',
     sublayers: [{
       sql: 'SELECT * FROM amrviz',
       cartocss: amx13colors,
-      //QUESTION: What does 'Interactivity' do? 
       interactivity: ['cartodb_id', 'amx13'],
       layerIndex:1
     }]
@@ -844,20 +851,16 @@ console.log("current year is 2009")
         showFeatureAmx13(data.cartodb_id);
       });
     })
-console.log("current year is 2013")
-
  ;
 } 
 else if (currentYear === 2015) {
-///CODE FOR AMOXICILLIN IN 2013
-    console.log("showAmx 2015 function called");
+    console.log("Amoxicillin 2015 function called");
     var amx15 = cartodb.createLayer(map, {
     user_name: 'nrobson',
     type: 'cartodb',
     sublayers: [{
       sql: 'SELECT * FROM amrviz',
       cartocss: amx15colors,
-      //QUESTION: What does 'Interactivity' do? 
       interactivity: ['cartodb_id', 'amx15'],
       layerIndex:1
     }]
@@ -872,23 +875,22 @@ else if (currentYear === 2015) {
         showFeatureAmx15(data.cartodb_id);
       });
     })
-console.log("current year is 2015")
     ;
 } else {
-    greeting = "error";
+    console.log("error");
 }
 };
 
-
-//SHOW CIPROFLOXACIN
 function showCip() {
+if (currentYear === 2009) {
+    console.log("Ciprofloxacin 2009 function called");
+    var currentDrug = "Ciprofloxacin";
     var cip09 = cartodb.createLayer(map, {
     user_name: 'nrobson',
     type: 'cartodb',
     sublayers: [{
       sql: 'SELECT * FROM amrviz',
       cartocss: cip09colors,
-      //QUESTION: What does 'Interactivity' do? 
       interactivity: ['cartodb_id', 'cip09'],
       layerIndex:1
     }]
@@ -903,17 +905,72 @@ function showCip() {
         showFeatureCip09(data.cartodb_id);
       });
     })
+ ;
+} else if (currentYear === 2013) {
+    console.log("Ciprofloxacin 2013 function called");
+    var currentDrug = "Ciprofloxacin";
+    var cip13 = cartodb.createLayer(map, {
+    user_name: 'nrobson',
+    type: 'cartodb',
+    sublayers: [{
+      sql: 'SELECT * FROM amrviz',
+      cartocss: cip13colors,
+      interactivity: ['cartodb_id', 'cip13'],
+      layerIndex:1
+    }]
+    },{ https: true })
+    .addTo(map)
+    .done(function(layer) {
+      layer.setInteraction(true);
+      //layer.bind('featureOver', onPolyOver)
+      //layer.bind('featureOut', onPolyOut)
+      layer.bind('featureClick', onPolyClick)
+      layer.bind('featureClick',function(e, pos, latlng, data) {
+        showFeatureCip13(data.cartodb_id);
+      });
+    })
+
+ ;
+} 
+else if (currentYear === 2015) {
+    console.log("Ciprofloxacin 2015 function called");
+    var currentDrug = "Ciprofloxacin";
+    var cip15 = cartodb.createLayer(map, {
+    user_name: 'nrobson',
+    type: 'cartodb',
+    sublayers: [{
+      sql: 'SELECT * FROM amrviz',
+      cartocss: cip15colors,
+      interactivity: ['cartodb_id', 'cip15'],
+      layerIndex:1
+    }]
+    },{ https: true })
+    .addTo(map)
+    .done(function(layer) {
+      layer.setInteraction(true);
+      //layer.bind('featureOver', onPolyOver)
+      //layer.bind('featureOut', onPolyOut)
+      layer.bind('featureClick', onPolyClick)
+      layer.bind('featureClick',function(e, pos, latlng, data) {
+        showFeatureCip15(data.cartodb_id);
+      });
+    })
+    ;
+} else {
+    console.log("error");
+}
 };
 
-//SHOW AMPICILLIN
 function showAmp() {
+if (currentYear === 2009) {
+    console.log("Ampicillin 2009 function called");
+    var currentDrug = "Ampicillin";
     var amp09 = cartodb.createLayer(map, {
     user_name: 'nrobson',
     type: 'cartodb',
     sublayers: [{
       sql: 'SELECT * FROM amrviz',
       cartocss: amp09colors,
-      //QUESTION: What does 'Interactivity' do? 
       interactivity: ['cartodb_id', 'amp09'],
       layerIndex:1
     }]
@@ -928,17 +985,70 @@ function showAmp() {
         showFeatureAmp09(data.cartodb_id);
       });
     })
+ ;
+} else if (currentYear === 2013) {
+    console.log("Ampicillin 2013 function called");
+    var amp13 = cartodb.createLayer(map, {
+    user_name: 'nrobson',
+    type: 'cartodb',
+    sublayers: [{
+      sql: 'SELECT * FROM amrviz',
+      cartocss: amp13colors,
+      interactivity: ['cartodb_id', 'amp13'],
+      layerIndex:1
+    }]
+    },{ https: true })
+    .addTo(map)
+    .done(function(layer) {
+      layer.setInteraction(true);
+      //layer.bind('featureOver', onPolyOver)
+      //layer.bind('featureOut', onPolyOut)
+      layer.bind('featureClick', onPolyClick)
+      layer.bind('featureClick',function(e, pos, latlng, data) {
+        showFeatureAmp13(data.cartodb_id);
+      });
+    })
+
+ ;
+} 
+else if (currentYear === 2015) {
+    console.log("Ampicillin 2015 function called");
+    var amp15 = cartodb.createLayer(map, {
+    user_name: 'nrobson',
+    type: 'cartodb',
+    sublayers: [{
+      sql: 'SELECT * FROM amrviz',
+      cartocss: amp15colors,
+      interactivity: ['cartodb_id', 'amp15'],
+      layerIndex:1
+    }]
+    },{ https: true })
+    .addTo(map)
+    .done(function(layer) {
+      layer.setInteraction(true);
+      //layer.bind('featureOver', onPolyOver)
+      //layer.bind('featureOut', onPolyOut)
+      layer.bind('featureClick', onPolyClick)
+      layer.bind('featureClick',function(e, pos, latlng, data) {
+        showFeatureAmp15(data.cartodb_id);
+      });
+    })
+    ;
+} else {
+    console.log("error");
+}
 };
 
 //SHOW NITROFURANTOIN
 function showNit() {
+if (currentYear === 2009) {
+    console.log("Nitrofurantoin 2009 function called");
     var nit09 = cartodb.createLayer(map, {
     user_name: 'nrobson',
     type: 'cartodb',
     sublayers: [{
       sql: 'SELECT * FROM amrviz',
       cartocss: nit09colors,
-      //QUESTION: What does 'Interactivity' do? 
       interactivity: ['cartodb_id', 'nit09'],
       layerIndex:1
     }]
@@ -953,19 +1063,71 @@ function showNit() {
         showFeatureNit09(data.cartodb_id);
       });
     })
+ ;
+} else if (currentYear === 2013) {
+    console.log("Nitrofurantoin 2013 function called");
+    var nit13 = cartodb.createLayer(map, {
+    user_name: 'nrobson',
+    type: 'cartodb',
+    sublayers: [{
+      sql: 'SELECT * FROM amrviz',
+      cartocss: nit13colors,
+      interactivity: ['cartodb_id', 'nit13'],
+      layerIndex:1
+    }]
+    },{ https: true })
+    .addTo(map)
+    .done(function(layer) {
+      layer.setInteraction(true);
+      //layer.bind('featureOver', onPolyOver)
+      //layer.bind('featureOut', onPolyOut)
+      layer.bind('featureClick', onPolyClick)
+      layer.bind('featureClick',function(e, pos, latlng, data) {
+        showFeatureNit13(data.cartodb_id);
+      });
+    })
+ ;
+} 
+else if (currentYear === 2015) {
+    console.log("Nitrofurantoin 2015 function called");
+    var nit15 = cartodb.createLayer(map, {
+    user_name: 'nrobson',
+    type: 'cartodb',
+    sublayers: [{
+      sql: 'SELECT * FROM amrviz',
+      cartocss: nit15colors,
+      interactivity: ['cartodb_id', 'nit15'],
+      layerIndex:1
+    }]
+    },{ https: true })
+    .addTo(map)
+    .done(function(layer) {
+      layer.setInteraction(true);
+      //layer.bind('featureOver', onPolyOver)
+      //layer.bind('featureOut', onPolyOut)
+      layer.bind('featureClick', onPolyClick)
+      layer.bind('featureClick',function(e, pos, latlng, data) {
+        showFeatureNit15(data.cartodb_id);
+      });
+    })
+    ;
+} else {
+    console.log("error");
+}
 };
+
 
 
 //SHOW TRIMETHROPRIM
 function showTri() {
-
+if (currentYear === 2009) {
+    console.log("Trimethroprim 2009 function called");
     var tri09 = cartodb.createLayer(map, {
     user_name: 'nrobson',
     type: 'cartodb',
     sublayers: [{
       sql: 'SELECT * FROM amrviz',
       cartocss: tri09colors,
-      //QUESTION: What does 'Interactivity' do? 
       interactivity: ['cartodb_id', 'tri09'],
       layerIndex:1
     }]
@@ -978,20 +1140,72 @@ function showTri() {
       layer.bind('featureClick', onPolyClick)
       layer.bind('featureClick',function(e, pos, latlng, data) {
         showFeatureTri09(data.cartodb_id);
-
       });
     })
+ ;
+} else if (currentYear === 2013) {
+    console.log("Trimethroprim 2013 function called");
+    var tri13 = cartodb.createLayer(map, {
+    user_name: 'nrobson',
+    type: 'cartodb',
+    sublayers: [{
+      sql: 'SELECT * FROM amrviz',
+      cartocss: tri13colors,
+      interactivity: ['cartodb_id', 'tri13'],
+      layerIndex:1
+    }]
+    },{ https: true })
+    .addTo(map)
+    .done(function(layer) {
+      layer.setInteraction(true);
+      //layer.bind('featureOver', onPolyOver)
+      //layer.bind('featureOut', onPolyOut)
+      layer.bind('featureClick', onPolyClick)
+      layer.bind('featureClick',function(e, pos, latlng, data) {
+        showFeatureTri13(data.cartodb_id);
+      });
+    })
+ ;
+} 
+else if (currentYear === 2015) {
+    console.log("Trimethroprim 2015 function called");
+    var tri15 = cartodb.createLayer(map, {
+    user_name: 'nrobson',
+    type: 'cartodb',
+    sublayers: [{
+      sql: 'SELECT * FROM amrviz',
+      cartocss: tri15colors,
+      interactivity: ['cartodb_id', 'tri15'],
+      layerIndex:1
+    }]
+    },{ https: true })
+    .addTo(map)
+    .done(function(layer) {
+      layer.setInteraction(true);
+      //layer.bind('featureOver', onPolyOver)
+      //layer.bind('featureOut', onPolyOut)
+      layer.bind('featureClick', onPolyClick)
+      layer.bind('featureClick',function(e, pos, latlng, data) {
+        showFeatureTri15(data.cartodb_id);
+      });
+    })
+    ;
+} else {
+    console.log("error");
+}
 };
 
-//SHOW TRIMETHROPRIM
+
+//SHOW LEVOFLOXACIN
 function showLev() {
+if (currentYear === 2009) {
+    console.log("Levofloxacin 2009 function called");
     var lev09 = cartodb.createLayer(map, {
     user_name: 'nrobson',
     type: 'cartodb',
     sublayers: [{
       sql: 'SELECT * FROM amrviz',
       cartocss: lev09colors,
-      //QUESTION: What does 'Interactivity' do? 
       interactivity: ['cartodb_id', 'lev09'],
       layerIndex:1
     }]
@@ -1006,7 +1220,66 @@ function showLev() {
         showFeatureLev09(data.cartodb_id);
       });
     })
+ ;
+} else if (currentYear === 2013) {
+    console.log("Levofloxacin 2013 function called");
+    var lev13 = cartodb.createLayer(map, {
+    user_name: 'nrobson',
+    type: 'cartodb',
+    sublayers: [{
+      sql: 'SELECT * FROM amrviz',
+      cartocss: lev13colors,
+      interactivity: ['cartodb_id', 'lev13'],
+      layerIndex:1
+    }]
+    },{ https: true })
+    .addTo(map)
+    .done(function(layer) {
+      layer.setInteraction(true);
+      //layer.bind('featureOver', onPolyOver)
+      //layer.bind('featureOut', onPolyOut)
+      layer.bind('featureClick', onPolyClick)
+      layer.bind('featureClick',function(e, pos, latlng, data) {
+        showFeatureLev13(data.cartodb_id);
+      });
+    })
+ ;
+} 
+else if (currentYear === 2015) {
+    console.log("Levofloxacin 2015 function called");
+    var lev15 = cartodb.createLayer(map, {
+    user_name: 'nrobson',
+    type: 'cartodb',
+    sublayers: [{
+      sql: 'SELECT * FROM amrviz',
+      cartocss: lev15colors,
+      interactivity: ['cartodb_id', 'lev15'],
+      layerIndex:1
+    }]
+    },{ https: true })
+    .addTo(map)
+    .done(function(layer) {
+      layer.setInteraction(true);
+      //layer.bind('featureOver', onPolyOver)
+      //layer.bind('featureOut', onPolyOut)
+      layer.bind('featureClick', onPolyClick)
+      layer.bind('featureClick',function(e, pos, latlng, data) {
+        showFeatureLev15(data.cartodb_id);
+      });
+    })
+    ;
+} else {
+    console.log("error");
+}
 };
+
+function updateTitle() {
+
+// a function to update the title with currentYear and currentDrug
+
+};
+
+
 
 // Colors:
 // #50B848
@@ -1029,7 +1302,7 @@ function getColor(d) {
 
 // function to draw the legend
 function drawLegend(cartodb_id) {
-console.log("drawlegend")
+// console.log("drawlegend")
 var legend = L.control({position: 'bottomright'});
 legend.onAdd = function (map) {
     var div = L.DomUtil.create('div', 'info legend'),
@@ -1044,11 +1317,11 @@ legend.onAdd = function (map) {
     return div;
 };
 legend.addTo(map);
-    var legend = $('.legend').html("<h3>Susceptibility</h3>" + currentDrug + currentYear +"</br></br><ul>");     
+    var legend = $('.legend').html("<h3>Susceptibility</h3></br></br><ul>");     
 }
 
 function onPolyClick(e, latln, pxPos, data, layer){
-    console.log(data)
+    // console.log(data)
   }
 
 
@@ -1064,7 +1337,7 @@ function showFeatureNit09(cartodb_id) {
       if (polygon) {
         map.removeLayer(polygon);
       }
-      console.log(geojson)
+      // console.log(geojson)
       polygon = L.geoJson(geojson, { 
         style: {
         color: "#000",
@@ -1084,7 +1357,7 @@ function showFeatureAmp09(cartodb_id) {
       if (polygon) {
         map.removeLayer(polygon);
       }
-      console.log(geojson)
+      // console.log(geojson)
       polygon = L.geoJson(geojson, { 
         style: {
         color: "#000",
@@ -1106,7 +1379,7 @@ function showFeatureAmx09(cartodb_id) {
       if (polygon) {
         map.removeLayer(polygon);
       }
-      console.log(geojson)
+      // console.log(geojson)
       polygon = L.geoJson(geojson, { 
         style: {
         color: "#000",
@@ -1128,7 +1401,7 @@ function showFeatureTri09(cartodb_id) {
       if (polygon) {
         map.removeLayer(polygon);
       }
-      console.log(geojson)
+      // console.log(geojson)
       polygon = L.geoJson(geojson, { 
         style: {
         color: "#000",
@@ -1151,7 +1424,7 @@ function showFeatureCip09(cartodb_id) {
       if (polygon) {
         map.removeLayer(polygon);
       }
-      console.log(geojson)
+      // console.log(geojson)
       polygon = L.geoJson(geojson, { 
         style: {
         color: "#000",
@@ -1172,7 +1445,7 @@ function showFeatureLev09(cartodb_id) {
       if (polygon) {
         map.removeLayer(polygon);
       }
-      console.log(geojson)
+      // console.log(geojson)
       polygon = L.geoJson(geojson, { 
         style: {
         color: "#000",
@@ -1184,6 +1457,267 @@ function showFeatureLev09(cartodb_id) {
       }).addTo(map).bindPopup("<b>" + geojson.features["0"].properties.lev09 + "% susceptibility </br></b>" + geojson.features["0"].properties.name + " county").openPopup();
     });
   }
+
+
+///2013 Tooltips
+// NITROFURANTOIN 2013 TOOLTIP
+function showFeatureNit13(cartodb_id) {
+    sql2.execute("SELECT * from amrviz WHERE cartodb_id = {{cartodb_id}}", {cartodb_id: cartodb_id} 
+  ).done(function(geojson) {
+      if (polygon) {
+        map.removeLayer(polygon);
+      }
+      // console.log(geojson)
+      polygon = L.geoJson(geojson, { 
+        style: {
+        color: "#000",
+        fillColor: "#fff",
+        fillOpacity: 0.0,
+        weight: 2,
+        opacity: 0.65
+        }
+      }).addTo(map).bindPopup("<b>" + geojson.features["0"].properties.nit13 + "% susceptibility </br></b>" + geojson.features["0"].properties.name + " county").openPopup();
+    });
+  }
+
+  // AMPICILLIN 2013 TOOLTIP
+function showFeatureAmp13(cartodb_id) {
+    sql2.execute("SELECT * from amrviz WHERE cartodb_id = {{cartodb_id}}", {cartodb_id: cartodb_id} 
+  ).done(function(geojson) {
+      if (polygon) {
+        map.removeLayer(polygon);
+      }
+      // console.log(geojson)
+      polygon = L.geoJson(geojson, { 
+        style: {
+        color: "#000",
+        fillColor: "#fff",
+        fillOpacity: 0.0,
+        weight: 2,
+        opacity: 0.65
+        }
+        // QUESTION: how do I add logic to the popup? I.e., if null, show "No Data". Else, show % susceptibility.
+      }).addTo(map).bindPopup("<b>" + geojson.features["0"].properties.amp13 + "% susceptibility </br></b>" + geojson.features["0"].properties.name + " county").openPopup();
+    });
+  }
+
+
+  // AMOXICILLIN 2013 TOOLTIP
+function showFeatureAmx13(cartodb_id) {
+    sql2.execute("SELECT * from amrviz WHERE cartodb_id = {{cartodb_id}}", {cartodb_id: cartodb_id} 
+  ).done(function(geojson) {
+      if (polygon) {
+        map.removeLayer(polygon);
+      }
+      // console.log(geojson)
+      polygon = L.geoJson(geojson, { 
+        style: {
+        color: "#000",
+        fillColor: "#fff",
+        fillOpacity: 0.0,
+        weight: 2,
+        opacity: 0.65
+        }
+        // QUESTION: how do I add logic to the popup? I.e., if null, show "No Data". Else, show % susceptibility.
+      }).addTo(map).bindPopup("<b>" + geojson.features["0"].properties.amx13 + "% susceptibility </br></b>" + geojson.features["0"].properties.name + " county").openPopup();
+    });
+  }
+
+
+  // TRIMETHROPRIM 2013 TOOLTIP
+function showFeatureTri13(cartodb_id) {
+    sql2.execute("SELECT * from amrviz WHERE cartodb_id = {{cartodb_id}}", {cartodb_id: cartodb_id} 
+  ).done(function(geojson) {
+      if (polygon) {
+        map.removeLayer(polygon);
+      }
+      // console.log(geojson)
+      polygon = L.geoJson(geojson, { 
+        style: {
+        color: "#000",
+        fillColor: "#fff",
+        fillOpacity: 0.0,
+        weight: 2,
+        opacity: 0.65
+        }
+        // QUESTION: how do I add logic to the popup? I.e., if null, show "No Data". Else, show % susceptibility.
+      }).addTo(map).bindPopup("<b>" + geojson.features["0"].properties.tri13 + "% susceptibility </br></b>" + geojson.features["0"].properties.name + " county").openPopup();
+    });
+  }
+
+
+
+// CIPROFLOXACIN 2013 TOOLTIP
+function showFeatureCip13(cartodb_id) {
+    sql2.execute("SELECT * from amrviz WHERE cartodb_id = {{cartodb_id}}", {cartodb_id: cartodb_id} 
+  ).done(function(geojson) {
+      if (polygon) {
+        map.removeLayer(polygon);
+      }
+      // console.log(geojson)
+      polygon = L.geoJson(geojson, { 
+        style: {
+        color: "#000",
+        fillColor: "#fff",
+        fillOpacity: 0.0,
+        weight: 2,
+        opacity: 0.65
+        }
+      }).addTo(map).bindPopup("<b>" + geojson.features["0"].properties.cip13 + "% susceptibility </br></b>" + geojson.features["0"].properties.name + " county").openPopup();
+    });
+  }
+
+
+// LEVOFLOXACIN 2013 TOOLTIP
+function showFeatureLev13(cartodb_id) {
+    sql2.execute("SELECT * from amrviz WHERE cartodb_id = {{cartodb_id}}", {cartodb_id: cartodb_id} 
+  ).done(function(geojson) {
+      if (polygon) {
+        map.removeLayer(polygon);
+      }
+      // console.log(geojson)
+      polygon = L.geoJson(geojson, { 
+        style: {
+        color: "#000",
+        fillColor: "#fff",
+        fillOpacity: 0.0,
+        weight: 2,
+        opacity: 0.65
+        }
+      }).addTo(map).bindPopup("<b>" + geojson.features["0"].properties.lev13 + "% susceptibility </br></b>" + geojson.features["0"].properties.name + " county").openPopup();
+    });
+  }
+
+//2015 tooltips
+
+// NITROFURANTOIN 2015 TOOLTIP
+function showFeatureNit15(cartodb_id) {
+    sql2.execute("SELECT * from amrviz WHERE cartodb_id = {{cartodb_id}}", {cartodb_id: cartodb_id} 
+  ).done(function(geojson) {
+      if (polygon) {
+        map.removeLayer(polygon);
+      }
+      // console.log(geojson)
+      polygon = L.geoJson(geojson, { 
+        style: {
+        color: "#000",
+        fillColor: "#fff",
+        fillOpacity: 0.0,
+        weight: 2,
+        opacity: 0.65
+        }
+      }).addTo(map).bindPopup("<b>" + geojson.features["0"].properties.nit15 + "% susceptibility </br></b>" + geojson.features["0"].properties.name + " county").openPopup();
+    });
+  }
+
+  // AMPICILLIN 2015 TOOLTIP
+function showFeatureAmp15(cartodb_id) {
+    sql2.execute("SELECT * from amrviz WHERE cartodb_id = {{cartodb_id}}", {cartodb_id: cartodb_id} 
+  ).done(function(geojson) {
+      if (polygon) {
+        map.removeLayer(polygon);
+      }
+      // console.log(geojson)
+      polygon = L.geoJson(geojson, { 
+        style: {
+        color: "#000",
+        fillColor: "#fff",
+        fillOpacity: 0.0,
+        weight: 2,
+        opacity: 0.65
+        }
+        // QUESTION: how do I add logic to the popup? I.e., if null, show "No Data". Else, show % susceptibility.
+      }).addTo(map).bindPopup("<b>" + geojson.features["0"].properties.amp15 + "% susceptibility </br></b>" + geojson.features["0"].properties.name + " county").openPopup();
+    });
+  }
+
+
+  // AMOXICILLIN 2015 TOOLTIP
+function showFeatureAmx15(cartodb_id) {
+    sql2.execute("SELECT * from amrviz WHERE cartodb_id = {{cartodb_id}}", {cartodb_id: cartodb_id} 
+  ).done(function(geojson) {
+      if (polygon) {
+        map.removeLayer(polygon);
+      }
+      // console.log(geojson)
+      polygon = L.geoJson(geojson, { 
+        style: {
+        color: "#000",
+        fillColor: "#fff",
+        fillOpacity: 0.0,
+        weight: 2,
+        opacity: 0.65
+        }
+        // QUESTION: how do I add logic to the popup? I.e., if null, show "No Data". Else, show % susceptibility.
+      }).addTo(map).bindPopup("<b>" + geojson.features["0"].properties.amx15 + "% susceptibility </br></b>" + geojson.features["0"].properties.name + " county").openPopup();
+    });
+  }
+
+
+  // TRIMETHROPRIM 2015 TOOLTIP
+function showFeatureTri15(cartodb_id) {
+    sql2.execute("SELECT * from amrviz WHERE cartodb_id = {{cartodb_id}}", {cartodb_id: cartodb_id} 
+  ).done(function(geojson) {
+      if (polygon) {
+        map.removeLayer(polygon);
+      }
+      // console.log(geojson)
+      polygon = L.geoJson(geojson, { 
+        style: {
+        color: "#000",
+        fillColor: "#fff",
+        fillOpacity: 0.0,
+        weight: 2,
+        opacity: 0.65
+        }
+        // QUESTION: how do I add logic to the popup? I.e., if null, show "No Data". Else, show % susceptibility.
+      }).addTo(map).bindPopup("<b>" + geojson.features["0"].properties.tri15 + "% susceptibility </br></b>" + geojson.features["0"].properties.name + " county").openPopup();
+    });
+  }
+
+
+
+// CIPROFLOXACIN 2015 TOOLTIP
+function showFeatureCip15(cartodb_id) {
+    sql2.execute("SELECT * from amrviz WHERE cartodb_id = {{cartodb_id}}", {cartodb_id: cartodb_id} 
+  ).done(function(geojson) {
+      if (polygon) {
+        map.removeLayer(polygon);
+      }
+      // console.log(geojson)
+      polygon = L.geoJson(geojson, { 
+        style: {
+        color: "#000",
+        fillColor: "#fff",
+        fillOpacity: 0.0,
+        weight: 2,
+        opacity: 0.65
+        }
+      }).addTo(map).bindPopup("<b>" + geojson.features["0"].properties.cip15 + "% susceptibility </br></b>" + geojson.features["0"].properties.name + " county").openPopup();
+    });
+  }
+
+
+// LEVOFLOXACIN 2015 TOOLTIP
+function showFeatureLev15(cartodb_id) {
+    sql2.execute("SELECT * from amrviz WHERE cartodb_id = {{cartodb_id}}", {cartodb_id: cartodb_id} 
+  ).done(function(geojson) {
+      if (polygon) {
+        map.removeLayer(polygon);
+      }
+      // console.log(geojson)
+      polygon = L.geoJson(geojson, { 
+        style: {
+        color: "#000",
+        fillColor: "#fff",
+        fillOpacity: 0.0,
+        weight: 2,
+        opacity: 0.65
+        }
+      }).addTo(map).bindPopup("<b>" + geojson.features["0"].properties.lev15 + "% susceptibility </br></b>" + geojson.features["0"].properties.name + " county").openPopup();
+    });
+  }
+
 
 
 
