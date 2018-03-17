@@ -859,57 +859,75 @@ if (currentDrug === "Nitrofurantoin") {
 function removePrevious() {
     if (cip09Layer != ""){
     cip09Layer.getSubLayer(0).hide();
+    cip09Layer = "";
     console.log("hid cip09Layer");
-} else if (cip13Layer != "") {
+} if (cip13Layer != "") {
     cip13Layer.getSubLayer(0).hide();
+    cip13Layer = "";
     console.log("hid cip13Layer");
-} else if (cip15Layer != "") {
+} if (cip15Layer != "") {
     cip15Layer.getSubLayer(0).hide();
+    cip15Layer = "";
     console.log("hid cip15Layer");
-} else if (amx09Layer != "") {
+} if (amx09Layer != "") {
     amx09Layer.getSubLayer(0).hide();
+    amx09Layer = "";
     console.log("hid amx09Layer");
-} else if (amx13Layer != "") {
+} if (amx13Layer != "") {
     amx13Layer.getSubLayer(0).hide();
+    amx13Layer = "";
     console.log("hid amx13Layer");
-} else if (amx15Layer != "") {
+} if (amx15Layer != "") {
     amx15Layer.getSubLayer(0).hide();
+    amx15Layer = "";
     console.log("hid amx15Layer");
-} else if (tri09Layer != "") {
+} if (tri09Layer != "") {
     tri09Layer.getSubLayer(0).hide();
+    tri09Layer = "";
     console.log("hid tri09Layer");
-} else if (tri13Layer != "") {
+} if (tri13Layer != "") {
     tri13Layer.getSubLayer(0).hide();
+    tri13Layer = "";
     console.log("hid tri13Layer");
-} else if (tri15Layer != "") {
+} if (tri15Layer != "") {
     tri15Layer.getSubLayer(0).hide();
+    tri15Layer = "";
     console.log("hid tri15Layer");
-} else if (amp09Layer != "") {
+} if (amp09Layer != "") {
     amp09Layer.getSubLayer(0).hide();
+    amp09Layer = "";
     console.log("hid amp09Layer");
-} else if (amp13Layer != "") {
+} if (amp13Layer != "") {
     amp13Layer.getSubLayer(0).hide();
+    amp13Layer = "";
     console.log("hid amp13Layer");
-} else if (amp15Layer != "") {
+} if (amp15Layer != "") {
     amp15Layer.getSubLayer(0).hide();
+    amp15Layer = "";
     console.log("hid amp15Layer");
-} else if (nit09Layer != "") {
+} if (nit09Layer != "") {
     nit09Layer.getSubLayer(0).hide();
+    nit09Layer = "";
     console.log("hid nit09Layer");
-} else if (nit13Layer != "") {
+} if (nit13Layer != "") {
     nit13Layer.getSubLayer(0).hide();
+    nit13Layer = "";
     console.log("hid nit13Layer");
-} else if (nit15Layer != "") {
+} if (nit15Layer != "") {
     nit15Layer.getSubLayer(0).hide();
+    nit15Layer = "";
     console.log("hid nit15Layer");
-} else if (lev09Layer != "") {
+} if (lev09Layer != "") {
     lev09Layer.getSubLayer(0).hide();
+    lev09Layer = "";
     console.log("hid lev09Layer");
-} else if (lev13Layer != "") {
+} if (lev13Layer != "") {
     lev13Layer.getSubLayer(0).hide();
+    lev13Layer = "";
     console.log("hid lev13Layer");
-} else if (lev15Layer != "") {
+} if (lev15Layer != "") {
     lev15Layer.getSubLayer(0).hide();
+    tri15Layer = "";
     console.log("hid lev15Layer");
 } else {
     console.log("didn't hide any layers");
@@ -921,7 +939,6 @@ function removePrevious() {
 function showAmx() {
 if (currentYear === 2009) {
     currentMap = "amx09";
-    amx09Layer = layer;
     // console.log(currentMap);
     // console.log("Amoxicillin 2009 function called");
     removePrevious();
@@ -938,6 +955,7 @@ if (currentYear === 2009) {
     .addTo(map)
     .done(function(layer) {
       layer.setInteraction(true);
+      amx09Layer = layer;
       // layer.bind('featureOver', onPolyOver)
       // layer.bind('featureOut', onPolyOut)
       layer.bind('featureClick', onPolyClick)
@@ -949,7 +967,6 @@ if (currentYear === 2009) {
  ;
 } else if (currentYear === 2013) {
     currentMap = "amx13";
-    amx13Layer = layer;
     // console.log(currentMap);
     // console.log("Amoxicillin 2013 function called");
     removePrevious();
@@ -966,6 +983,7 @@ if (currentYear === 2009) {
     .addTo(map)
     .done(function(layer) {
       layer.setInteraction(true);
+      amx13Layer = layer;
       //layer.bind('featureOver', onPolyOver)
       //layer.bind('featureOut', onPolyOut)
       layer.bind('featureClick', onPolyClick)
@@ -977,7 +995,6 @@ if (currentYear === 2009) {
 } 
 else if (currentYear === 2015) {
     currentMap = "amx15";
-    amx15Layer = layer;
     // console.log(currentMap);
     // console.log("Amoxicillin 2015 function called");
     removePrevious();
@@ -994,6 +1011,7 @@ else if (currentYear === 2015) {
     .addTo(map)
     .done(function(layer) {
       layer.setInteraction(true);
+      amx15Layer = layer;
       //layer.bind('featureOver', onPolyOver)
       //layer.bind('featureOut', onPolyOut)
       layer.bind('featureClick', onPolyClick)
@@ -1010,7 +1028,6 @@ else if (currentYear === 2015) {
 function showCip() {
 if (currentYear === 2009) {
     currentMap = "cip09";
-    cip09Layer = layer;
     // console.log(currentMap);
     // console.log("Ciprofloxacin 2009 function called");
     removePrevious();
@@ -1030,6 +1047,7 @@ if (currentYear === 2009) {
       layer.setInteraction(true);
       //layer.bind('featureOver', onPolyOver)
       //layer.bind('featureOut', onPolyOut)
+      cip09Layer = layer;
       layer.bind('featureClick', onPolyClick)
       layer.bind('featureClick',function(e, pos, latlng, data) {
         showFeatureCip09(data.cartodb_id);
@@ -1038,7 +1056,6 @@ if (currentYear === 2009) {
  ;
 } else if (currentYear === 2013) {
     currentMap = "cip13";
-    cip13Layer = layer;
     // console.log(currentMap);
     // console.log("Ciprofloxacin 2013 function called");
     removePrevious();
@@ -1058,6 +1075,7 @@ if (currentYear === 2009) {
       layer.setInteraction(true);
       //layer.bind('featureOver', onPolyOver)
       //layer.bind('featureOut', onPolyOut)
+      cip13Layer = layer;
       layer.bind('featureClick', onPolyClick)
       layer.bind('featureClick',function(e, pos, latlng, data) {
         showFeatureCip13(data.cartodb_id);
@@ -1068,7 +1086,6 @@ if (currentYear === 2009) {
 } 
 else if (currentYear === 2015) {
     currentMap = "cip15";
-    cip15Layer = layer;
     // console.log(currentMap);
     // console.log("Ciprofloxacin 2015 function called");
     removePrevious();
@@ -1088,6 +1105,7 @@ else if (currentYear === 2015) {
       layer.setInteraction(true);
       //layer.bind('featureOver', onPolyOver)
       //layer.bind('featureOut', onPolyOut)
+      cip15Layer = layer;
       layer.bind('featureClick', onPolyClick)
       layer.bind('featureClick',function(e, pos, latlng, data) {
         showFeatureCip15(data.cartodb_id);
@@ -1103,7 +1121,6 @@ function showAmp() {
 
 if (currentYear === 2009) {
     currentMap = "amp09";
-    amp09Layer = layer;
     // console.log(currentMap);
     // console.log("Ampicillin 2009 function called");
     removePrevious();
@@ -1121,6 +1138,7 @@ if (currentYear === 2009) {
     .addTo(map)
     .done(function(layer) {
       layer.setInteraction(true);
+      amp09Layer = layer;
       //layer.bind('featureOver', onPolyOver)
       //layer.bind('featureOut', onPolyOut)
       layer.bind('featureClick', onPolyClick)
@@ -1131,7 +1149,6 @@ if (currentYear === 2009) {
  ;
 } else if (currentYear === 2013) {
     currentMap = "amp13";
-    amp13Layer = layer;
     // console.log(currentMap);
     // console.log("Ampicillin 2013 function called");
     removePrevious();
@@ -1150,6 +1167,7 @@ if (currentYear === 2009) {
       layer.setInteraction(true);
       //layer.bind('featureOver', onPolyOver)
       //layer.bind('featureOut', onPolyOut)
+      amp13Layer = layer;
       layer.bind('featureClick', onPolyClick)
       layer.bind('featureClick',function(e, pos, latlng, data) {
         showFeatureAmp13(data.cartodb_id);
@@ -1160,7 +1178,6 @@ if (currentYear === 2009) {
 } 
 else if (currentYear === 2015) {
     currentMap = "amp15";
-    amp15Layer = layer;
     // console.log(currentMap);
     // console.log("Ampicillin 2015 function called");
     removePrevious();
@@ -1179,6 +1196,7 @@ else if (currentYear === 2015) {
       layer.setInteraction(true);
       //layer.bind('featureOver', onPolyOver)
       //layer.bind('featureOut', onPolyOut)
+      amp15Layer = layer;
       layer.bind('featureClick', onPolyClick)
       layer.bind('featureClick',function(e, pos, latlng, data) {
         showFeatureAmp15(data.cartodb_id);
@@ -1194,7 +1212,6 @@ else if (currentYear === 2015) {
 function showNit() {
 if (currentYear === 2009) {
     currentMap = "nit09";    
-    nit09Layer = layer;
     // console.log(currentMap);
     // console.log("Nitrofurantoin 2009 function called");
     removePrevious();
@@ -1213,6 +1230,7 @@ if (currentYear === 2009) {
       layer.setInteraction(true);
       //layer.bind('featureOver', onPolyOver)
       //layer.bind('featureOut', onPolyOut)
+      nit09Layer = layer;
       layer.bind('featureClick', onPolyClick)
       layer.bind('featureClick',function(e, pos, latlng, data) {
         showFeatureNit09(data.cartodb_id);
@@ -1221,7 +1239,6 @@ if (currentYear === 2009) {
  ;
 } else if (currentYear === 2013) {
     currentMap = "nit13";
-    nit13Layer = layer;
     // console.log(currentMap);
     // console.log("Nitrofurantoin 2013 function called");
     removePrevious();
@@ -1240,6 +1257,7 @@ if (currentYear === 2009) {
       layer.setInteraction(true);
       //layer.bind('featureOver', onPolyOver)
       //layer.bind('featureOut', onPolyOut)
+      nit13Layer = layer;
       layer.bind('featureClick', onPolyClick)
       layer.bind('featureClick',function(e, pos, latlng, data) {
         showFeatureNit13(data.cartodb_id);
@@ -1249,7 +1267,6 @@ if (currentYear === 2009) {
 } 
 else if (currentYear === 2015) {
     currentMap = "nit15";
-    nit15Layer = layer;
     // console.log(currentMap);
     // console.log("Nitrofurantoin 2015 function called");
     removePrevious();
@@ -1268,6 +1285,7 @@ else if (currentYear === 2015) {
       layer.setInteraction(true);
       //layer.bind('featureOver', onPolyOver)
       //layer.bind('featureOut', onPolyOut)
+      nit15Layer = layer;
       layer.bind('featureClick', onPolyClick)
       layer.bind('featureClick',function(e, pos, latlng, data) {
         showFeatureNit15(data.cartodb_id);
@@ -1279,13 +1297,10 @@ else if (currentYear === 2015) {
 }
 };
 
-
-
 //SHOW TRIMETHROPRIM
 function showTri() {
 if (currentYear === 2009) {
     currentMap = "tri09";
-    tri09Layer = layer;
     // console.log(currentMap);
     // console.log("Trimethroprim 2009 function called");
     removePrevious();
@@ -1304,6 +1319,7 @@ if (currentYear === 2009) {
       layer.setInteraction(true);
       //layer.bind('featureOver', onPolyOver)
       //layer.bind('featureOut', onPolyOut)
+      tri09Layer = layer;
       layer.bind('featureClick', onPolyClick)
       layer.bind('featureClick',function(e, pos, latlng, data) {
         showFeatureTri09(data.cartodb_id);
@@ -1312,7 +1328,6 @@ if (currentYear === 2009) {
  ;
 } else if (currentYear === 2013) {
     currentMap = "tri13";
-    tri13Layer = layer;
     // console.log(currentMap);
     // console.log("Trimethroprim 2013 function called");
     removePrevious();
@@ -1331,6 +1346,7 @@ if (currentYear === 2009) {
       layer.setInteraction(true);
       //layer.bind('featureOver', onPolyOver)
       //layer.bind('featureOut', onPolyOut)
+      tri13Layer = layer;
       layer.bind('featureClick', onPolyClick)
       layer.bind('featureClick',function(e, pos, latlng, data) {
         showFeatureTri13(data.cartodb_id);
@@ -1340,7 +1356,6 @@ if (currentYear === 2009) {
 } 
 else if (currentYear === 2015) {
     currentMap = "tri15";
-    tri15Layer = layer;
     // console.log(currentMap);
     // console.log("Trimethroprim 2015 function called");
     removePrevious();
@@ -1359,6 +1374,7 @@ else if (currentYear === 2015) {
       layer.setInteraction(true);
       //layer.bind('featureOver', onPolyOver)
       //layer.bind('featureOut', onPolyOut)
+      tri15Layer = layer;
       layer.bind('featureClick', onPolyClick)
       layer.bind('featureClick',function(e, pos, latlng, data) {
         showFeatureTri15(data.cartodb_id);
@@ -1375,7 +1391,6 @@ else if (currentYear === 2015) {
 function showLev() {
 if (currentYear === 2009) {
     currentMap = "lev09";
-    lev09Layer = layer;
     // console.log(currentMap);
     // console.log("Levofloxacin 2009 function called");
     removePrevious();
@@ -1394,6 +1409,7 @@ if (currentYear === 2009) {
       layer.setInteraction(true);
       //layer.bind('featureOver', onPolyOver)
       //layer.bind('featureOut', onPolyOut)
+      lev09Layer = layer;
       layer.bind('featureClick', onPolyClick)
       layer.bind('featureClick',function(e, pos, latlng, data) {
         showFeatureLev09(data.cartodb_id);
@@ -1402,7 +1418,6 @@ if (currentYear === 2009) {
  ;
 } else if (currentYear === 2013) {
     currentMap = "lev13";
-    lev13Layer = layer;
     // console.log(currentMap);
     // console.log("Levofloxacin 2013 function called");
     removePrevious();
@@ -1421,6 +1436,7 @@ if (currentYear === 2009) {
       layer.setInteraction(true);
       //layer.bind('featureOver', onPolyOver)
       //layer.bind('featureOut', onPolyOut)
+      lev13Layer = layer;
       layer.bind('featureClick', onPolyClick)
       layer.bind('featureClick',function(e, pos, latlng, data) {
         showFeatureLev13(data.cartodb_id);
@@ -1430,7 +1446,6 @@ if (currentYear === 2009) {
 } 
 else if (currentYear === 2015) {
     currentMap = "lev15";
-    lev15Layer = layer;
     // console.log(currentMap);
     // console.log("Levofloxacin 2015 function called");
     removePrevious();
@@ -1449,6 +1464,7 @@ else if (currentYear === 2015) {
       layer.setInteraction(true);
       //layer.bind('featureOver', onPolyOver)
       //layer.bind('featureOut', onPolyOut)
+      lev15Layer = layer;
       layer.bind('featureClick', onPolyClick)
       layer.bind('featureClick',function(e, pos, latlng, data) {
         showFeatureLev15(data.cartodb_id);
