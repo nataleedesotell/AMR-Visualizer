@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -42,78 +40,83 @@ body {
     background-color: #fff;
 }
 
-#custom-search-input input{
-    border: 0;
-    box-shadow: none;
-}
-
-#custom-search-input button{
-    margin: 2px 0 0 0;
-    background: none;
-    box-shadow: none;
-    border: 0;
-    color: #666666;
-    padding: 0 8px 0 10px;
-    border-left: solid 1px #ccc;
-}
-
-#custom-search-input button:hover{
-    border: 0;
-    box-shadow: none;
-    border-left: solid 1px #ccc;
-}
-
-#custom-search-input .glyphicon-search{
-    font-size: 23px;
-}
-
-#results {
-    position: absolute;
-    top: 68px;
-    left: 15px;
-    right: 15px;
-    bottom: 0;
-}
-
 .list-group-item:hover {
     background: steelblue;
     color: #fff;
     cursor: pointer;
 }
-.legend {
-    padding: 6px 8px;
-    font-size: 1em;
-    background: white;
-    color: black; 
-    box-shadow: 0 0 15px rgba(0,0,0,0.2);
-    border-radius: 5px;
-    width: 145px;
-    border: 2px solid white;
-    border-radius: 5px; 
+
+/* basic positioning */
+.legend { 
+    list-style: none; 
+    width: 200px;
+    height: 400px;
+    left: -100px;
 }
-.legend h3 {
-    font-size: 1em;
-    font-weight: bold;
-    line-height: 1.3em;
-    color: black;
-    margin: 0;
+
+.legend li { 
+    float: left; 
+    margin-right: 0px; 
+    width: 200px;
+    margin-left: -35px;
 }
-.legend ul {
-    margin: 10px 0 0 0;
-    padding: 0;
+
+.legend ul { 
+
 }
-.legend li {
-    list-style-type: none;
-    height: 22px;
-    color: black;
-    font-size: .85em;
+
+.legend span { 
+    border-radius: 3px;
+    border: none;
+    float: left; 
+    width: 25px; 
+    height: 25px; 
+    margin: 3px; 
+    left: 0px;
+    align-items: vertical;
 }
-.legend span {
-    width: 30px;
-    height: 20px;
-    float: left;
-    margin-right: 5px;
+
+
+/* LEGEND COLORS */
+.legend .a { 
+  background-color: #50B848; 
 }
+.legend .b { 
+  background-color: #BCDDA1; 
+}
+.legend .c { 
+  background-color: #F4E6ED; 
+}
+.legend .d { 
+  background-color: #EDC1DB; 
+}
+.legend .e { 
+  background-color: #CF3D96; 
+}
+.legend .f { 
+  background-color: #CCCCCC; 
+}
+
+.col-md-2 {
+  background: #0A0A0A;
+}
+
+p {
+  color: grey;
+}
+
+li {
+  color: grey;
+  font-size: 9pt;
+}
+
+/*// Colors:
+// #50B848
+// #BCDDA1
+// #F4E6ED
+// #EDC1DB
+// #CF3D96
+*/
 
   </style>
 
@@ -138,14 +141,11 @@ body {
         </div><!--/.nav-collapse -->
       </div> <!-- end container -->
     </nav> <!-- end navbar-->
-
-
 <div id="container">
-  <div class="col-md-2" style='height:100%'>
+  <div class="col-md-2" style="height:100%">
     <br/>
     <ul id="results" class="list-group"></ul>
     </br></br>
-
       <!-- start year dropdown -->
       <div class="dropdown">
         <p>YEAR</p>
@@ -158,8 +158,6 @@ body {
         </ul>
       </div>
       <!-- end year dropdown -->
-
-      </br></br>
       </br></br>
       </br></br>
 
@@ -179,11 +177,32 @@ body {
         </div>
         <!-- end drug dropdown-->
 
+      </br></br>
+      </br></br>
+
+<!-- start legend -->
+<div class = "dropdown">
+  <p>SUSCEPTIBILITY</p>
+  <ul class="legend">
+        <li><span class="a"></span> 90 - 100%</li>
+      </br>
+        <li><span class="b"></span> 80 - 89% </li>
+      </br>
+        <li><span class="c"></span> 70 - 79%</li>
+      </br>
+        <li><span class="d"></span> 60 - 69%</li>
+      </br>
+        <li><span class="e"></span> Under 60%</li>
+        </br>
+        <li><span class="f"></span> No Data </li>
+      </ul>
+</div>
+<!-- end legend -->
+
 </div>
 
       <!-- map div -->
-      <div id="map">
-      </div>
+      <div id="map"></div>
       <!-- end map div -->
 
 </script>
@@ -216,16 +235,16 @@ var cip09colors = '#layer {' +
       '#layer [cip09 <= 100] {' +
         'polygon-fill: #50B848;' +
       '}' +
-      '#layer [cip09 <= 90] {' +
+      '#layer [cip09 <= 89] {' +
         'polygon-fill: #BCDDA1;' +
       '}' +
-      '#layer [cip09 <= 80] {' +
+      '#layer [cip09 <= 79] {' +
         'polygon-fill: #F4E6ED;' +
       '}' +
-      '#layer [cip09 <= 70] {' +
+      '#layer [cip09 <= 69] {' +
         'polygon-fill: #EDC1DB;' +
       '}' +
-      '#layer [cip09 <= 60] {' +
+      '#layer [cip09 <= 59] {' +
         'polygon-fill: #CF3D96;' +
       '}';
 
@@ -242,16 +261,16 @@ var nit09colors = '#layer {' +
       '#layer [nit09 <= 100] {' +
         'polygon-fill: #50B848;' +
       '}' +
-      '#layer [nit09 <= 90] {' +
+      '#layer [nit09 <= 89] {' +
         'polygon-fill: #BCDDA1;' +
       '}' +
-      '#layer [nit09 <= 80] {' +
+      '#layer [nit09 <= 79] {' +
         'polygon-fill: #F4E6ED;' +
       '}' +
-      '#layer [nit09 <= 70] {' +
+      '#layer [nit09 <= 69] {' +
         'polygon-fill: #EDC1DB;' +
       '}' +
-      '#layer [nit09 <= 60] {' +
+      '#layer [nit09 <= 59] {' +
         'polygon-fill: #CF3D96;' +
       '}';
 
@@ -267,16 +286,16 @@ var amp09colors = '#layer {' +
       '#layer [amp09 <= 100] {' +
         'polygon-fill: #50B848;' +
       '}' +
-      '#layer [amp09 <= 90] {' +
+      '#layer [amp09 <= 89] {' +
         'polygon-fill: #BCDDA1;' +
       '}' +
-      '#layer [amp09 <= 80] {' +
+      '#layer [amp09 <= 79] {' +
         'polygon-fill: #F4E6ED;' +
       '}' +
-      '#layer [amp09 <= 70] {' +
+      '#layer [amp09 <= 69] {' +
         'polygon-fill: #EDC1DB;' +
       '}' +
-      '#layer [amp09 <= 60] {' +
+      '#layer [amp09 <= 59] {' +
         'polygon-fill: #CF3D96;' +
       '}';
 
@@ -293,16 +312,16 @@ var amx09colors = '#layer {' +
       '#layer [amx09 <= 100] {' +
         'polygon-fill: #50B848;' +
       '}' +
-      '#layer [amx09 <= 90] {' +
+      '#layer [amx09 <= 89] {' +
         'polygon-fill: #BCDDA1;' +
       '}' +
-      '#layer [amx09 <= 80] {' +
+      '#layer [amx09 <= 79] {' +
         'polygon-fill: #F4E6ED;' +
       '}' +
-      '#layer [amx09 <= 70] {' +
+      '#layer [amx09 <= 69] {' +
         'polygon-fill: #EDC1DB;' +
       '}' +
-      '#layer [amx09 <= 60] {' +
+      '#layer [amx09 <= 59] {' +
         'polygon-fill: #CF3D96;' +
       '}';
 
@@ -319,16 +338,16 @@ var tri09colors = '#layer {' +
       '#layer [tri09 <= 100] {' +
         'polygon-fill: #50B848;' +
       '}' +
-      '#layer [tri09 <= 90] {' +
+      '#layer [tri09 <= 89] {' +
         'polygon-fill: #BCDDA1;' +
       '}' +
-      '#layer [tri09 <= 80] {' +
+      '#layer [tri09 <= 79] {' +
         'polygon-fill: #F4E6ED;' +
       '}' +
-      '#layer [tri09 <= 70] {' +
+      '#layer [tri09 <= 69] {' +
         'polygon-fill: #EDC1DB;' +
       '}' +
-      '#layer [tri09 <= 60] {' +
+      '#layer [tri09 <= 59] {' +
         'polygon-fill: #CF3D96;' +
       '}';
 
@@ -344,16 +363,16 @@ var lev09colors = '#layer {' +
       '#layer [lev09 <= 100] {' +
         'polygon-fill: #50B848;' +
       '}' +
-      '#layer [lev09 <= 90] {' +
+      '#layer [lev09 <= 89] {' +
         'polygon-fill: #BCDDA1;' +
       '}' +
-      '#layer [lev09 <= 80] {' +
+      '#layer [lev09 <= 79] {' +
         'polygon-fill: #F4E6ED;' +
       '}' +
-      '#layer [lev09 <= 70] {' +
+      '#layer [lev09 <= 69] {' +
         'polygon-fill: #EDC1DB;' +
       '}' +
-      '#layer [lev09 <= 60] {' +
+      '#layer [lev09 <= 59] {' +
         'polygon-fill: #CF3D96;' +
       '}';
 
@@ -371,16 +390,16 @@ var cip13colors = '#layer {' +
       '#layer [cip13 <= 100] {' +
         'polygon-fill: #50B848;' +
       '}' +
-      '#layer [cip13 <= 90] {' +
+      '#layer [cip13 <= 89] {' +
         'polygon-fill: #BCDDA1;' +
       '}' +
-      '#layer [cip13 <= 80] {' +
+      '#layer [cip13 <= 79] {' +
         'polygon-fill: #F4E6ED;' +
       '}' +
-      '#layer [cip13 <= 70] {' +
+      '#layer [cip13 <= 69] {' +
         'polygon-fill: #EDC1DB;' +
       '}' +
-      '#layer [cip13 <= 60] {' +
+      '#layer [cip13 <= 59] {' +
         'polygon-fill: #CF3D96;' +
       '}';
 
@@ -397,16 +416,16 @@ var nit13colors = '#layer {' +
       '#layer [nit13 <= 100] {' +
         'polygon-fill: #50B848;' +
       '}' +
-      '#layer [nit13 <= 90] {' +
+      '#layer [nit13 <= 89] {' +
         'polygon-fill: #BCDDA1;' +
       '}' +
-      '#layer [nit13 <= 80] {' +
+      '#layer [nit13 <= 79] {' +
         'polygon-fill: #F4E6ED;' +
       '}' +
-      '#layer [nit13 <= 70] {' +
+      '#layer [nit13 <= 69] {' +
         'polygon-fill: #EDC1DB;' +
       '}' +
-      '#layer [nit13 <= 60] {' +
+      '#layer [nit13 <= 59] {' +
         'polygon-fill: #CF3D96;' +
       '}';
 
@@ -422,16 +441,16 @@ var amp13colors = '#layer {' +
       '#layer [amp13 <= 100] {' +
         'polygon-fill: #50B848;' +
       '}' +
-      '#layer [amp13 <= 90] {' +
+      '#layer [amp13 <= 89] {' +
         'polygon-fill: #BCDDA1;' +
       '}' +
-      '#layer [amp13 <= 80] {' +
+      '#layer [amp13 <= 79] {' +
         'polygon-fill: #F4E6ED;' +
       '}' +
-      '#layer [amp13 <= 70] {' +
+      '#layer [amp13 <= 69] {' +
         'polygon-fill: #EDC1DB;' +
       '}' +
-      '#layer [amp13 <= 60] {' +
+      '#layer [amp13 <= 59] {' +
         'polygon-fill: #CF3D96;' +
       '}';
 
@@ -448,19 +467,18 @@ var amx13colors = '#layer {' +
       '#layer [amx13 <= 100] {' +
         'polygon-fill: #50B848;' +
       '}' +
-      '#layer [amx13 <= 90] {' +
+      '#layer [amx13 <= 89] {' +
         'polygon-fill: #BCDDA1;' +
       '}' +
-      '#layer [amx13 <= 80] {' +
+      '#layer [amx13 <= 79] {' +
         'polygon-fill: #F4E6ED;' +
       '}' +
-      '#layer [amx13 <= 70] {' +
+      '#layer [amx13 <= 69] {' +
         'polygon-fill: #EDC1DB;' +
       '}' +
-      '#layer [amx13 <= 60] {' +
+      '#layer [amx13 <= 59] {' +
         'polygon-fill: #CF3D96;' +
       '}';
-
 
 var tri13colors = '#layer {' +
         'polygon-fill: #CCCCCC;' +
@@ -474,16 +492,16 @@ var tri13colors = '#layer {' +
       '#layer [tri13 <= 100] {' +
         'polygon-fill: #50B848;' +
       '}' +
-      '#layer [tri13 <= 90] {' +
+      '#layer [tri13 <= 89] {' +
         'polygon-fill: #BCDDA1;' +
       '}' +
-      '#layer [tri13 <= 80] {' +
+      '#layer [tri13 <= 79] {' +
         'polygon-fill: #F4E6ED;' +
       '}' +
-      '#layer [tri13 <= 70] {' +
+      '#layer [tri13 <= 69] {' +
         'polygon-fill: #EDC1DB;' +
       '}' +
-      '#layer [tri13 <= 60] {' +
+      '#layer [tri13 <= 59] {' +
         'polygon-fill: #CF3D96;' +
       '}';
 
@@ -499,19 +517,18 @@ var lev13colors = '#layer {' +
       '#layer [lev13 <= 100] {' +
         'polygon-fill: #50B848;' +
       '}' +
-      '#layer [lev13 <= 90] {' +
+      '#layer [lev13 <= 89] {' +
         'polygon-fill: #BCDDA1;' +
       '}' +
-      '#layer [lev13 <= 80] {' +
+      '#layer [lev13 <= 79] {' +
         'polygon-fill: #F4E6ED;' +
       '}' +
-      '#layer [lev13 <= 70] {' +
+      '#layer [lev13 <= 69] {' +
         'polygon-fill: #EDC1DB;' +
       '}' +
-      '#layer [lev13 <= 60] {' +
+      '#layer [lev13 <= 59] {' +
         'polygon-fill: #CF3D96;' +
       '}';
-
 
 // 2015 COLORS // 
 
@@ -527,19 +544,18 @@ var cip15colors = '#layer {' +
       '#layer [cip15 <= 100] {' +
         'polygon-fill: #50B848;' +
       '}' +
-      '#layer [cip15 <= 90] {' +
+      '#layer [cip15 <= 89] {' +
         'polygon-fill: #BCDDA1;' +
       '}' +
-      '#layer [cip15 <= 80] {' +
+      '#layer [cip15 <= 79] {' +
         'polygon-fill: #F4E6ED;' +
       '}' +
-      '#layer [cip15 <= 70] {' +
+      '#layer [cip15 <= 69] {' +
         'polygon-fill: #EDC1DB;' +
       '}' +
-      '#layer [cip15 <= 60] {' +
+      '#layer [cip15 <= 59] {' +
         'polygon-fill: #CF3D96;' +
       '}';
-
 
 var nit15colors = '#layer {' +
         'polygon-fill: #CCCCCC;' +
@@ -553,16 +569,16 @@ var nit15colors = '#layer {' +
       '#layer [nit15 <= 100] {' +
         'polygon-fill: #50B848;' +
       '}' +
-      '#layer [nit15 <= 90] {' +
+      '#layer [nit15 <= 89] {' +
         'polygon-fill: #BCDDA1;' +
       '}' +
-      '#layer [nit15 <= 80] {' +
+      '#layer [nit15 <= 79] {' +
         'polygon-fill: #F4E6ED;' +
       '}' +
-      '#layer [nit15 <= 70] {' +
+      '#layer [nit15 <= 69] {' +
         'polygon-fill: #EDC1DB;' +
       '}' +
-      '#layer [nit15 <= 60] {' +
+      '#layer [nit15 <= 59] {' +
         'polygon-fill: #CF3D96;' +
       '}';
 
@@ -578,16 +594,16 @@ var amp15colors = '#layer {' +
       '#layer [amp15 <= 100] {' +
         'polygon-fill: #50B848;' +
       '}' +
-      '#layer [amp15 <= 90] {' +
+      '#layer [amp15 <= 89] {' +
         'polygon-fill: #BCDDA1;' +
       '}' +
-      '#layer [amp15 <= 80] {' +
+      '#layer [amp15 <= 79] {' +
         'polygon-fill: #F4E6ED;' +
       '}' +
-      '#layer [amp15 <= 70] {' +
+      '#layer [amp15 <= 69] {' +
         'polygon-fill: #EDC1DB;' +
       '}' +
-      '#layer [amp15 <= 60] {' +
+      '#layer [amp15 <= 59] {' +
         'polygon-fill: #CF3D96;' +
       '}';
 
@@ -604,16 +620,16 @@ var amx15colors = '#layer {' +
       '#layer [amx15 <= 100] {' +
         'polygon-fill: #50B848;' +
       '}' +
-      '#layer [amx15 <= 90] {' +
+      '#layer [amx15 <= 89] {' +
         'polygon-fill: #BCDDA1;' +
       '}' +
-      '#layer [amx15 <= 80] {' +
+      '#layer [amx15 <= 79] {' +
         'polygon-fill: #F4E6ED;' +
       '}' +
-      '#layer [amx15 <= 70] {' +
+      '#layer [amx15 <= 69] {' +
         'polygon-fill: #EDC1DB;' +
       '}' +
-      '#layer [amx15 <= 60] {' +
+      '#layer [amx15 <= 59] {' +
         'polygon-fill: #CF3D96;' +
       '}';
 
@@ -630,16 +646,16 @@ var tri15colors = '#layer {' +
       '#layer [tri15 <= 100] {' +
         'polygon-fill: #50B848;' +
       '}' +
-      '#layer [tri15 <= 90] {' +
+      '#layer [tri15 <= 89] {' +
         'polygon-fill: #BCDDA1;' +
       '}' +
-      '#layer [tri15 <= 80] {' +
+      '#layer [tri15 <= 79] {' +
         'polygon-fill: #F4E6ED;' +
       '}' +
-      '#layer [tri15 <= 70] {' +
+      '#layer [tri15 <= 69] {' +
         'polygon-fill: #EDC1DB;' +
       '}' +
-      '#layer [tri15 <= 60] {' +
+      '#layer [tri15 <= 59] {' +
         'polygon-fill: #CF3D96;' +
       '}';
 
@@ -655,21 +671,20 @@ var lev15colors = '#layer {' +
       '#layer [lev15 <= 100] {' +
         'polygon-fill: #50B848;' +
       '}' +
-      '#layer [lev15 <= 90] {' +
+      '#layer [lev15 <= 89] {' +
         'polygon-fill: #BCDDA1;' +
       '}' +
-      '#layer [lev15 <= 80] {' +
+      '#layer [lev15 <= 79] {' +
         'polygon-fill: #F4E6ED;' +
       '}' +
-      '#layer [lev15 <= 70] {' +
+      '#layer [lev15 <= 69] {' +
         'polygon-fill: #EDC1DB;' +
       '}' +
-      '#layer [lev15 <= 60] {' +
+      '#layer [lev15 <= 59] {' +
         'polygon-fill: #CF3D96;' +
       '}';
 
 // END LAYER COLORS
-
 
 ///////////////////////////////////////////////////////////
 ///////////////// LOAD MAP //// ///////////////////////////
@@ -679,24 +694,58 @@ var lev15colors = '#layer {' +
   $( document ).ready(function() {
     //Create the leaflet map
     var map = L.map('map', {
-      zoomControl: true,
+      zoomControl: false,
       center: [44.4,-90.0],
       zoom: 7
+
     });
+
+    L.control.zoom({
+      position:'topright'
+    }).addTo(map);
 
     var currentYear = 2015;
     var currentDrug = "Ciprofloxacin";
+    var username = "nrobson";
+    var currentMap = "cip15";
+    
+    var layer = "";
+
+    var nit09Layer = "";
+    var nit13Layer = "";
+    var nit15Layer = "";
+
+    var cip09Layer = "";
+    var cip13Layer = "";
+    var cip15Layer = "";
+
+    var lev09Layer = "";
+    var lev13Layer = "";
+    var lev15Layer = "";
+
+    var tri09Layer = "";
+    var tri13Layer = "";
+    var tri15Layer = "";
+
+    var amx09Layer = "";
+    var amx13Layer = "";
+    var amx15Layer = "";
+
+    var amp09Layer = "";
+    var amp13Layer = "";
+    var amp15Layer = "";
+
+    var cip09;
+    var nit09;
     showCip();
     //show Ciprofloxacin 2015 on load
     
-    sql2 = new cartodb.SQL({ user: 'nrobson', format: 'geojson' });
+    sql2 = new cartodb.SQL({ user: username, format: 'geojson' });
     
     var basemap = L.tileLayer('http://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png',{
       attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="http://cartodb.com/attributions">CartoDB</a>'
     }).addTo(map);
-    drawLegend();
-
-
+    // drawLegend();
 
 ///////////////////////////////////////////////////////////
 ///////////////// DROPDOWNS /// ///////////////////////////
@@ -736,14 +785,14 @@ var lev15colors = '#layer {' +
     $("#amxdrop").click(function(e){
     currentDrug = "Amoxicillin";
     showAmx();
-    console.log(currentDrug + " was clicked");
+    // console.log(currentDrug + " was clicked");
     e.preventDefault();
     });
 
     $("#levdrop").click(function(e){
     currentDrug = "Levofloxacin";
     showLev();
-    console.log(currentDrug + " was clicked");
+    // console.log(currentDrug + " was clicked");
     e.preventDefault();
     });
 
@@ -765,7 +814,7 @@ var lev15colors = '#layer {' +
     $("#2013drop").click(function(e){
     currentYear = 2013;
     selectDrug();
-    console.log(currentDrug);
+    // console.log(currentDrug);
     // console.log("current year is " + currentYear)
     // e.preventDefault();
     });
@@ -773,16 +822,15 @@ var lev15colors = '#layer {' +
     $("#2015drop").click(function(e){
     currentYear = 2015;
     selectDrug();
-    console.log(currentDrug);
+    // console.log(currentDrug);
     // console.log("current year is " + currentYear)
     // e.preventDefault();
     });
 
 function selectDrug() {
-  console.log("selectDrug was called");
+  // console.log("selectDrug was called");
 if (currentDrug === "Nitrofurantoin") {
     // console.log(currentDrug + " was called");
-    console.log("made it to selectDrug >> Nitro");
     showNit();
 } else if (currentDrug === "Trimethroprim") {
     // console.log(currentDrug + " was called");
@@ -808,14 +856,77 @@ if (currentDrug === "Nitrofurantoin") {
 ///////////////// MAP FUNCTIONS ///////////////////////////
 ///////////////////////////////////////////////////////////
 
+function removePrevious() {
+    if (cip09Layer != ""){
+    cip09Layer.getSubLayer(0).hide();
+    console.log("hid cip09Layer");
+} else if (cip13Layer != "") {
+    cip13Layer.getSubLayer(0).hide();
+    console.log("hid cip13Layer");
+} else if (cip15Layer != "") {
+    cip15Layer.getSubLayer(0).hide();
+    console.log("hid cip15Layer");
+} else if (amx09Layer != "") {
+    amx09Layer.getSubLayer(0).hide();
+    console.log("hid amx09Layer");
+} else if (amx13Layer != "") {
+    amx13Layer.getSubLayer(0).hide();
+    console.log("hid amx13Layer");
+} else if (amx15Layer != "") {
+    amx15Layer.getSubLayer(0).hide();
+    console.log("hid amx15Layer");
+} else if (tri09Layer != "") {
+    tri09Layer.getSubLayer(0).hide();
+    console.log("hid tri09Layer");
+} else if (tri13Layer != "") {
+    tri13Layer.getSubLayer(0).hide();
+    console.log("hid tri13Layer");
+} else if (tri15Layer != "") {
+    tri15Layer.getSubLayer(0).hide();
+    console.log("hid tri15Layer");
+} else if (amp09Layer != "") {
+    amp09Layer.getSubLayer(0).hide();
+    console.log("hid amp09Layer");
+} else if (amp13Layer != "") {
+    amp13Layer.getSubLayer(0).hide();
+    console.log("hid amp13Layer");
+} else if (amp15Layer != "") {
+    amp15Layer.getSubLayer(0).hide();
+    console.log("hid amp15Layer");
+} else if (nit09Layer != "") {
+    nit09Layer.getSubLayer(0).hide();
+    console.log("hid nit09Layer");
+} else if (nit13Layer != "") {
+    nit13Layer.getSubLayer(0).hide();
+    console.log("hid nit13Layer");
+} else if (nit15Layer != "") {
+    nit15Layer.getSubLayer(0).hide();
+    console.log("hid nit15Layer");
+} else if (lev09Layer != "") {
+    lev09Layer.getSubLayer(0).hide();
+    console.log("hid lev09Layer");
+} else if (lev13Layer != "") {
+    lev13Layer.getSubLayer(0).hide();
+    console.log("hid lev13Layer");
+} else if (lev15Layer != "") {
+    lev15Layer.getSubLayer(0).hide();
+    console.log("hid lev15Layer");
+} else {
+    console.log("didn't hide any layers");
+}
 
-// When creating new layers, they will essentially get stacked upon one another and will obfuscate one another. To avoid a huge pileup of tile layers, it is necessary to manage them once they are created. See the attached code for more about how to hide (e.g. cipLayer.getSubLayer(0).hide();) and show (cipLayer.getSubLayer(0).show();) a layer after it is created.
+};
+
 
 function showAmx() {
 if (currentYear === 2009) {
-    console.log("Amoxicillin 2009 function called");
+    currentMap = "amx09";
+    amx09Layer = layer;
+    // console.log(currentMap);
+    // console.log("Amoxicillin 2009 function called");
+    removePrevious();
     var amx09 = cartodb.createLayer(map, {
-    user_name: 'nrobson',
+    user_name: username,
     type: 'cartodb',
     sublayers: [{
       sql: 'SELECT * FROM amrviz',
@@ -827,18 +938,23 @@ if (currentYear === 2009) {
     .addTo(map)
     .done(function(layer) {
       layer.setInteraction(true);
-      //layer.bind('featureOver', onPolyOver)
-      //layer.bind('featureOut', onPolyOut)
+      // layer.bind('featureOver', onPolyOver)
+      // layer.bind('featureOut', onPolyOut)
       layer.bind('featureClick', onPolyClick)
       layer.bind('featureClick',function(e, pos, latlng, data) {
         showFeatureAmx09(data.cartodb_id);
+
       });
     })
  ;
 } else if (currentYear === 2013) {
-    console.log("Amoxicillin 2013 function called");
+    currentMap = "amx13";
+    amx13Layer = layer;
+    // console.log(currentMap);
+    // console.log("Amoxicillin 2013 function called");
+    removePrevious();
     var amx13 = cartodb.createLayer(map, {
-    user_name: 'nrobson',
+    user_name: username,
     type: 'cartodb',
     sublayers: [{
       sql: 'SELECT * FROM amrviz',
@@ -860,9 +976,13 @@ if (currentYear === 2009) {
  ;
 } 
 else if (currentYear === 2015) {
-    console.log("Amoxicillin 2015 function called");
+    currentMap = "amx15";
+    amx15Layer = layer;
+    // console.log(currentMap);
+    // console.log("Amoxicillin 2015 function called");
+    removePrevious();
     var amx15 = cartodb.createLayer(map, {
-    user_name: 'nrobson',
+    user_name: username,
     type: 'cartodb',
     sublayers: [{
       sql: 'SELECT * FROM amrviz',
@@ -889,10 +1009,14 @@ else if (currentYear === 2015) {
 
 function showCip() {
 if (currentYear === 2009) {
-    console.log("Ciprofloxacin 2009 function called");
+    currentMap = "cip09";
+    cip09Layer = layer;
+    // console.log(currentMap);
+    // console.log("Ciprofloxacin 2009 function called");
+    removePrevious();
     var currentDrug = "Ciprofloxacin";
     var cip09 = cartodb.createLayer(map, {
-    user_name: 'nrobson',
+    user_name: username,
     type: 'cartodb',
     sublayers: [{
       sql: 'SELECT * FROM amrviz',
@@ -913,10 +1037,14 @@ if (currentYear === 2009) {
     })
  ;
 } else if (currentYear === 2013) {
-    console.log("Ciprofloxacin 2013 function called");
+    currentMap = "cip13";
+    cip13Layer = layer;
+    // console.log(currentMap);
+    // console.log("Ciprofloxacin 2013 function called");
+    removePrevious();
     var currentDrug = "Ciprofloxacin";
     var cip13 = cartodb.createLayer(map, {
-    user_name: 'nrobson',
+    user_name: username,
     type: 'cartodb',
     sublayers: [{
       sql: 'SELECT * FROM amrviz',
@@ -939,10 +1067,14 @@ if (currentYear === 2009) {
  ;
 } 
 else if (currentYear === 2015) {
-    console.log("Ciprofloxacin 2015 function called");
+    currentMap = "cip15";
+    cip15Layer = layer;
+    // console.log(currentMap);
+    // console.log("Ciprofloxacin 2015 function called");
+    removePrevious();
     var currentDrug = "Ciprofloxacin";
     var cip15 = cartodb.createLayer(map, {
-    user_name: 'nrobson',
+    user_name: username,
     type: 'cartodb',
     sublayers: [{
       sql: 'SELECT * FROM amrviz',
@@ -968,11 +1100,16 @@ else if (currentYear === 2015) {
 };
 
 function showAmp() {
+
 if (currentYear === 2009) {
-    console.log("Ampicillin 2009 function called");
+    currentMap = "amp09";
+    amp09Layer = layer;
+    // console.log(currentMap);
+    // console.log("Ampicillin 2009 function called");
+    removePrevious();
     var currentDrug = "Ampicillin";
     var amp09 = cartodb.createLayer(map, {
-    user_name: 'nrobson',
+    user_name: username,
     type: 'cartodb',
     sublayers: [{
       sql: 'SELECT * FROM amrviz',
@@ -993,9 +1130,13 @@ if (currentYear === 2009) {
     })
  ;
 } else if (currentYear === 2013) {
-    console.log("Ampicillin 2013 function called");
+    currentMap = "amp13";
+    amp13Layer = layer;
+    // console.log(currentMap);
+    // console.log("Ampicillin 2013 function called");
+    removePrevious();
     var amp13 = cartodb.createLayer(map, {
-    user_name: 'nrobson',
+    user_name: username,
     type: 'cartodb',
     sublayers: [{
       sql: 'SELECT * FROM amrviz',
@@ -1018,9 +1159,13 @@ if (currentYear === 2009) {
  ;
 } 
 else if (currentYear === 2015) {
-    console.log("Ampicillin 2015 function called");
+    currentMap = "amp15";
+    amp15Layer = layer;
+    // console.log(currentMap);
+    // console.log("Ampicillin 2015 function called");
+    removePrevious();
     var amp15 = cartodb.createLayer(map, {
-    user_name: 'nrobson',
+    user_name: username,
     type: 'cartodb',
     sublayers: [{
       sql: 'SELECT * FROM amrviz',
@@ -1048,9 +1193,13 @@ else if (currentYear === 2015) {
 //SHOW NITROFURANTOIN
 function showNit() {
 if (currentYear === 2009) {
-    console.log("Nitrofurantoin 2009 function called");
+    currentMap = "nit09";    
+    nit09Layer = layer;
+    // console.log(currentMap);
+    // console.log("Nitrofurantoin 2009 function called");
+    removePrevious();
     var nit09 = cartodb.createLayer(map, {
-    user_name: 'nrobson',
+    user_name: username,
     type: 'cartodb',
     sublayers: [{
       sql: 'SELECT * FROM amrviz',
@@ -1071,9 +1220,13 @@ if (currentYear === 2009) {
     })
  ;
 } else if (currentYear === 2013) {
-    console.log("Nitrofurantoin 2013 function called");
+    currentMap = "nit13";
+    nit13Layer = layer;
+    // console.log(currentMap);
+    // console.log("Nitrofurantoin 2013 function called");
+    removePrevious();
     var nit13 = cartodb.createLayer(map, {
-    user_name: 'nrobson',
+    user_name: username,
     type: 'cartodb',
     sublayers: [{
       sql: 'SELECT * FROM amrviz',
@@ -1095,9 +1248,13 @@ if (currentYear === 2009) {
  ;
 } 
 else if (currentYear === 2015) {
-    console.log("Nitrofurantoin 2015 function called");
+    currentMap = "nit15";
+    nit15Layer = layer;
+    // console.log(currentMap);
+    // console.log("Nitrofurantoin 2015 function called");
+    removePrevious();
     var nit15 = cartodb.createLayer(map, {
-    user_name: 'nrobson',
+    user_name: username,
     type: 'cartodb',
     sublayers: [{
       sql: 'SELECT * FROM amrviz',
@@ -1127,9 +1284,13 @@ else if (currentYear === 2015) {
 //SHOW TRIMETHROPRIM
 function showTri() {
 if (currentYear === 2009) {
-    console.log("Trimethroprim 2009 function called");
+    currentMap = "tri09";
+    tri09Layer = layer;
+    // console.log(currentMap);
+    // console.log("Trimethroprim 2009 function called");
+    removePrevious();
     var tri09 = cartodb.createLayer(map, {
-    user_name: 'nrobson',
+    user_name: username,
     type: 'cartodb',
     sublayers: [{
       sql: 'SELECT * FROM amrviz',
@@ -1150,9 +1311,13 @@ if (currentYear === 2009) {
     })
  ;
 } else if (currentYear === 2013) {
-    console.log("Trimethroprim 2013 function called");
+    currentMap = "tri13";
+    tri13Layer = layer;
+    // console.log(currentMap);
+    // console.log("Trimethroprim 2013 function called");
+    removePrevious();
     var tri13 = cartodb.createLayer(map, {
-    user_name: 'nrobson',
+    user_name: username,
     type: 'cartodb',
     sublayers: [{
       sql: 'SELECT * FROM amrviz',
@@ -1174,9 +1339,13 @@ if (currentYear === 2009) {
  ;
 } 
 else if (currentYear === 2015) {
-    console.log("Trimethroprim 2015 function called");
+    currentMap = "tri15";
+    tri15Layer = layer;
+    // console.log(currentMap);
+    // console.log("Trimethroprim 2015 function called");
+    removePrevious();
     var tri15 = cartodb.createLayer(map, {
-    user_name: 'nrobson',
+    user_name: username,
     type: 'cartodb',
     sublayers: [{
       sql: 'SELECT * FROM amrviz',
@@ -1205,9 +1374,13 @@ else if (currentYear === 2015) {
 //SHOW LEVOFLOXACIN
 function showLev() {
 if (currentYear === 2009) {
-    console.log("Levofloxacin 2009 function called");
+    currentMap = "lev09";
+    lev09Layer = layer;
+    // console.log(currentMap);
+    // console.log("Levofloxacin 2009 function called");
+    removePrevious();
     var lev09 = cartodb.createLayer(map, {
-    user_name: 'nrobson',
+    user_name: username,
     type: 'cartodb',
     sublayers: [{
       sql: 'SELECT * FROM amrviz',
@@ -1228,9 +1401,13 @@ if (currentYear === 2009) {
     })
  ;
 } else if (currentYear === 2013) {
-    console.log("Levofloxacin 2013 function called");
+    currentMap = "lev13";
+    lev13Layer = layer;
+    // console.log(currentMap);
+    // console.log("Levofloxacin 2013 function called");
+    removePrevious();
     var lev13 = cartodb.createLayer(map, {
-    user_name: 'nrobson',
+    user_name: username,
     type: 'cartodb',
     sublayers: [{
       sql: 'SELECT * FROM amrviz',
@@ -1252,9 +1429,13 @@ if (currentYear === 2009) {
  ;
 } 
 else if (currentYear === 2015) {
-    console.log("Levofloxacin 2015 function called");
+    currentMap = "lev15";
+    lev15Layer = layer;
+    // console.log(currentMap);
+    // console.log("Levofloxacin 2015 function called");
+    removePrevious();
     var lev15 = cartodb.createLayer(map, {
-    user_name: 'nrobson',
+    user_name: username,
     type: 'cartodb',
     sublayers: [{
       sql: 'SELECT * FROM amrviz',
@@ -1291,13 +1472,6 @@ function updateTitle() {
 ///////////////// LEGEND ////// ///////////////////////////
 ///////////////////////////////////////////////////////////
 
-// Colors:
-// #50B848
-// #BCDDA1
-// #F4E6ED
-// #EDC1DB
-// #CF3D96
-
 // QUESTION: what does this 'd' refer to?
 function getColor(d) {
     return d > 1000 ? '#800026' :
@@ -1310,25 +1484,25 @@ function getColor(d) {
                       '#FFEDA0';
 }
 
-// function to draw the legend
-function drawLegend(cartodb_id) {
-// console.log("drawlegend")
-var legend = L.control({position: 'bottomright'});
-legend.onAdd = function (map) {
-    var div = L.DomUtil.create('div', 'info legend'),
-        grades = [0, 10, 20, 50, 100, 200, 500, 1000],
-        labels = [];
-    // loop through our density intervals and generate a label with a colored square for each interval
-    for (var i = 0; i < grades.length; i++) {
-        div.innerHTML +=
-            '<i style="background:' + getColor(grades[i] + 1) + '"></i> ' +
-            grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '<br>' : '+');
-    }
-    return div;
-};
-legend.addTo(map);
-    var legend = $('.legend').html("<h3>Susceptibility</h3></br></br><ul>");     
-}
+// // function to draw the legend
+// function drawLegend(cartodb_id) {
+// // console.log("drawlegend")
+// var legend = L.control({position: 'bottomleft'});
+// legend.onAdd = function (map) {
+//     var div = L.DomUtil.create('div', 'info legend'),
+//         grades = [0, 10, 20, 50, 100, 200, 500, 1000],
+//         labels = [];
+//     // loop through our density intervals and generate a label with a colored square for each interval
+//     for (var i = 0; i < grades.length; i++) {
+//         div.innerHTML +=
+//             '<i style="background:' + getColor(grades[i] + 1) + '"></i> ' +
+//             grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '<br>' : '+');
+//     }
+//     return div;
+// };
+// legend.addTo(map);
+//     var legend = $('.legend').html("<h3>Susceptibility</h3></br></br><ul>");     
+// }
 
 function onPolyClick(e, latln, pxPos, data, layer){
     // console.log(data)
@@ -1362,12 +1536,12 @@ function showFeatureNit09(cartodb_id) {
 
   // AMPICILLIN 2009 TOOLTIP
 function showFeatureAmp09(cartodb_id) {
+
     sql2.execute("SELECT * from amrviz WHERE cartodb_id = {{cartodb_id}}", {cartodb_id: cartodb_id} 
   ).done(function(geojson) {
       if (polygon) {
         map.removeLayer(polygon);
       }
-      // console.log(geojson)
       polygon = L.geoJson(geojson, { 
         style: {
         color: "#000",
@@ -1376,8 +1550,9 @@ function showFeatureAmp09(cartodb_id) {
         weight: 2,
         opacity: 0.65
         }
-        // QUESTION: how do I add logic to the popup? I.e., if null, show "No Data". Else, show % susceptibility.
       }).addTo(map).bindPopup("<b>" + geojson.features["0"].properties.amp09 + "% susceptibility </br></b>" + geojson.features["0"].properties.name + " county").openPopup();
+      // write a console log to print just the value I click
+      console.log(geojson.features["0"].properties.amp09);
     });
   }
 
@@ -1717,6 +1892,7 @@ function showFeatureLev15(cartodb_id) {
         opacity: 0.65
         }
       }).addTo(map).bindPopup("<b>" + geojson.features["0"].properties.lev15 + "% susceptibility </br></b>" + geojson.features["0"].properties.name + " county").openPopup();
+      console.log(geojson.features["0"].properties.lev15);
     });
   }
 
